@@ -6,9 +6,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import KAGO_framework.control.ViewController;
 
-public class Player extends Entity {
+public abstract class Player extends Entity {
     ViewController viewController;
-    private int speed = 90;
+    protected int speed = 90;
 
     public Player(double pX, double pY, ViewController pViewController){
         viewController = pViewController;
@@ -27,19 +27,5 @@ public class Player extends Entity {
         move(dt);
     }
 
-    private void move(double dt){
-        if(viewController.isKeyDown(KeyEvent.VK_A)){
-            x -= speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_D)){
-            x += speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_W)){
-            y -= speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_S)){
-            y += speed*dt;
-        }
-
-    }
+    protected abstract void move(double dt);
 }

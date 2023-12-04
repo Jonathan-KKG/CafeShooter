@@ -1,9 +1,7 @@
 package my_project.control;
 
 import KAGO_framework.control.ViewController;
-import my_project.model.Enemy;
-import my_project.model.Environment;
-import my_project.model.Player;
+import my_project.model.*;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
@@ -27,7 +25,7 @@ public class ProgramController {
 
     public void startProgram() {
         environmentController = new EnvironmentController(viewController);
-        player = new Player(150,150, viewController);
+        player = new Shooter(150,150, viewController);
         enemy = new Enemy[2];
         try {
             enemy[0] = new Enemy(100.,300.);

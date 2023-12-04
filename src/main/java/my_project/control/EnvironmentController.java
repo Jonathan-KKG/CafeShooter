@@ -11,6 +11,11 @@ public class EnvironmentController {
 
     public EnvironmentController(ViewController viewController){
         try{
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    environmentObjects.append(new Environment("grass.png", i*500, j*500));
+                }
+            }
             environmentObjects.append(new Environment("floortile.png", 100, 100));
             environmentObjects.append(new Environment("leftwall.png", 100, 100));
 

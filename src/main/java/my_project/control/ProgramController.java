@@ -1,6 +1,7 @@
 package my_project.control;
 
 import KAGO_framework.control.ViewController;
+import my_project.model.Enemy;
 import my_project.model.Environment;
 import my_project.model.Player;
 
@@ -13,6 +14,8 @@ public class ProgramController {
     //Attribute
     private Player player;
     private Environment myEnv;
+    private Enemy[] enemy;
+    private EnemyControler enemyControler;
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
@@ -35,13 +38,19 @@ public class ProgramController {
     public void startProgram() {
         // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
         player = new Player(150,150);
-        viewController.draw(player);
+        enemy = new Enemy[2];
         try {
             myEnv = new Environment( 100,100);
+            enemy[0] = new Enemy(100.,300.);
+            enemy[1] = new Enemy(300.,100.);
         } catch (Exception e){
             System.out.println("oopsies");
         }
         viewController.draw(myEnv);
+        viewController.draw(player);
+        viewController.draw(enemy[0]);
+        viewController.draw(enemy[1]);
+        enemyControler = new EnemyControler(enemy,player);
     }
 
     /**
@@ -49,6 +58,7 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-
+        enemyControler.updateEnemies(dt);
+        System.out.println(enemy[0].getX());
     }
 }

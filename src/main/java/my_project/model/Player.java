@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Player extends InteractiveGraphicalObject {
+public class Player extends Entety {
     int speed = 5;
     public Player(double x, double y){
         this.x = x;
@@ -38,4 +38,5 @@ public class Player extends InteractiveGraphicalObject {
             x += speed;
         }
     }
+
 }

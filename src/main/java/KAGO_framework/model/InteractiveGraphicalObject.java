@@ -8,12 +8,10 @@ public abstract class InteractiveGraphicalObject extends GraphicalObject impleme
 
     @Override
     public void keyPressed(int key){
-
     }
 
     @Override
     public void keyReleased(int key){
-
     }
 
     @Override
@@ -23,7 +21,7 @@ public abstract class InteractiveGraphicalObject extends GraphicalObject impleme
 
     @Override
     public void mouseClicked(MouseEvent e){
-
+        System.out.println();
     }
 
     @Override

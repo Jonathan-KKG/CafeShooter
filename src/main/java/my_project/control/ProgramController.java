@@ -2,6 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import my_project.model.Environment;
+import my_project.model.Player;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
@@ -10,7 +11,8 @@ import my_project.model.Environment;
 public class ProgramController {
 
     //Attribute
-
+    private Player player;
+    private Environment myEnv;
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
@@ -32,12 +34,14 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
+        player = new Player(150,150);
+        viewController.draw(player);
         try {
-
-            Environment myEnv = new Environment("spaceship.png", 100,100);
+            myEnv = new Environment( 100,100);
         } catch (Exception e){
             System.out.println("oopsies");
         }
+        viewController.draw(myEnv);
     }
 
     /**

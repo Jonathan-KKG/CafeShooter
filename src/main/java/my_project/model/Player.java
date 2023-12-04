@@ -4,13 +4,16 @@ import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import KAGO_framework.control.ViewController;
 
 public class Player extends Entity {
-    int speed = 5;
-    public Player(double x, double y){
-        this.x = x;
-        this.y = y;
-        System.out.println("player");
+    ViewController viewController;
+    int speed = 90;
+
+    public Player(double pX, double pY, ViewController pViewController){
+        viewController = pViewController;
+        x = pX;
+        y = pY;
     }
 
     public void draw(DrawTool drawTool) {
@@ -20,19 +23,23 @@ public class Player extends Entity {
         drawTool.drawCircle(x,y,5);
     }
 
+    public void update(double dt){
+        move(dt);
+    }
 
-    public void keyReleased(int key) {
-        if (key == KeyEvent.VK_S) {
-            y += speed;
+    public void move(double dt){
+        if(viewController.isKeyDown(KeyEvent.VK_A)){
+            x -= speed*dt;
         }
-        if (key == KeyEvent.VK_W) {
-            y -= speed;
+        if(viewController.isKeyDown(KeyEvent.VK_D)){
+            x += speed*dt;
         }
-        if (key == KeyEvent.VK_A) {
-            x -= speed;
+        if(viewController.isKeyDown(KeyEvent.VK_W)){
+            y -= speed*dt;
         }
-        if (key == KeyEvent.VK_D) {
-            x += speed;
+        if(viewController.isKeyDown(KeyEvent.VK_S)){
+            y += speed*dt;
         }
+
     }
 }

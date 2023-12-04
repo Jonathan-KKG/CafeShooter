@@ -37,7 +37,7 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
-        player = new Player(150,150);
+        player = new Player(150,150, viewController);
         enemy = new Enemy[2];
         try {
             myEnv = new Environment( 100,100);
@@ -59,6 +59,5 @@ public class ProgramController {
      */
     public void updateProgram(double dt){
         enemyControler.updateEnemies(dt);
-        System.out.println(enemy[0].getX());
     }
 }

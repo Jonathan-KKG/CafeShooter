@@ -15,7 +15,7 @@ public class ProgramController {
     private Player player;
     private Environment myEnv;
     private Enemy[] enemy;
-    private EnemyControler enemyControler;
+    private EnemyController enemyControler;
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
@@ -50,7 +50,7 @@ public class ProgramController {
         viewController.draw(player);
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
-        enemyControler = new EnemyControler(enemy,player);
+        enemyControler = new EnemyController(enemy,player);
     }
 
     /**

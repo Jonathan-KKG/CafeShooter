@@ -1,13 +1,11 @@
 package my_project.model;
 
-import KAGO_framework.model.InteractiveGraphicalObject;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class Player extends Entety {
+public class Player extends Entity {
     int speed = 5;
     public Player(double x, double y){
         this.x = x;
@@ -24,7 +22,6 @@ public class Player extends Entety {
 
 
     public void keyReleased(int key) {
-        System.out.println(key);
         if (key == KeyEvent.VK_S) {
             y += speed;
         }
@@ -38,5 +35,4 @@ public class Player extends Entety {
             x += speed;
         }
     }
-
 }

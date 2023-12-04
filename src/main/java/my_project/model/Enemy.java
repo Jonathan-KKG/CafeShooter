@@ -1,13 +1,12 @@
 package my_project.model;
 
-import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Enemy extends Entety {
+public class Enemy extends Entity {
     private int enemyType;
     private BufferedImage image;
     private double speed;
@@ -16,7 +15,7 @@ public class Enemy extends Entety {
         x = px;
         y = py;
         enemyType =(int) (Math.random()*2+1);
-        speed = 1;
+        speed = 10;
         try{
             if (enemyType == 1)
                 image = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));

@@ -1,12 +1,12 @@
 package my_project.control;
 
 import my_project.model.Enemy;
-import my_project.model.Entety;
+import my_project.model.Entity;
 
-public class EnemyControler {
+public class EnemyController {
     Enemy[] enemies;
-    Entety target;
-    public EnemyControler(Enemy[] pEnemies, Entety pTarget) {
+    Entity target;
+    public EnemyController(Enemy[] pEnemies, Entity pTarget) {
         enemies = pEnemies;
         target = pTarget;
     }

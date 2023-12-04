@@ -4,8 +4,8 @@ import my_project.model.Enemy;
 import my_project.model.Entity;
 
 public class EnemyController {
-    Enemy[] enemies;
-    Entity target;
+    private Enemy[] enemies;
+    private Entity target;
     public EnemyController(Enemy[] pEnemies, Entity pTarget) {
         enemies = pEnemies;
         target = pTarget;

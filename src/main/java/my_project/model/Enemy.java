@@ -11,9 +11,9 @@ public class Enemy extends Entity {
     private BufferedImage image;
     private double speed;
 
-    public Enemy(Double px, Double py) {
-        x = px;
-        y = py;
+    public Enemy(Double pX, Double pY) {
+        x = pX;
+        y = pY;
         enemyType =(int) (Math.random()*2+1);
         speed = 10;
         try{

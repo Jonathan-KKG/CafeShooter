@@ -8,7 +8,7 @@ import KAGO_framework.control.ViewController;
 
 public class Player extends Entity {
     ViewController viewController;
-    int speed = 90;
+    private int speed = 90;
 
     public Player(double pX, double pY, ViewController pViewController){
         viewController = pViewController;
@@ -27,7 +27,7 @@ public class Player extends Entity {
         move(dt);
     }
 
-    public void move(double dt){
+    private void move(double dt){
         if(viewController.isKeyDown(KeyEvent.VK_A)){
             x -= speed*dt;
         }

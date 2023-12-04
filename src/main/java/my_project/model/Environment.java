@@ -10,12 +10,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class Environment extends GraphicalObject {
-    private Image sprite;
+    private Image floorTileSprite;
+    private Image grassBg;
+    private Image wallTileL;
 
     public Environment(double pX, double pY) throws IOException {
         try{
-            File img = new File("src/main/resources/graphic/spaceship.png");
-            sprite = ImageIO.read(img);
+            File leftWallTile = new File("src/main/resources/graphic/leftwall.png");
+            wallTileL = ImageIO.read(leftWallTile);
+            File grassTile = new File("src/main/resources/graphic/grass.png");
+            grassBg = ImageIO.read(grassTile);
+            File floorTile = new File("src/main/resources/graphic/floortile.png");
+            floorTileSprite = ImageIO.read(floorTile);
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }
@@ -24,6 +30,12 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage((BufferedImage) sprite,x,y);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                drawTool.drawImage((BufferedImage) grassBg,500*i,500*j);
+            }
+        }
+        drawTool.drawImage((BufferedImage) floorTileSprite,x,y);
+        drawTool.drawImage((BufferedImage) wallTileL,x,y);
     }
 }

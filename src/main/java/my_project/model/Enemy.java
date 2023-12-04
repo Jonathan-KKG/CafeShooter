@@ -26,7 +26,7 @@ public class Enemy extends Entity {
         }
     }
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage((BufferedImage) image,x,y);
+        drawTool.drawImage((BufferedImage) image,x - image.getWidth()/2,y - image.getHeight()/2);
     }
 
     public double getSpeed() {

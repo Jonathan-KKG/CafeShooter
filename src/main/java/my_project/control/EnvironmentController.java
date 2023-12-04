@@ -11,10 +11,14 @@ public class EnvironmentController {
 
     public EnvironmentController(ViewController viewController){
         try{
-            Environment floorTile = new Environment("floortile.png", 100, 100);
-            Environment leftWall = new Environment("leftwall.png", 100, 100);
-            viewController.draw(floorTile);
-            viewController.draw(leftWall);
+            environmentObjects.append(new Environment("floortile.png", 100, 100));
+            environmentObjects.append(new Environment("leftwall.png", 100, 100));
+
+            environmentObjects.toFirst();
+            while(environmentObjects.hasAccess()){
+                viewController.draw(environmentObjects.getContent());
+                environmentObjects.next();
+            }
         } catch (Exception e){
             System.out.println("Creating Environment object went wrong!");
         }

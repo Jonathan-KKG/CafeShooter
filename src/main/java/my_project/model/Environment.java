@@ -23,11 +23,6 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        // for (int i = 0; i < 4; i++) {
-        //     for (int j = 0; j < 3; j++) {
-        //         drawTool.drawImage((BufferedImage) grassBg,500*i,500*j);
-        //     }
-        // }
         drawTool.drawImage((BufferedImage) img,x,y);
     }
 }

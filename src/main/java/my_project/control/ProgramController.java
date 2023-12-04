@@ -15,42 +15,32 @@ public class ProgramController {
     private Player player;
     private Environment myEnv;
     private Enemy[] enemy;
-    private EnemyController enemyControler;
+    private EnemyController enemyController;
 
-    // Referenzen
-    private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
+    //Referenzen
+    private ViewController viewController;
+    private EnvironmentController environmentController;
 
-    /**
-     * Konstruktor
-     * Dieser legt das Objekt der Klasse ProgramController an, das den Programmfluss steuert.
-     * Damit der ProgramController auf das Fenster zugreifen kann, benötigt er eine Referenz auf das Objekt
-     * der Klasse viewController. Diese wird als Parameter übergeben.
-     * @param viewController das viewController-Objekt des Programms
-     */
     public ProgramController(ViewController viewController){
         this.viewController = viewController;
     }
 
-    /**
-     * Diese Methode wird genau ein mal nach Programmstart aufgerufen.
-     * Sie erstellt die leeren Datenstrukturen, zu Beginn nur eine Queue
-     */
     public void startProgram() {
-        // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
+        environmentController = new EnvironmentController(viewController);
         player = new Player(150,150, viewController);
         enemy = new Enemy[2];
         try {
-            myEnv = new Environment( 100,100);
             enemy[0] = new Enemy(100.,300.);
             enemy[1] = new Enemy(300.,100.);
         } catch (Exception e){
             System.out.println("oopsies");
         }
+
         viewController.draw(myEnv);
         viewController.draw(player);
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
-        enemyControler = new EnemyController(enemy,player);
+        enemyController = new EnemyController(enemy,player);
     }
 
     /**
@@ -58,6 +48,6 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-        enemyControler.updateEnemies(dt);
+        enemyController.updateEnemies(dt);
     }
 }

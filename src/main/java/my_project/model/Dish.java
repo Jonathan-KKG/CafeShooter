@@ -9,13 +9,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class Dish extends Item {
-    protected double xDir;
-    protected double yDir;
+    protected double xVel;
+    protected double yVel;
 
-    public Dish(String filename, double pX, double pY, double pXDir, double pYDir) {
+    public Dish(String filename, double pX, double pY) {
         super(filename,pX,pY);
-        xDir = pXDir;
-        yDir = pYDir;
 
     }
 
@@ -24,5 +22,19 @@ public class Dish extends Item {
         drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
     }
 
+    public void setxVel(double xVel) {
+        this.xVel = xVel;
+    }
 
+    public void setyVel(double yVel) {
+        this.yVel = yVel;
+    }
+
+    public double getxVel() {
+        return xVel;
+    }
+
+    public double getyVel() {
+        return yVel;
+    }
 }

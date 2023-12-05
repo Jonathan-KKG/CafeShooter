@@ -1,12 +1,17 @@
 package my_project.model;
 
 import KAGO_framework.control.ViewController;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class Shooter extends Player{
-    public Shooter(double pX, double pY, ViewController pViewController) {
+    private Queue<Dish> dishes;
+    public Shooter(double pX, double pY, ViewController pViewController) throws IOException {
         super(pX, pY, pViewController);
+        dishes = new Queue<>();
+        dishes.enqueue(new Dish("Houerglass.png",x,y));
     }
 
     /**
@@ -21,5 +26,7 @@ public class Shooter extends Player{
         y += yDir * speed * dt;
     }
 
-
+    public Queue<Dish> getDishes() {
+        return dishes;
+    }
 }

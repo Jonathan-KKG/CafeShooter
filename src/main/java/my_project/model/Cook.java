@@ -3,9 +3,10 @@ package my_project.model;
 import KAGO_framework.control.ViewController;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class Cook extends Player{
-    public Cook(double pX, double pY, ViewController pViewController) {
+    public Cook(double pX, double pY, ViewController pViewController) throws IOException {
         super(pX, pY, pViewController);
     }
 

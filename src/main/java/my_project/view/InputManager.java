@@ -2,6 +2,7 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
+import my_project.control.DishController;
 import my_project.control.ProgramController;
 import my_project.model.Cook;
 import my_project.model.Player;
@@ -20,6 +21,7 @@ public class InputManager extends InteractiveGraphicalObject {
     private ViewController viewController;
     private Cook cook;
     private Shooter shooter;
+    private DishController dishController;
 
     /**
      * Objekterzeugung
@@ -27,11 +29,11 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param pCook Nötig, damit beliebiges Cook Objekt genommen werden kann
      * @param pShooter Nötig, damit beliebiges Shooter Objekt genommen werden kann
      */
-    public InputManager(ViewController pViewController, Cook pCook, Shooter pShooter){
+    public InputManager(ViewController pViewController, Cook pCook, Shooter pShooter, DishController pdishController){
         viewController = pViewController;
         cook = pCook;
         shooter = pShooter;
-
+        dishController = pdishController;
     }
 
     public void inputUpdate(double dt){
@@ -75,4 +77,11 @@ public class InputManager extends InteractiveGraphicalObject {
 
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        if (e.getButton() == 1){
+            dishController.shoot(e.getX(),e.getY());
+        }
+    }
 }

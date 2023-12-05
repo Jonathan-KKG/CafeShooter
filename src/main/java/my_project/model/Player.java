@@ -24,8 +24,8 @@ public abstract class Player extends Entity {
     }
 
     public void update(double dt){
-        move(dt);
+
     }
 
-    protected abstract void move(double dt);
+    protected abstract void move(double dt, int xDir, int yDir);
 }

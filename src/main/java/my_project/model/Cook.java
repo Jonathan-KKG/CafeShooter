@@ -10,18 +10,8 @@ public class Cook extends Player{
     }
 
     @Override
-    protected void move(double dt) {
-        if(viewController.isKeyDown(KeyEvent.VK_A)){
-            x -= speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_D)){
-            x += speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_W)){
-            y -= speed*dt;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_S)){
-            y += speed*dt;
-        }
+    protected void move(double dt, int xDir, int yDir) {
+        x += xDir * speed * dt;
+        y += yDir * speed * dt;
     }
 }

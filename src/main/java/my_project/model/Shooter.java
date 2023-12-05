@@ -10,7 +10,7 @@ public class Shooter extends Player{
     }
 
     @Override
-    protected void move(double dt, int xDir, int yDir) {
+    public void move(double dt, int xDir, int yDir) {
         x += xDir * speed * dt;
         y += yDir * speed * dt;
     }

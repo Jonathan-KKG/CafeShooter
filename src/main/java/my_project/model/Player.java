@@ -14,7 +14,7 @@ public abstract class Player extends Entity {
         try {
             image = ImageIO.read(new File("src/main/resources/graphic/img.png"));
         }
-        catch (Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
 

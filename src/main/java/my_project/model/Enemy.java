@@ -3,12 +3,10 @@ package my_project.model;
 import KAGO_framework.view.DrawTool;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Enemy extends Entity {
     private int enemyType;
-    private BufferedImage image;
 
     public Enemy(Double pX, Double pY) {
         super(pX, pY);

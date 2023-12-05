@@ -11,8 +11,7 @@ public class Enemy extends Entity {
     private BufferedImage image;
 
     public Enemy(Double pX, Double pY) {
-        x = pX;
-        y = pY;
+        super(pX, pY);
         enemyType =(int) (Math.random()*2+1);
         speed = 10;
         try{

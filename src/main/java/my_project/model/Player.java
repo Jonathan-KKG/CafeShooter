@@ -6,9 +6,7 @@ import java.awt.*;
 
 public abstract class Player extends Entity {
     public Player(double pX, double pY){
-        speed = 90;
-        x = pX;
-        y = pY;
+        super(pX, pY);
     }
 
     public void draw(DrawTool drawTool) {
@@ -18,7 +16,4 @@ public abstract class Player extends Entity {
         drawTool.drawCircle(x,y,5);
     }
 
-    public void update(double dt){
-
-    }
 }

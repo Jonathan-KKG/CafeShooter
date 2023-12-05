@@ -32,18 +32,10 @@ public class InputManager extends InteractiveGraphicalObject {
         cook = pCook;
         shooter = pShooter;
 
-
-
     }
 
     public void inputUpdate(double dt){
         exePlayerMovement(dt);
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
     }
 
     /**
@@ -57,33 +49,22 @@ public class InputManager extends InteractiveGraphicalObject {
         int xDirShooter = 0;
         int yDirShooter = 0;
 
-
-        if(viewController.isKeyDown(KeyEvent.VK_A)){
+        if(viewController.isKeyDown(KeyEvent.VK_A))
             xDirCook = -1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_D)){
+        if(viewController.isKeyDown(KeyEvent.VK_D))
             xDirCook = 1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_W)){
+        if(viewController.isKeyDown(KeyEvent.VK_W))
             yDirCook = -1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_S)){
+        if(viewController.isKeyDown(KeyEvent.VK_S))
             yDirCook = 1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_LEFT)){
+        if(viewController.isKeyDown(KeyEvent.VK_LEFT))
             xDirShooter = -1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_RIGHT)){
+        if(viewController.isKeyDown(KeyEvent.VK_RIGHT))
             xDirShooter = 1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_UP)){
+        if(viewController.isKeyDown(KeyEvent.VK_UP))
             yDirShooter = -1;
-        }
-        if(viewController.isKeyDown(KeyEvent.VK_DOWN)){
+        if(viewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
-
-        }
-
 
         cook.move(dt, xDirCook, yDirCook );
         shooter.move(dt, xDirShooter, yDirShooter );

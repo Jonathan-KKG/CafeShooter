@@ -1,15 +1,15 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import my_project.model.Projectile;
+import my_project.model.Dish;
 import my_project.model.Shooter;
 
 public class DishController {
-    private List<Projectile> projectiles;
+    private List<Dish> dishes;
     private Shooter shooter;
 
     public DishController(Shooter pShooter) {
-        projectiles = new List<>();
+        dishes = new List<>();
         shooter = pShooter;
     }
 
@@ -17,11 +17,9 @@ public class DishController {
         double xDir = xPos - shooter.getX();
         double yDir = yPos - shooter.getY();
 
-        //projectiles.append(new Projectile(shooter.getX(), shooter.getY(), xDir, yDir));
-    }
-
-    public void deleteProjectile(Projectile pProjectile){
 
     }
+
+
 
 }

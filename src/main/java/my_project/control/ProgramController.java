@@ -12,14 +12,13 @@ import java.io.IOException;
  */
 public class ProgramController {
 
-    //Attribute
+    //Referenzen
     private Shooter shooter;
     private Cook cook;
     private Environment myEnv;
     private Enemy[] enemy;
-    private EnemyController enemyController;
 
-    //Referenzen
+    private EnemyController enemyController;
     private ViewController viewController;
     private EnvironmentController environmentController;
     private InputManager inputManager;
@@ -34,8 +33,8 @@ public class ProgramController {
      */
     public void startProgram() throws IOException {
         environmentController = new EnvironmentController(viewController);
-        shooter = new Shooter(150,150, viewController);
-        cook = new Cook(450,150, viewController);
+        shooter = new Shooter(150,150);
+        cook = new Cook(450,150);
         enemy = new Enemy[2];
         try {
             enemy[0] = new Enemy(100.,300.);

@@ -68,9 +68,10 @@ public class InputManager extends InteractiveGraphicalObject {
         if(viewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
-        cook.move(dt, xDirCook, yDirCook );
-        shooter.move(dt, xDirShooter, yDirShooter );
-
+        cook.setX(cook.getX() + xDirCook * cook.getSpeed() * dt);
+        cook.setY(cook.getY() + yDirCook * cook.getSpeed() * dt);
+        shooter.setX(shooter.getX() + xDirShooter * shooter.getSpeed() * dt);
+        shooter.setY(shooter.getY() + yDirShooter * shooter.getSpeed() * dt);
     }
 
     private void exePlayerShoot(){

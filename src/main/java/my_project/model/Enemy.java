@@ -9,11 +9,9 @@ import java.io.File;
 public class Enemy extends Entity {
     private int enemyType;
     private BufferedImage image;
-    private double speed;
 
     public Enemy(Double pX, Double pY) {
-        x = pX;
-        y = pY;
+        super(pX, pY);
         enemyType =(int) (Math.random()*2+1);
         speed = 10;
         try{
@@ -26,10 +24,7 @@ public class Enemy extends Entity {
         }
     }
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage((BufferedImage) image,x - image.getWidth()/2,y - image.getHeight()/2);
+        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
     }
 
-    public double getSpeed() {
-        return speed;
-    }
 }

@@ -11,16 +11,16 @@ public class Shooter extends Player{
 
     @Override
     protected void move(double dt) {
-        if(viewController.isKeyDown(KeyEvent.VK_A)){
+        if(viewController.isKeyDown(KeyEvent.VK_LEFT)){
             x -= speed*dt;
         }
-        if(viewController.isKeyDown(KeyEvent.VK_D)){
+        if(viewController.isKeyDown(KeyEvent.VK_RIGHT)){
             x += speed*dt;
         }
-        if(viewController.isKeyDown(KeyEvent.VK_W)){
+        if(viewController.isKeyDown(KeyEvent.VK_UP)){
             y -= speed*dt;
         }
-        if(viewController.isKeyDown(KeyEvent.VK_S)){
+        if(viewController.isKeyDown(KeyEvent.VK_DOWN)){
             y += speed*dt;
         }
     }

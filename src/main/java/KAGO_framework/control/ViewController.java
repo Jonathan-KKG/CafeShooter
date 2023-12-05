@@ -2,7 +2,6 @@ package KAGO_framework.control;
 
 import KAGO_framework.Config;
 import KAGO_framework.view.DrawTool;
-//import KAGO_scenario_framework.control.ScenarioController;
 import my_project.control.ProgramController;
 import KAGO_framework.view.DrawFrame;
 import KAGO_framework.view.DrawingPanel;
@@ -10,7 +9,6 @@ import KAGO_framework.view.DrawingPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -59,7 +57,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
     /**
      * Erzeugt ein Objekt zur Kontrolle des Programmflusses.
      */
-    ViewController() throws IOException {
+    ViewController() {
         notChangingDrawables = true;
         notChangingInteractables = true;
         scenes = new ArrayList<>();
@@ -88,7 +86,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
     /**
      * Startet das Programm, nachdem Vorarbeiten abgeschlossen sind.
      */
-    private void startProgram() throws IOException {
+    private void startProgram() {
         programController = new ProgramController(this);
         programController.startProgram();
         // Starte nebenlaeufigen Prozess, der Zeichnen und Animation uebernimmt

@@ -4,7 +4,6 @@ import KAGO_framework.control.ViewController;
 import my_project.model.*;
 import my_project.view.InputManager;
 
-import java.io.IOException;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
@@ -31,7 +30,7 @@ public class ProgramController {
     /**
      * Erstellt alle Objekte
      */
-    public void startProgram() throws IOException {
+    public void startProgram(){
         environmentController = new EnvironmentController(viewController);
         shooter = new Shooter(150,150);
         cook = new Cook(450,150);
@@ -49,8 +48,8 @@ public class ProgramController {
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
         enemyController = new EnemyController(enemy,shooter);
-        inputManager = new InputManager(viewController,cook,shooter, dishController);
         dishController = new DishController(shooter);
+        inputManager = new InputManager(viewController, cook, shooter, dishController);
     }
 
     /**

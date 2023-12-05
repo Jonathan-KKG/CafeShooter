@@ -3,7 +3,6 @@ package KAGO_framework.control;
 import KAGO_framework.Config;
 
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * Diese Klasse enthält die main-Methode. Von ihr wird als erstes ein Objekt innerhalb der main-Methode erzeugt,
@@ -25,18 +24,14 @@ public class MainController {
     public static void startFramework(){
         if ( Config.INFO_MESSAGES) System.out.println("***** PROGRAMMSTART ("+" Framework: "+Config.VERSION+") *****.");
         if ( Config.INFO_MESSAGES) System.out.println("** Supported Java-Versions: "+ Config.JAVA_SUPPORTED);
-        if ( Config.INFO_MESSAGES) System.out.println("");
+        if ( Config.INFO_MESSAGES) System.out.println();
         if ( Config.INFO_MESSAGES) System.out.println("** Ablauf der Framework-Initialisierung: **");
         EventQueue.invokeLater(
                 new Runnable() {
                     @Override
                     public void run() {
                         if ( Config.INFO_MESSAGES) System.out.println("  > Main-Methode: Programmstart. Erzeuge ein Objekt der Main-Controller-Klasse.");
-                        try {
-                            new MainController();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        new MainController();
                     }
                 });
     }
@@ -45,7 +40,7 @@ public class MainController {
      * Der Konstruktor der Klasse-MainController ist die erste Methode, die nach der Main-Methode
      * aufgerufen wird. Hier wird der Programmfluss geregelt.
      */
-    public MainController() throws IOException {
+    public MainController(){
         if ( Config.INFO_MESSAGES) System.out.println("  > MainController: Ich wurde erzeugt. Erstelle ein ViewController-Objekt zur Steuerung der View...");
         new ViewController();
     }

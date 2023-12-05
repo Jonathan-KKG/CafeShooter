@@ -3,9 +3,7 @@ package my_project.view;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.DishController;
-import my_project.control.ProgramController;
 import my_project.model.Cook;
-import my_project.model.Player;
 import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
@@ -43,7 +41,6 @@ public class InputManager extends InteractiveGraphicalObject {
     /**
      * Prüft in welche Richtung der Spieler (Cook und Shooter) bewegt werden soll und bewegt diese anschließend
      * @param dt Benötigt um jeden Frame zu Updaten
-     *
      */
     private void exePlayerMovement(double dt){
         int xDirCook = 0;
@@ -68,10 +65,8 @@ public class InputManager extends InteractiveGraphicalObject {
         if(viewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
-        cook.setX(cook.getX() + xDirCook * cook.getSpeed() * dt);
-        cook.setY(cook.getY() + yDirCook * cook.getSpeed() * dt);
-        shooter.setX(shooter.getX() + xDirShooter * shooter.getSpeed() * dt);
-        shooter.setY(shooter.getY() + yDirShooter * shooter.getSpeed() * dt);
+        cook.move(dt, xDirCook, yDirCook);
+        shooter.move(dt, xDirShooter, yDirShooter);
     }
 
     private void exePlayerShoot(){

@@ -11,13 +11,17 @@ public class EnemyController {
         target = pTarget;
     }
 
+    /**
+     * Updates enemy movement
+     * @param dt Benötigt um jeden Frame zu Updaten
+     */
     public void updateEnemies(double dt){
         for (int i = 0; i < enemies.length; i++) {
             double xDir = (target.getX()- enemies[i].getX());
             double yDir = (target.getY()- enemies[i].getY());
             double distance = Math.sqrt(xDir * xDir + yDir * yDir);
-            enemies[i].setX(enemies[i].getX()+ xDir * enemies[i].getSpeed() * dt / distance);
-            enemies[i].setY(enemies[i].getY()+ yDir * enemies[i].getSpeed() * dt / distance);
+
+            enemies[i].move((dt / distance), xDir, yDir);
         }
     }
 }

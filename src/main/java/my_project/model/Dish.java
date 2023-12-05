@@ -1,12 +1,6 @@
 package my_project.model;
 
-import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Dish extends Item {
     protected double xVel;
@@ -22,19 +16,19 @@ public class Dish extends Item {
         drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
     }
 
-    public void setxVel(double xVel) {
+    public void setXVel(double xVel) {
         this.xVel = xVel;
     }
 
-    public void setyVel(double yVel) {
+    public void setYVel(double yVel) {
         this.yVel = yVel;
     }
 
-    public double getxVel() {
+    public double setXVel() {
         return xVel;
     }
 
-    public double getyVel() {
+    public double getYVel() {
         return yVel;
     }
 }

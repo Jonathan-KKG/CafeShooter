@@ -13,7 +13,7 @@ public class Enemy extends Entity {
     public Enemy(Double pX, Double pY) {
         super(pX, pY);
         enemyType =(int) (Math.random()*2+1);
-        speed = 10;
+        speed = 28;
         try{
             if (enemyType == 1)
                 image = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));

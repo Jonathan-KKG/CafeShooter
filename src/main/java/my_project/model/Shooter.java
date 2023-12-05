@@ -9,8 +9,14 @@ public class Shooter extends Player{
         super(pX, pY, pViewController);
     }
 
+    /**
+     * Bewegt den Spieler
+     * @param dt Updatet jede Frame
+     * @param xDir Für die Richtung der Bewegung
+     * @param yDir Für die Richtung der Bewegung
+     */
     @Override
-    protected void move(double dt, int xDir, int yDir) {
+    public void move(double dt, int xDir, int yDir) {
         x += xDir * speed * dt;
         y += yDir * speed * dt;
     }

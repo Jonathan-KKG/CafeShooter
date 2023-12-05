@@ -3,15 +3,10 @@ package my_project.model;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import KAGO_framework.control.ViewController;
 
 public abstract class Player extends Entity {
-    ViewController viewController;
-    protected int speed = 90;
-
-    public Player(double pX, double pY, ViewController pViewController){
-        viewController = pViewController;
+    public Player(double pX, double pY){
+        speed = 90;
         x = pX;
         y = pY;
     }
@@ -26,6 +21,4 @@ public abstract class Player extends Entity {
     public void update(double dt){
 
     }
-
-    protected abstract void move(double dt, int xDir, int yDir);
 }

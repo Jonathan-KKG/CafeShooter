@@ -1,9 +1,17 @@
 package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
-import KAGO_framework.model.InteractiveGraphicalObject;
 
 public class Entity extends GraphicalObject {
+    protected double speed;
+    protected int hp;
     public Entity() {
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+    public int getHP() {
+        return hp;
     }
 }

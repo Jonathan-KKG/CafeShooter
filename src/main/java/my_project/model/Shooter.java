@@ -2,12 +2,19 @@ package my_project.model;
 
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
 
-public class Shooter extends Player{
+public class Shooter extends Player {
     private Dish[] dishes;
-    public Shooter(double pX, double pY){
+
+    /**
+     * @param pX the start x-Position
+     * @param pY the stard y-Position
+     */
+    public Shooter(double pX, double pY) {
         super(pX, pY);
         dishes = new Dish[8];
-        dishes[0] = new Dish("Houerglass.png",x,y);
+        for (int i = 0; i <dishes.length; i++) {
+            dishes[i] = new Dish("Houerglass.png", x, y);
+        }
     }
 
     public Dish[] getDishes() {

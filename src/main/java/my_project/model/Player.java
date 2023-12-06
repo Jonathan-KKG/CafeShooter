@@ -9,22 +9,31 @@ import javax.imageio.ImageIO;
 
 public abstract class Player extends Entity {
 
+    /**
+     * @param pX the start x-Position
+     * @param pY the stard y-Position
+     */
     public Player(double pX, double pY){
         super(pX, pY);
         try {
-            image = ImageIO.read(new File("src/main/resources/graphic/img.png"));
+            myImage = ImageIO.read(new File("src/main/resources/graphic/img.png"));
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
+        width = myImage.getWidth();
+        height = myImage.getHeight();
     }
 
+    /**
+     *Drawes the Enemy
+     * @param drawTool the tool used to draw things
+     */
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
+        drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
     }
 
     public BufferedImage getImage() {
-        return image;
+        return myImage;
     }
 }

@@ -7,22 +7,38 @@ import java.io.File;
 
 public class Enemy extends Entity {
     private int enemyType;
+    private String requierdDish;
 
+    /**
+     * @param pX the start x-Position
+     * @param pY the start y-Position
+     */
     public Enemy(Double pX, Double pY) {
         super(pX, pY);
         enemyType =(int) (Math.random()*2+1);
+        requierdDish = "class my_project.model.Dish";
         speed = 28;
         try{
             if (enemyType == 1)
-                image = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));
             else if (enemyType == 2)
-                image = ImageIO.read(new File("src/main/resources/graphic/Armor.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/Armor.png"));
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }
-    }
-    public void draw(DrawTool drawTool) {
-        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
+        width = myImage.getWidth();
+        height = myImage.getHeight();
     }
 
+    /**
+     *Drawes the Enemy
+     * @param drawTool the tool used to draw things
+     */
+    public void draw(DrawTool drawTool) {
+        drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
+    }
+
+    public String getRequierdDish() {
+        return requierdDish;
+    }
 }

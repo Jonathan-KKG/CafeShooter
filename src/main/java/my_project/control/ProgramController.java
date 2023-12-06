@@ -22,6 +22,9 @@ public class ProgramController {
     private InputManager inputManager;
     private DishController dishController;
 
+    /**
+     * @param viewController A clase that manages the Visuals.
+     */
     public ProgramController(ViewController viewController){
         this.viewController = viewController;
     }
@@ -40,26 +43,28 @@ public class ProgramController {
         } catch (Exception e){
             System.out.println("oopsies");
         }
-
-        viewController.draw(shooter.getDishes()[0]);
+        for (int i = 0; i < shooter.getDishes().length; i++) {
+            viewController.draw(shooter.getDishes()[i]);
+        }
         viewController.draw(shooter);
         viewController.draw(cook);
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
         enemyController = new EnemyController(enemy,shooter);
-        dishController = new DishController(shooter);
+        dishController = new DishController(shooter, viewController);
         inputManager = new InputManager(viewController, cook, shooter, dishController);
         viewController.register(inputManager);
     }
 
     /**
-     * Aufruf mit jeder Frame
-     * @param dt Zeit seit letzter Frame
+     * Updates the Program.
+     * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt){
         enemyController.updateEnemies(dt);
         inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
+        dishController.checkColisions(enemy);
 
     }
 }

@@ -21,7 +21,7 @@ public class GraphicalObject implements Drawable {
     protected double radius = 0; //Falls ein Radius gesetzt wurde (also größer als 0 ist), wird collidesWith angepasst.
 
     // Referenzen
-    private BufferedImage myImage;
+    protected BufferedImage myImage;
 
     /**
      * Der generische Konstruktur ermöglicht einen optionalen super-Aufruf in den Unterklassen

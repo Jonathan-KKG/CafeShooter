@@ -10,7 +10,7 @@ public class Enemy extends Entity {
 
     public Enemy(Double pX, Double pY) {
         super(pX, pY);
-        enemyType =(int) (Math.random()*2+1);
+        enemyType = (int) (Math.random()*2+1);
         speed = 28;
         try{
             if (enemyType == 1)
@@ -20,6 +20,7 @@ public class Enemy extends Entity {
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }
+
     }
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);

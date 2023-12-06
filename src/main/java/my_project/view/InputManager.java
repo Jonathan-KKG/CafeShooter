@@ -3,8 +3,7 @@ package my_project.view;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.DishController;
-import my_project.model.Cook;
-import my_project.model.Shooter;
+import my_project.control.EntityController;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -15,23 +14,17 @@ import java.awt.event.MouseEvent;
  */
 public class InputManager extends InteractiveGraphicalObject {
 
-
-    private ViewController viewController;
-    private Cook cook;
-    private Shooter shooter;
     private DishController dishController;
+    private EntityController entityController;
+    private ViewController viewController;
 
     /**
-     * Objekterzeugung
-     * @param pViewController Nötig, um den Aufruf der Interface-Methoden sicherzustellen
-     * @param pCook Nötig, damit beliebiges Cook Objekt genommen werden kann
-     * @param pShooter Nötig, damit beliebiges Shooter Objekt genommen werden kann
+     * @param pdishController Nötig, für den Aufruf der Shoot-Methode
+     * @param pEntityController Nötig, für den Aufruf der Move-Methode
      */
-    public InputManager(ViewController pViewController, Cook pCook, Shooter pShooter, DishController pdishController){
-        viewController = pViewController;
-        cook = pCook;
-        shooter = pShooter;
+    public InputManager(DishController pdishController, EntityController pEntityController, ViewController pViewController){
         dishController = pdishController;
+        entityController = pEntityController;
     }
 
     public void inputUpdate(double dt){
@@ -65,9 +58,8 @@ public class InputManager extends InteractiveGraphicalObject {
         if(viewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
-        cook.move(dt, xDirCook, yDirCook);
-        shooter.move(dt, xDirShooter, yDirShooter);
-
+        entityController.updatePlayers(dt, xDirCook, yDirCook);
+        entityController.updatePlayers(dt, xDirShooter, yDirShooter);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class Entity extends GraphicalObject {
     public void move(double dt, double xDir, double yDir) {
         x += xDir * dt * speed;
         y += yDir * dt * speed;
+
     }
 
     public double getSpeed() {

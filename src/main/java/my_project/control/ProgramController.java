@@ -16,7 +16,7 @@ public class ProgramController {
     private Cook cook;
     private Enemy[] enemy;
 
-    private EnemyController enemyController;
+    private EntityController entityController;
     private ViewController viewController;
     private EnvironmentController environmentController;
     private InputManager inputManager;
@@ -34,6 +34,7 @@ public class ProgramController {
         shooter = new Shooter(150,150);
         cook = new Cook(450,150);
         enemy = new Enemy[2];
+
         try {
             enemy[0] = new Enemy(100.,300.);
             enemy[1] = new Enemy(300.,100.);
@@ -46,9 +47,9 @@ public class ProgramController {
         viewController.draw(cook);
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
-        enemyController = new EnemyController(enemy,shooter);
         dishController = new DishController(shooter);
-        inputManager = new InputManager(viewController, cook, shooter, dishController);
+        entityController = new EntityController(enemy, cook, shooter, environmentController, viewController);
+        inputManager = new InputManager(dishController, entityController, viewController);
         viewController.register(inputManager);
     }
 
@@ -57,7 +58,7 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-        enemyController.updateEnemies(dt);
+        entityController.updateEnemies(dt);
         inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
 

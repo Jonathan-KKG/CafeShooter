@@ -7,13 +7,18 @@ import java.awt.image.BufferedImage;
 public class Entity extends GraphicalObject {
     protected double speed;
     protected int hp;
-    protected BufferedImage image;
     public Entity(double pX, double pY) {
         speed = 130;
         x = pX;
         y = pY;
     }
 
+    /**
+     * Moves the Entety.
+     * @param dt the Time passed betwen this and the last call of the method
+     * @param xDir the x-Direction
+     * @param yDir
+     */
     public void move(double dt, double xDir, double yDir) {
         x += xDir * dt * speed;
         y += yDir * dt * speed;

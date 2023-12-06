@@ -9,18 +9,29 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class Item extends GraphicalObject {
-    protected BufferedImage image;
+    /**
+     * @param filename the Immage that should be Drawn.
+     * @param pX the start x-Position
+     * @param pY the stard y-Position
+     */
     public Item(String filename, double pX, double pY) {
         try{
             File file = new File("src/main/resources/graphic/" + filename);
-            image = ImageIO.read(file);
+            myImage = ImageIO.read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
         x = pX;
         y = pY;
+        width = myImage.getWidth();
+        height = myImage.getHeight();
     }
+
+    /**
+     *Drawes the Enemy
+     * @param drawTool the tool used to draw things
+     */
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
+        drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
     }
 }

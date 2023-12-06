@@ -66,7 +66,6 @@ public class DishController {
         while (dishes.hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
                 if (pEnemies[i] != null && dishes.getContent().collidesWith(pEnemies[i])) {
-                    System.out.println(dishes.getContent().getClass().toString());
                     if (pEnemies[i].getRequierdDish().equals(dishes.getContent().getClass().toString())) {
                         viewController.removeDrawable(pEnemies[i]);
                         pEnemies[i] = null;

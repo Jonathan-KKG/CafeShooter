@@ -31,6 +31,7 @@ public class EnvironmentController {
             for (int i = 0; i < 12*32; i = i + 32) {
                 environmentObjects.append(new Environment("rightwall.png", 250+33*32, 932-i));
             }
+            environmentObjects.append(new Environment("stovetop.png", 250+32, 900-3*32));
             while(environmentObjects.hasAccess()){
                 viewController.draw(environmentObjects.getContent());
                 environmentObjects.next();

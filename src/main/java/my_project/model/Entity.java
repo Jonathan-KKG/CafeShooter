@@ -9,7 +9,7 @@ public class Entity extends GraphicalObject {
     protected int hp;
     protected BufferedImage image;
     public Entity(double pX, double pY) {
-        speed = 90;
+        speed = 130;
         x = pX;
         y = pY;
     }

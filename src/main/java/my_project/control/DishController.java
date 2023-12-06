@@ -31,7 +31,6 @@ public class DishController {
 
     /**
      * Updates Dish movement
-     *
      * @param dt Benötigt um jeden Frame zu Updaten
      */
     public void dishUpdate(double dt) {

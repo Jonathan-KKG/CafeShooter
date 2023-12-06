@@ -9,6 +9,11 @@ import java.io.File;
 public class Environment extends GraphicalObject {
     private boolean isActive;
 
+    /**
+     * @param filename Required to load sprite
+     * @param pX Required to set position
+     * @param pY Required to set position
+     */
     public Environment(String filename, double pX, double pY) {
         try{
             File environmentFile = new File("src/main/resources/graphic/" + filename);
@@ -24,7 +29,7 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(getMyImage(),x,y);
+        drawTool.drawImage(myImage,x - myImage.getWidth() / 2,y - myImage.getHeight() / 2);
     }
 
     public boolean isActive() {

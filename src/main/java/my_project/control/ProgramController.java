@@ -27,7 +27,7 @@ public class ProgramController {
     }
 
     /**
-     * Erstellt alle Objekte
+     * Creates all objects
      */
     public void startProgram(){
         environmentController = new EnvironmentController(viewController);
@@ -48,7 +48,7 @@ public class ProgramController {
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
         dishController = new DishController(shooter);
-        entityController = new EntityController(enemy, cook, shooter, environmentController, viewController);
+        entityController = new EntityController(enemy, cook, shooter, environmentController);
         inputManager = new InputManager(dishController, entityController, viewController);
         viewController.register(inputManager);
     }

@@ -11,7 +11,7 @@ public class Enemy extends Entity {
     public Enemy(Double pX, Double pY) {
         super(pX, pY);
         enemyType = (int) (Math.random()*2+1);
-        speed = 28;
+        speed = 100;
         try{
             if (enemyType == 1)
                 image = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));
@@ -22,6 +22,7 @@ public class Enemy extends Entity {
         }
 
     }
+
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
     }

@@ -19,14 +19,17 @@ public class InputManager extends InteractiveGraphicalObject {
     private ViewController viewController;
 
     /**
-     * @param pdishController Nötig, für den Aufruf der Shoot-Methode
-     * @param pEntityController Nötig, für den Aufruf der Move-Methode
+     * @param pdishController Required for call of shoot-method
+     * @param pEntityController Required for call of move-method
      */
     public InputManager(DishController pdishController, EntityController pEntityController, ViewController pViewController){
         dishController = pdishController;
         entityController = pEntityController;
     }
 
+    /**Aufruf mit jeder Frame
+     * @param dt Zeit seit letzter Frame
+     */
     public void inputUpdate(double dt){
         exePlayerMovement(dt);
     }
@@ -58,8 +61,7 @@ public class InputManager extends InteractiveGraphicalObject {
         if(viewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
-        entityController.updatePlayers(dt, xDirCook, yDirCook);
-        entityController.updatePlayers(dt, xDirShooter, yDirShooter);
+        entityController.updatePlayers(dt, new double[]{xDirCook, yDirCook}, new double[]{xDirShooter, yDirShooter});
     }
 
     @Override

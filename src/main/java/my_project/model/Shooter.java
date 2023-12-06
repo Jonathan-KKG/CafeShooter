@@ -10,9 +10,7 @@ public class Shooter extends Player{
         dishes[0] = new Dish("Houerglass.png",x,y);
     }
 
-    public Queue<Dish> getDishes() {
-        //<return dishes;
-        return null;
-
+    public Dish[] getDishes() {
+        return dishes;
     }
 }

@@ -14,7 +14,6 @@ public class ProgramController {
     //Referenzen
     private Shooter shooter;
     private Cook cook;
-    private Environment myEnv;
     private Enemy[] enemy;
 
     private EnemyController enemyController;
@@ -42,8 +41,7 @@ public class ProgramController {
             System.out.println("oopsies");
         }
 
-        viewController.draw(shooter.getDishes().front());
-        viewController.draw(myEnv);
+        viewController.draw(shooter.getDishes()[0]);
         viewController.draw(shooter);
         viewController.draw(cook);
         viewController.draw(enemy[0]);

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Environment extends GraphicalObject {
-    private Image img;
+    private BufferedImage img;
 
     public Environment(String filename, double pX, double pY) {
         try{
@@ -23,6 +23,6 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage((BufferedImage) img,x,y);
+        drawTool.drawImage(img,x,y);
     }
 }

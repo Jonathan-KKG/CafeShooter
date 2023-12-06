@@ -1,6 +1,7 @@
 package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
+import KAGO_framework.view.DrawTool;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,5 +19,8 @@ public abstract class Item extends GraphicalObject {
         }
         x = pX;
         y = pY;
+    }
+    public void draw(DrawTool drawTool) {
+        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
     }
 }

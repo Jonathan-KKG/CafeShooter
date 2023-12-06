@@ -70,10 +70,6 @@ public class InputManager extends InteractiveGraphicalObject {
 
     }
 
-    private void exePlayerShoot(){
-
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == 1){

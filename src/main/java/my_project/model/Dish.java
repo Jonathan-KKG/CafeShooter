@@ -12,7 +12,7 @@ public class Dish extends Item {
 
     @Override
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(image,x - image.getWidth()/2,y - image.getHeight()/2);
+        super.draw(drawTool);
     }
 
     public void setXVel(double xVel) {

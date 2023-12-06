@@ -14,16 +14,18 @@ public class DishController {
     }
 
     public void shoot(double xPos, double yPos) {
-        if (!shooter.getDishes().isEmpty()) {
-            long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
-            long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
-            double playerRotation = Math.atan2(yLength, xLength);
-            double xVel = Math.cos(playerRotation);//xVel
-            double yVel = Math.sin(playerRotation);//yVel
-            shooter.getDishes().front().setXVel(xVel);
-            shooter.getDishes().front().setYVel(yVel);
-            dishes.append(shooter.getDishes().front());
-            shooter.getDishes().dequeue();
+        for (int i = 0; i < shooter.getDishes().length; i++) {
+            if (shooter.getDishes()[i] != null) {
+                long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
+                long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
+                double playerRotation = Math.atan2(yLength, xLength);
+                double xVel = Math.cos(playerRotation);//xVel
+                double yVel = Math.sin(playerRotation);//yVel
+                shooter.getDishes()[i].setXVel(xVel);
+                shooter.getDishes()[i].setYVel(yVel);
+                dishes.append(shooter.getDishes()[i]);
+                shooter.getDishes()[i] = null;
+            }
         }
     }
 

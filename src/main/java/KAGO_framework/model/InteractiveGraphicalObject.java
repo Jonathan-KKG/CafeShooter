@@ -21,7 +21,7 @@ public abstract class InteractiveGraphicalObject extends GraphicalObject impleme
 
     @Override
     public void mouseClicked(MouseEvent e){
-        System.out.println();
+
     }
 
     @Override

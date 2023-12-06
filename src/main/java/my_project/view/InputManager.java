@@ -67,6 +67,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
         cook.move(dt, xDirCook, yDirCook);
         shooter.move(dt, xDirShooter, yDirShooter);
+
     }
 
     private void exePlayerShoot(){
@@ -75,7 +76,6 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
         if (e.getButton() == 1){
             dishController.shoot(e.getX(),e.getY());
         }

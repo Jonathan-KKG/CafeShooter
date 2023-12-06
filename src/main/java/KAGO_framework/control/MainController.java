@@ -43,6 +43,7 @@ public class MainController {
     public MainController(){
         if ( Config.INFO_MESSAGES) System.out.println("  > MainController: Ich wurde erzeugt. Erstelle ein ViewController-Objekt zur Steuerung der View...");
         new ViewController();
+
     }
 
 }

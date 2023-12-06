@@ -42,6 +42,7 @@ public class ProgramController {
             System.out.println("oopsies");
         }
 
+        viewController.draw(shooter.getDishes().front());
         viewController.draw(myEnv);
         viewController.draw(shooter);
         viewController.draw(cook);
@@ -50,6 +51,7 @@ public class ProgramController {
         enemyController = new EnemyController(enemy,shooter);
         dishController = new DishController(shooter);
         inputManager = new InputManager(viewController, cook, shooter, dishController);
+        viewController.register(inputManager);
     }
 
     /**

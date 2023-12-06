@@ -3,14 +3,16 @@ package my_project.model;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
 
 public class Shooter extends Player{
-    private Queue<Dish> dishes;
+    private Dish[] dishes;
     public Shooter(double pX, double pY){
         super(pX, pY);
-        dishes = new Queue<>();
-        dishes.enqueue(new Dish("Houerglass.png",x,y));
+        dishes = new Dish[8];
+        dishes[0] = new Dish("Houerglass.png",x,y);
     }
 
     public Queue<Dish> getDishes() {
-        return dishes;
+        //<return dishes;
+        return null;
+
     }
 }

@@ -8,7 +8,6 @@ public class Dish extends Item {
 
     public Dish(String filename, double pX, double pY) {
         super(filename,pX,pY);
-
     }
 
     @Override

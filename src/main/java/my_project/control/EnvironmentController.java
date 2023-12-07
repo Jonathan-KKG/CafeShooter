@@ -18,15 +18,16 @@ public class EnvironmentController {
                     environmentObjects.append(new Environment("floortile.png", 282+j, 932-i));
                 }
             }
+            // Wall-Sprites are 12x32 px for collision reasons ==> other maths operations -_-;
             for (int i = 0; i < 12*32; i = i + 32) {
-                environmentObjects.append(new Environment("leftwall.png", 250, 932-i));
+                environmentObjects.append(new Environment("leftwall.png", 250+20, 932-i));
             }
             // Calculating coordinates [#####-50%-/////]
-            environmentObjects.append(new Environment("wallturn1.png", 250, 932 - 12 * 32));
+            environmentObjects.append(new Environment("wallturn1.png", 250, 932-12*32));
             for (int i = 0; i < 32*32; i = i + 32) {
-                environmentObjects.append(new Environment("topwall.png", 250+32+i, 932 - 12 * 32));
+                environmentObjects.append(new Environment("topwall.png", 250+32+i, 932+20-12*32));
             }
-            environmentObjects.append(new Environment("wallturn2.png", 250+33*32, 932 - 12 * 32));
+            environmentObjects.append(new Environment("wallturn2.png", 250+33*32, 932-12*32));
             environmentObjects.toFirst();
             for (int i = 0; i < 12*32; i = i + 32) {
                 environmentObjects.append(new Environment("rightwall.png", 250+33*32, 932-i));

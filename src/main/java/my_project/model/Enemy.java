@@ -31,11 +31,6 @@ public class Enemy extends Entity {
         height = myImage.getHeight();
     }
 
-
-    /**
-     *Drawes the Enemy
-     * @param drawTool the tool used to draw things
-     */
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
     }

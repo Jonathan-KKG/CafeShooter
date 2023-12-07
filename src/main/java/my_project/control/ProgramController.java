@@ -51,7 +51,7 @@ public class ProgramController {
         viewController.draw(cook);
         viewController.draw(enemy[0]);
         viewController.draw(enemy[1]);
-        dishController = new DishController(shooter);
+        dishController = new DishController(shooter, viewController);
         entityController = new EntityController(enemy, cook, shooter, environmentController);
         inputManager = new InputManager(dishController, entityController, viewController);
         viewController.register(inputManager);

@@ -10,7 +10,7 @@ public class EntityController {
     private List<Environment> environmentObjects;
 
     /**
-     * @param pEnemies Required for enemy movement
+     * @param pEnemies Array of all Existing enemies
      * @param pCook Required for player movement
      * @param pShooter Required for player movement
      * @param envController Required for player - CollidableEnvironment Collision
@@ -23,13 +23,16 @@ public class EntityController {
     }
 
     /**
-     * Updates enemy movement
-     * @param dt Benötigt um jeden Frame zu Updaten
+     * Moves every Enemy towards the Cook
+     * @param dt Time passed between this and last frame
      */
     public void updateEnemies(double dt) {
         for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i] == null)
+                return;
+
             double[] dir = {cook.getX() - enemies[i].getX(), cook.getY() - enemies[i].getY()};
-            dir = checkForCollisions(enemies[i], dir);
+            checkForCollisions(enemies[i], dir);
             // TODO 1: distance, therefore dir, is NaN because of squareroot of (0) --> leads to unwanted behavior (enemies move to upper left corner)
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 
@@ -56,78 +59,80 @@ public class EntityController {
      * @return double[] adjusted direction with length 2 (sets dir[i] = 0 to restrict movement into collider) Default: returns entered parameters
      */
     private double[] checkForCollisions(Entity entity, double[] entityDir){
-        double[] newDir = entityDir;
-        newDir = checkEnvironmentCollision(entity, newDir);
-        //newDir = checkScreenBorderCollision(entity, newDir);
-        return newDir;
+        // Check collision w/ collidable Environment
+        checkEnvironmentCollision(entity, entityDir);
+        // Check collision w/ screen borders
+        keepWithinBoundaries(
+                new double[][]{
+                        {0, 1000},
+                        {1600, 0}
+                },
+                entity,
+                entityDir
+        );
+
+        return entityDir;
     }
 
-    /**Searches for collision with a collidable Environment object & adjusts direction accordingly
-     * @param entity The entity that should be checked for collisions
+    /**
+     * Searches for collision with a collidable Environment object & adjusts direction accordingly
+     * @param entity    The entity that should be checked for collisions
      * @param entityDir Entity direction that should be adjusted
-     * @return double[] adjusted direction with length 2 (sets dir[i] = 0 to restrict movement into collider)
      */
-    private double[] checkEnvironmentCollision(Entity entity, double[] entityDir) {
-        double[] newDir = entityDir;
-
+    private void checkEnvironmentCollision(Entity entity, double[] entityDir) {
         // TODO 2: Fix following behavior: Colliding with an object from your below leads to restriction to right movement (same effect with your right collison, upward movement)
-        // TODO 3: TEST THIS:: Entering kitchen from left side is possible but not exiting????? --> Similar behavior with exiting upward
+
+        double newDir[] = {entityDir[0], entityDir[1]};
 
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().collidesWith(entity) && environmentObjects.getContent().isActive()) {
                 Environment env = environmentObjects.getContent();
-                newDir = keepWithinBoundaries(
+                keepWithinBoundaries(
                 new double[][]{
-                                {env.getX(), env.getX()}, //TODO 4: add image width to this
-                                {env.getY(), env.getX()}
+                                {env.getX() - env.getWidth(), env.getX() - env.getWidth()},
+                                {env.getY() - env.getHeight(), env.getX() / 2 + env.getHeight() / 2}
                                 },
                         entity,
                         entityDir);
             }
 
-            if(newDir != entityDir)
-                return newDir;
+            //if(newDir != entityDir)
+            //    break;
+
             environmentObjects.next();
         }
-        return entityDir;
     }
 
-    /**Searches for collision with a screenborder & adjusts direction accordingly
-     * @param entity entity that should be checked
-     * @param entityDir direction the entity is moving
-     * @return double[] adjusted direction with length 2 (sets dir[i] = 0 to restrict movement into collider) Default: returns entered parameters
-     */
-    private double[] checkScreenBorderCollision(Entity entity, double[] entityDir){
+    /*
+    private double[] checkEntityCollision(Entity entity, double[] entityDir, Entity collidingEntity){
         double[] newDir = entityDir;
         newDir = keepWithinBoundaries(
         new double[][]{
-                    {0, 1080+29},
-                    {1920, 0}
+                        {collidingEntity.getX() - collidingEntity.getWidth() / 2, collidingEntity.getX() + collidingEntity.getWidth() / 2},
+                        {collidingEntity.getY() - collidingEntity.getHeight() / 2, collidingEntity.getY() + collidingEntity.getHeight() / 2}
                 },
                 entity,
-                newDir
+                entityDir
         );
         return newDir;
-    }
+    }*/
 
-    /**Checks if gO is moving within certain boundaries. If not, prevents moving further out by adjusting direction
+    /**
+     * Checks if gO is moving within certain boundaries. If not, prevents moving further out by adjusting direction
      * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{UpperBorder, BottomBorder}}
-     * @param entity entity that should be checked
-     * @param entityDir direction the entity is moving
-     * @return
+     * @param entity     entity that should be checked
+     * @param entityDir  direction the entity is moving
      */
-    private double[] keepWithinBoundaries(double[][] boundaries, Entity entity, double[] entityDir){
-        double[] newDir = entityDir;
+    private void keepWithinBoundaries(double[][] boundaries, Entity entity, double[] entityDir){
         if(
-                newDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                newDir[0] > 0 && boundaries[0][1] < entity.getX()
-        ) newDir[0] = 0;
+                entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
+                entityDir[0] > 0 && boundaries[0][1] < entity.getX()
+        ) entityDir[0] = 0;
         if(
-                newDir[1] > 0 && boundaries[1][0] < entity.getY() ||
-                newDir[1] < 0 && boundaries[1][1] > entity.getY()
-        ) newDir[1] = 0;
-        return newDir;
+                entityDir[1] > 0 && boundaries[1][0] < entity.getY() ||
+                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+        ) entityDir[1] = 0;
     }
 
 }

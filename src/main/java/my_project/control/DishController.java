@@ -29,8 +29,8 @@ public class DishController {
                 long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
                 long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
                 double playerRotation = Math.atan2(yLength, xLength);
-                double xVel = Math.cos(playerRotation);//xVel
-                double yVel = Math.sin(playerRotation);//yVel
+                double xVel = Math.cos(playerRotation);
+                double yVel = Math.sin(playerRotation);
                 shooter.getDishes()[i].setXVel(xVel);
                 shooter.getDishes()[i].setYVel(yVel);
                 dishes.append(shooter.getDishes()[i]);

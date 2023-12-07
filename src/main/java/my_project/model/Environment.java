@@ -16,20 +16,19 @@ public class Environment extends GraphicalObject {
      */
     public Environment(String filename, double pX, double pY) {
         try{
-            File environmentFile = new File("src/main/resources/graphic/" + filename);
-            setImage(ImageIO.read(environmentFile));
+            myImage = ImageIO.read(new File("src/main/resources/graphic/" + filename));
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }
         x = pX;
         y = pY;
-        width = getMyImage().getWidth();
-        height = getMyImage().getHeight();
+        width = myImage.getWidth();
+        height = myImage.getHeight();
         isActive = true;
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage,x - myImage.getWidth() / 2,y - myImage.getHeight() / 2);
+        drawTool.drawImage(myImage, x - myImage.getWidth() / 1.25d, y - myImage.getHeight() / 1.25d);
     }
 
     public boolean isActive() {

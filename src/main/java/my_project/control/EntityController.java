@@ -82,8 +82,6 @@ public class EntityController {
     private void checkEnvironmentCollision(Entity entity, double[] entityDir) {
         // TODO 2: Fix following behavior: Colliding with an object from your below leads to restriction to right movement (same effect with your right collison, upward movement)
 
-        double newDir[] = {entityDir[0], entityDir[1]};
-
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().collidesWith(entity) && environmentObjects.getContent().isActive()) {
@@ -96,9 +94,6 @@ public class EntityController {
                         entity,
                         entityDir);
             }
-
-            //if(newDir != entityDir)
-            //    break;
 
             environmentObjects.next();
         }

@@ -16,13 +16,12 @@ public class InputManager extends InteractiveGraphicalObject {
 
     private DishController dishController;
     private EntityController entityController;
-    private ViewController viewController;
 
     /**
      * @param pdishController Required for call of shoot-method
      * @param pEntityController Required for call of move-method
      */
-    public InputManager(DishController pdishController, EntityController pEntityController, ViewController pViewController){
+    public InputManager(DishController pdishController, EntityController pEntityController){
         dishController = pdishController;
         entityController = pEntityController;
     }
@@ -44,21 +43,21 @@ public class InputManager extends InteractiveGraphicalObject {
         int xDirShooter = 0;
         int yDirShooter = 0;
 
-        if(viewController.isKeyDown(KeyEvent.VK_A))
+        if(ViewController.isKeyDown(KeyEvent.VK_A))
             xDirCook = -1;
-        if(viewController.isKeyDown(KeyEvent.VK_D))
+        if(ViewController.isKeyDown(KeyEvent.VK_D))
             xDirCook = 1;
-        if(viewController.isKeyDown(KeyEvent.VK_W))
+        if(ViewController.isKeyDown(KeyEvent.VK_W))
             yDirCook = -1;
-        if(viewController.isKeyDown(KeyEvent.VK_S))
+        if(ViewController.isKeyDown(KeyEvent.VK_S))
             yDirCook = 1;
-        if(viewController.isKeyDown(KeyEvent.VK_LEFT))
+        if(ViewController.isKeyDown(KeyEvent.VK_LEFT))
             xDirShooter = -1;
-        if(viewController.isKeyDown(KeyEvent.VK_RIGHT))
+        if(ViewController.isKeyDown(KeyEvent.VK_RIGHT))
             xDirShooter = 1;
-        if(viewController.isKeyDown(KeyEvent.VK_UP))
+        if(ViewController.isKeyDown(KeyEvent.VK_UP))
             yDirShooter = -1;
-        if(viewController.isKeyDown(KeyEvent.VK_DOWN))
+        if(ViewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
         entityController.updatePlayers(dt, new double[]{xDirCook, yDirCook}, new double[]{xDirShooter, yDirShooter});

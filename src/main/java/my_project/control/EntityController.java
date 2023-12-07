@@ -64,8 +64,8 @@ public class EntityController {
         // Check collision w/ screen borders
         keepWithinBoundaries(
                 new double[][]{
-                        {0, 1920},
-                        {1109, 0}
+                        {0, 1920 - 19},
+                        {1080 - 42, 0}
                 },
                 entity,
                 entityDir
@@ -88,8 +88,8 @@ public class EntityController {
                 Environment env = environmentObjects.getContent();
                 keepWithinBoundaries(
                 new double[][]{
-                                {env.getX() - env.getWidth(), env.getX() - env.getWidth()},
-                                {env.getY() - env.getHeight(), env.getX() / 2 + env.getHeight() / 2}
+                                {env.getX() - env.getWidth() / 2, env.getX() + env.getWidth() / 2},
+                                {env.getY() + env.getHeight() / 2, env.getX() / 2 - env.getHeight() / 2}
                                 },
                         entity,
                         entityDir);
@@ -115,14 +115,14 @@ public class EntityController {
 
     /**
      * Checks if gO is moving within certain boundaries. If not, prevents moving further out by adjusting direction
-     * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{UpperBorder, BottomBorder}}
+     * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
      * @param entity     entity that should be checked
      * @param entityDir  direction the entity is moving
      */
     private void keepWithinBoundaries(double[][] boundaries, Entity entity, double[] entityDir){
         if(
-                entityDir[0] < 0 && boundaries[0][0] > entity.getX() + entity.getWidth() / 2 ||
-                entityDir[0] > 0 && boundaries[0][1] < entity.getX() - entity.getWidth() / 2
+                entityDir[0] < 0 && boundaries[0][0] > entity.getX() - entity.getWidth() / 2 ||
+                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth() / 2
         ) entityDir[0] = 0;
         if(
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() / 2 ||

@@ -8,7 +8,7 @@ public class Entity extends GraphicalObject {
     protected double speed;
     protected int hp;
     public Entity(double pX, double pY) {
-        speed = 130;
+        speed = 200;
         x = pX;
         y = pY;
     }

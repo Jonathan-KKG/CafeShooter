@@ -28,7 +28,7 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage, x - myImage.getWidth() / 1.25d, y - myImage.getHeight() / 1.25d);
+        drawTool.drawImage(myImage, x - myImage.getWidth() / 2d, y - myImage.getHeight() / 2d);
     }
 
     public boolean isActive() {

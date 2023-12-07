@@ -18,8 +18,7 @@ public class DishController {
     }
 
     /**
-     * Calculate Velocity of thrown Dish and adds it to the List of thrown Dishes
-     *
+     * Calculate velocity of thrown Dish and adds it to the List of thrown Dishes
      * @param xPos x-Position of the Cursor
      * @param yPos y-Position of the Cursor
      */
@@ -41,9 +40,8 @@ public class DishController {
     }
 
     /**
-     * Moves all Dishes that are Thrown (all in the List dishes)
-     *
-     * @param dt the Time passed betwen this and the last call of the method
+     * Moves all Dishes that are thrown (all in the List dishes)
+     * @param dt the Time passed between this and the last call of the method
      */
     public void dishUpdate(double dt) {
         dishes.toFirst();
@@ -56,7 +54,7 @@ public class DishController {
 
     /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
-     * All Dishes outside the map gets deleted.
+     * All Dishes outside the map get deleted.
      * @param pEnemies an Array of all existing Enemies
      */
     public void checkCollisions(Enemy[] pEnemies) {

@@ -41,7 +41,7 @@ public class DrawingPanel extends JPanel  {
             addMouseMotionListener(viewController);
             setFocusable(true);
             requestFocusInWindow();
-            requested = ! requested;
+            requested =! requested;
         }
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;

@@ -120,7 +120,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
         // Erzeuge die erste Szene
         createScene();
         // Erzeuge ein neues Fenster zum Zeichnen
-        drawFrame = new DrawFrame(my_project.Config.WINDOW_TITLE, x, y, 1600, 1000, scenes.get(0).drawingPanel);
+        drawFrame = new DrawFrame(my_project.Config.WINDOW_TITLE, x, y, my_project.Config.WINDOW_WIDTH, my_project.Config.WINDOW_HEIGHT, scenes.get(0).drawingPanel);
         drawFrame.setResizable(false);
         showScene(0);
         // Übergibt den weiteren Programmfluss an das neue Objekt der Klasse ViewController

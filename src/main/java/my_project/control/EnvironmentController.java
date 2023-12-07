@@ -6,8 +6,8 @@ public class EnvironmentController {
     //Referenzen
     private List<Environment> environmentObjects = new List<>();
     public EnvironmentController(ViewController viewController){
+        // sprite = 32px :^)
         try{
-            // sprite = 32px :^)
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
                     environmentObjects.append(new Environment("grass.png", i*500, j*500));
@@ -22,16 +22,17 @@ public class EnvironmentController {
             for (int i = 0; i < 12*32; i = i + 32) {
                 environmentObjects.append(new Environment("leftwall.png", 250+20, 932-i));
             }
-            // Calculating coordinates [#####-50%-/////]
-            environmentObjects.append(new Environment("wallturn1.png", 250, 932-12*32));
             for (int i = 0; i < 32*32; i = i + 32) {
                 environmentObjects.append(new Environment("topwall.png", 250+32+i, 932+20-12*32));
             }
-            environmentObjects.append(new Environment("wallturn2.png", 250+33*32, 932-12*32));
-            environmentObjects.toFirst();
             for (int i = 0; i < 12*32; i = i + 32) {
                 environmentObjects.append(new Environment("rightwall.png", 250+33*32, 932-i));
             }
+            // Calculating coordinates [#####-50%-/////]
+            environmentObjects.append(new Environment("wallturn1.png", 250, 932-12*32));
+            environmentObjects.append(new Environment("wallturn2.png", 250+33*32, 932-12*32));
+            environmentObjects.append(new Environment("window.png", 250+32, 932+20-12*32));
+            environmentObjects.toFirst();
             environmentObjects.append(new Environment("stovetop.png", 250+32, 900-3*32));
             while(environmentObjects.hasAccess()){
                 viewController.draw(environmentObjects.getContent());

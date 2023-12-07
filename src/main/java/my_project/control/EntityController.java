@@ -64,8 +64,8 @@ public class EntityController {
         // Check collision w/ screen borders
         keepWithinBoundaries(
                 new double[][]{
-                        {0, 1000},
-                        {1600, 0}
+                        {0, 1920},
+                        {1109, 0}
                 },
                 entity,
                 entityDir
@@ -121,12 +121,12 @@ public class EntityController {
      */
     private void keepWithinBoundaries(double[][] boundaries, Entity entity, double[] entityDir){
         if(
-                entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                entityDir[0] > 0 && boundaries[0][1] < entity.getX()
+                entityDir[0] < 0 && boundaries[0][0] > entity.getX() + entity.getWidth() / 2 ||
+                entityDir[0] > 0 && boundaries[0][1] < entity.getX() - entity.getWidth() / 2
         ) entityDir[0] = 0;
         if(
-                entityDir[1] > 0 && boundaries[1][0] < entity.getY() ||
-                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+                entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() / 2 ||
+                entityDir[1] < 0 && boundaries[1][1] > entity.getY() - entity.getHeight() / 2
         ) entityDir[1] = 0;
     }
 

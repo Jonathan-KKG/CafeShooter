@@ -65,7 +65,7 @@ public class ProgramController {
         entityController.updateEnemies(dt);
         inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
-        dishController.checkColisions(enemy);
+        dishController.checkCollisions(enemy);
 
     }
 }

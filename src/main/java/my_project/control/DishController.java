@@ -55,18 +55,17 @@ public class DishController {
     }
 
     /**
-     * Checks collision betwen Enemy and Dishes. If a Dish hits a Enemy it gets deleted and if it has the Right type the Enemy dies.
+     * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map gets deleted.
-     *
      * @param pEnemies an Array of all existing Enemies
      */
-    public void checkColisions(Enemy[] pEnemies) {
+    public void checkCollisions(Enemy[] pEnemies) {
         dishes.toFirst();
         boolean removed = false;
         while (dishes.hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
                 if (pEnemies[i] != null && dishes.getContent().collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequierdDish().equals(dishes.getContent().getClass().toString())) {
+                    if (pEnemies[i].getRequiredDish().equals(dishes.getContent().getClass().toString())) {
                         viewController.removeDrawable(pEnemies[i]);
                         pEnemies[i] = null;
                         i = pEnemies.length;

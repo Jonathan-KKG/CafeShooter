@@ -11,6 +11,14 @@ public class CollidableEnvironment extends Environment{
         isColliderActive = true;
     }
 
+    /**
+     * Second constructor to create invisible environmentalObjects
+     */
+    public CollidableEnvironment(double pX, double pY, double pWidth, double pHeight) {
+        super( pX, pY ,pWidth,pHeight);
+        isColliderActive = true;
+    }
+
     public boolean isColliderActive() {
         return isColliderActive;
     }

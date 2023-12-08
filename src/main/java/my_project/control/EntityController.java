@@ -59,17 +59,8 @@ public class EntityController {
      * @return double[] adjusted direction with length 2 (sets dir[i] = 0 to restrict movement into collider) Default: returns entered parameters
      */
     private double[] checkForCollisions(Entity entity, double[] entityDir){
-        // Check collision w/ collidable Environment
+        // Check collision w/environment
         checkEnvironmentCollision(entity, entityDir);
-        // Check collision w/ screen borders
-        keepWithinScreen(
-        new double[][]{
-                        {0, 1920 * 0.85 - 19},
-                        {1080 * 0.85 - 42, 0}
-                },
-                entity,
-                entityDir
-        );
 
         return entityDir;
     }
@@ -79,12 +70,12 @@ public class EntityController {
      * @param entity    The entity that should be checked for collisions
      * @param entityDir Entity direction that should be adjusted
      */
-    private void checkEnvironmentCollision(Double dt, Entity entity, double[] entityDir) {
+    private void checkEnvironmentCollision(Entity entity, double[] entityDir) {
         // TODO 2: Fix following behavior: Colliding with an object from your below leads to restriction to right movement (same effect with your right collison, upward movement)
 
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
-            if (environmentObjects.getContent().isColliderActive()) {
+            if (environmentObjects.getContent().collidesWith(entity) && environmentObjects.getContent().isColliderActive()) {
                 CollidableEnvironment env = environmentObjects.getContent();
                 keepOutOfBounds(
                 new double[][]{
@@ -96,41 +87,16 @@ public class EntityController {
 
             }
 
+
+
             environmentObjects.next();
         }
     }
 
-    /*
-    private double[] checkEntityCollision(Entity entity, double[] entityDir, Entity collidingEntity){
-        double[] newDir = entityDir;
-        newDir = keepWithinBoundaries(
-        new double[][]{
-                        {collidingEntity.getX() - collidingEntity.getWidth() / 2, collidingEntity.getX() + collidingEntity.getWidth() / 2},
-                        {collidingEntity.getY() - collidingEntity.getHeight() / 2, collidingEntity.getY() + collidingEntity.getHeight() / 2}
-                },
-                entity,
-                entityDir
-        );
-        return newDir;
-    }*/
 
-    /**
-     * Checks if gO is moving within screen. If not, prevents moving further out by adjusting direction
-     * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
-     * @param entity     entity that should be checked
-     * @param entityDir  direction the entity is moving
-     */
-    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir){
-        if(
-                entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
-        ) entityDir[0] = 0;
 
-        if(
-                entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
-        ) entityDir[1] = 0;
-    }
+
+
 
     /**
      * Checks if gO is moving within certain boundaries. If not, prevents moving further out by adjusting direction
@@ -138,8 +104,9 @@ public class EntityController {
      * @param entity     entity that should be checked
      * @param entityDir  direction the entity is moving
      */
+
     private void keepOutOfBounds(double[][] boundaries, Entity entity, double[] entityDir){
-        if(
+            if(
                 entityDir[0] > 0 && boundaries[0][0] > entity.getX() ||
                 entityDir[0] < 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
         ) entityDir[0] = 0;
@@ -149,5 +116,7 @@ public class EntityController {
                 entityDir[1] > 0 && boundaries[1][1] > entity.getY()
         ) entityDir[1] = 0;
     }
+
+
 
 }

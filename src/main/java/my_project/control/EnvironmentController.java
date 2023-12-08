@@ -31,19 +31,15 @@ public class EnvironmentController {
                     environmentObjects.append(new Environment("floortile.png", kitchenOffset[0]+32+j, kitchenOffset[1]-i));
 
             for (int i = 0; i < 12*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("leftwall.png", kitchenOffset[0]+10, kitchenOffset[1]-i));
+                collidableEnvironmentObjects.append(new Environment("leftwall.png", kitchenOffset[0]+20, kitchenOffset[1]-i));
 
             // Calculating coordinates [#####-50%-/////]
             for (int i = 0; i < 32*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("topwall.png", kitchenOffset[0]+32+i, kitchenOffset[1]+10-12*32));
-
-            collidableEnvironmentObjects.append(new Environment("wallturn1.png", kitchenOffset[0]+10, kitchenOffset[1]+10-12*32));
-
-            collidableEnvironmentObjects.append(new Environment("wallturn2.png", kitchenOffset[0]-10+33*32, kitchenOffset[1]+10-12*32));
-
+                collidableEnvironmentObjects.append(new Environment("topwall.png", kitchenOffset[0]-10+42+i, kitchenOffset[1]+20-12*32));
+            collidableEnvironmentObjects.append(new Environment("wallturn1.png", kitchenOffset[0]+20, kitchenOffset[1]+20-12*32));
+            collidableEnvironmentObjects.append(new Environment("wallturn2.png", kitchenOffset[0]+33*32, kitchenOffset[1]+20-12*32));
             for (int i = 0; i < 12*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("rightwall.png", kitchenOffset[0]-10+33*32, kitchenOffset[1]-i));
-
+                collidableEnvironmentObjects.append(new Environment("rightwall.png", kitchenOffset[0]+33*32, kitchenOffset[1]-i));
             collidableEnvironmentObjects.append(new Environment("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32));
             for (int i = 0; i < 6*64; i = i + 64)
                 collidableEnvironmentObjects.append(new Environment("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));

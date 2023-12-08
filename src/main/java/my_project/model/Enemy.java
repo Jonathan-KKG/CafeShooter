@@ -32,7 +32,7 @@ public class Enemy extends Entity {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
+        drawTool.drawImage(myImage,x,y);
     }
 
     public String getRequiredDish() {

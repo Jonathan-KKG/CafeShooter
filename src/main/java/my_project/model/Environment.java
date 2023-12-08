@@ -11,13 +11,13 @@ public class Environment extends GraphicalObject {
 
     /**
      * @param filename Required to load sprite
-     * @param pX Required to set position
-     * @param pY Required to set position
+     * @param pX       Required to set position
+     * @param pY       Required to set position
      */
     public Environment(String filename, double pX, double pY) {
-        try{
+        try {
             myImage = ImageIO.read(new File("src/main/resources/graphic/" + filename));
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Creating sprite from pathname went wrong!");
         }
         x = pX;
@@ -28,8 +28,10 @@ public class Environment extends GraphicalObject {
     }
 
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage, x - myImage.getWidth() / 2d, y - myImage.getHeight() / 2d);
+        drawTool.drawImage(myImage, x, y);
+        drawTool.drawRectangle(x,y,width, height);
     }
+
 
     public boolean isActive() {
         return isActive;

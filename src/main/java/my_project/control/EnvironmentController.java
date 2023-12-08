@@ -19,6 +19,7 @@ public class EnvironmentController {
      * @param viewController Required to draw Objects
      */
     private void createObjects(ViewController viewController) {
+        int[] kitchenOffset = {400,1026};
         try{
             // sprite = 32px :^)
             for (int i = 0; i < 5; i++)
@@ -27,21 +28,21 @@ public class EnvironmentController {
 
             for (int i = 0; i < 12*32; i = i + 32)
                 for (int j = 0; j < 32*32; j = j + 32)
-                    environmentObjects.append(new Environment("floortile.png", 282+j, 932-i));
+                    environmentObjects.append(new Environment("floortile.png", kitchenOffset[0]+32+j, kitchenOffset[1]-i));
 
             for (int i = 0; i < 12*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("leftwall.png", 250+20, 932-i));
+                collidableEnvironmentObjects.append(new Environment("leftwall.png", kitchenOffset[0]+10, kitchenOffset[1]-i));
 
             // Calculating coordinates [#####-50%-/////]
-            collidableEnvironmentObjects.append(new Environment("wallturn1.png", 250, 932-12*32));
+            collidableEnvironmentObjects.append(new Environment("wallturn1.png", kitchenOffset[0], kitchenOffset[1]-12*32));
             for (int i = 0; i < 32*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("topwall.png", 250+32+i, 932+20-12*32));
+                collidableEnvironmentObjects.append(new Environment("topwall.png", kitchenOffset[0]+32+i, kitchenOffset[1]+10-12*32));
 
-            collidableEnvironmentObjects.append(new Environment("wallturn2.png", 250+33*32, 932-12*32));
+            collidableEnvironmentObjects.append(new Environment("wallturn2.png", kitchenOffset[0]+33*32, kitchenOffset[1]-12*32));
             for (int i = 0; i < 12*32; i = i + 32)
-                collidableEnvironmentObjects.append(new Environment("rightwall.png", 250+33*32, 932-i));
+                collidableEnvironmentObjects.append(new Environment("rightwall.png", kitchenOffset[0]-10+33*32, kitchenOffset[1]-i));
 
-            collidableEnvironmentObjects.append(new Environment("stovetop.png", 250+32, 900-3*32));
+            collidableEnvironmentObjects.append(new Environment("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32));
 
             environmentObjects.toFirst();
             while(environmentObjects.hasAccess()){

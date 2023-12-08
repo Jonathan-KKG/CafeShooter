@@ -7,7 +7,7 @@ public class EntityController {
     private Enemy[] enemies;
     private Cook cook;
     private Shooter shooter;
-    private List<Environment> environmentObjects;
+    private List<CollidableEnvironment> environmentObjects;
 
     /**
      * @param pEnemies Array of all Existing enemies
@@ -63,9 +63,9 @@ public class EntityController {
         checkEnvironmentCollision(entity, entityDir);
         // Check collision w/ screen borders
         keepWithinScreen(
-                new double[][]{
-                        {0, 1920 - 19},
-                        {1080 - 42, 0}
+        new double[][]{
+                        {0, 1920 * 0.85 - 19},
+                        {1080 * 0.85 - 42, 0}
                 },
                 entity,
                 entityDir
@@ -79,13 +79,13 @@ public class EntityController {
      * @param entity    The entity that should be checked for collisions
      * @param entityDir Entity direction that should be adjusted
      */
-    private void checkEnvironmentCollision(Entity entity, double[] entityDir) {
+    private void checkEnvironmentCollision(Double dt, Entity entity, double[] entityDir) {
         // TODO 2: Fix following behavior: Colliding with an object from your below leads to restriction to right movement (same effect with your right collison, upward movement)
 
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
-            if (environmentObjects.getContent().collidesWith(entity) && environmentObjects.getContent().isActive()) {
-                Environment env = environmentObjects.getContent();
+            if (environmentObjects.getContent().isColliderActive()) {
+                CollidableEnvironment env = environmentObjects.getContent();
                 keepOutOfBounds(
                 new double[][]{
                                 {env.getX(), env.getX() + env.getWidth()},

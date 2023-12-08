@@ -7,8 +7,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Environment extends GraphicalObject {
-    private boolean isActive;
-
     /**
      * @param filename Required to load sprite
      * @param pX       Required to set position
@@ -24,16 +22,13 @@ public class Environment extends GraphicalObject {
         y = pY;
         width = myImage.getWidth();
         height = myImage.getHeight();
-        isActive = true;
     }
 
+    /** draws the image of (this)
+     * @param drawTool
+     */
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(myImage, x, y);
         drawTool.drawRectangle(x,y,width, height);
-    }
-
-
-    public boolean isActive() {
-        return isActive;
     }
 }

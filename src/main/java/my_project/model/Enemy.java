@@ -20,7 +20,7 @@ public class Enemy extends Entity {
         speed = 100;
         try{
             if (enemyType == 1)
-                myImage = ImageIO.read(new File("src/main/resources/graphic/spaceship.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/habib.png"));
             else if (enemyType == 2)
                 myImage = ImageIO.read(new File("src/main/resources/graphic/Armor.png"));
         } catch (Exception e){

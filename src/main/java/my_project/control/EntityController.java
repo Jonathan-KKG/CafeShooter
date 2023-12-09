@@ -33,10 +33,9 @@ public class EntityController {
 
             double[] dir = {cook.getX() - enemies[i].getX(), cook.getY() - enemies[i].getY()};
             checkForCollisions(enemies[i], dir);
-            // TODO 1: distance, therefore dir, is NaN because of squareroot of (0) --> leads to unwanted behavior (enemies move to upper left corner)
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 
-            if(!Double.isNaN(distance))
+            if(distance < 0 || distance > 0)
                 enemies[i].move((dt / distance), dir[0], dir[1]);
         }
     }
@@ -77,6 +76,8 @@ public class EntityController {
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().collidesWith(entity) && environmentObjects.getContent().isColliderActive()) {
                 CollidableEnvironment env = environmentObjects.getContent();
+                if (entity.getClass().toString().equals("class my_project.model.Enemy"))
+                    env.reduceHP();
                 keepOutOfBounds(
                 new double[][]{
                                 {env.getX(), env.getX() + env.getWidth()},

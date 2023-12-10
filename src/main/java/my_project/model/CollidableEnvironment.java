@@ -1,7 +1,6 @@
 package my_project.model;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class CollidableEnvironment extends Environment{
@@ -31,14 +30,14 @@ public class CollidableEnvironment extends Environment{
     }
 
     /**
-     * reduces hp of the Bariers. If ig goes to 0 they brace and don`t stop entities anymore.
+     * reduces hp of the Barriers. If hp is <=0 it stops colliding & switches img
      */
     public void reduceHP(){
         hp--;
         if (hp <= 0) {
             isColliderActive = false;
             try {
-                myImage =  ImageIO.read(new File("src/main/resources/graphic/window.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/window.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

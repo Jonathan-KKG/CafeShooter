@@ -45,6 +45,7 @@ public class EnvironmentController {
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2.png", kitchenOffset[0]-384+33*32, kitchenOffset[1]+148-12*32));
             for (int i = 0; i < 8*32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall.png", kitchenOffset[0]-384+33*32, kitchenOffset[1]-i));
+
             //stove
             CollidableEnvironment stove = new CollidableEnvironment("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32);
             collidableEnvironmentObjects.append(stove);
@@ -67,15 +68,6 @@ public class EnvironmentController {
                 viewController.draw(collidableEnvironmentObjects.getContent());
                 collidableEnvironmentObjects.next();
             }
-
-            //creates boundaries at screen boarder
-            collidableEnvironmentObjects.append(new CollidableEnvironment( -(1980*0.85- 19), 0, (1980*0.85- 19), (1080 * 0.85- 42)));
-            collidableEnvironmentObjects.append(new CollidableEnvironment( 0, -(1080 * 0.85- 42), (1980*0.85- 19), (1080 * 0.85- 42)));
-            collidableEnvironmentObjects.append(new CollidableEnvironment( (1980*0.85- 69), 0, (1980*0.85- 19), (1080 * 0.85- 42)));
-            collidableEnvironmentObjects.append(new CollidableEnvironment( 0, (1080 * 0.85- 42), (1980*0.85- 19), (1080 * 0.85- 42)));
-
-
-
         } catch (Exception e){
             System.out.println("Creating Environment object went wrong!");
         }

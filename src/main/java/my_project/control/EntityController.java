@@ -35,18 +35,17 @@ public class EntityController {
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
             dir[0] /= distance;
             dir[1] /= distance;
-            if(distance < 0)
+            if (distance > 0 || distance < 0)
                 checkForCollisions(dt, enemies[i], dir);
-            // TODO 1: distance, therefore dir, is NaN because of squareroot of (0) --> leads to unwanted behavior (enemies move to upper left corner)
-
-
         }
     }
 
     /**
      * updates player movement
-     * @param dt                  Time between last frame and this
-     * @param cookDir,pYDirPlayer bentöigt, um Richtung der Bewegungsänderung weiterzugeben
+     *
+     * @param dt         Time between last frame and this
+     * @param cookDir    bentöigt, um Richtung der Bewegungsänderung weiterzugeben
+     * @param shooterDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben
      */
     public void updatePlayers(double dt, double[] cookDir, double[] shooterDir) {
         checkForCollisions(dt, cook, cookDir);
@@ -55,6 +54,7 @@ public class EntityController {
 
     /**
      * Checks for any collisions & adjusts Dir accordingly
+     *
      * @param dt        time passed between this frame and last one
      * @param entity    entity that should be checked
      * @param entityDir direction the entity is moving
@@ -76,28 +76,28 @@ public class EntityController {
 
     /**
      * Searches for collision with a collidable Environment object & adjusts direction accordingly
+     *
+     * @param dt        Time between this frame and last
      * @param entity    The entity that should be checked for collisions
      * @param entityDir Entity direction that should be adjusted
      */
     private void checkEnvironmentCollision(double dt, Entity entity, double[] entityDir) {
-        // TODO 2: Fix following behavior: Colliding with an object from your below leads to restriction to right movement (same effect with your right collison, upward movement)
-
         double[] newPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         double[] oldPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().isColliderActive()) {
                 CollidableEnvironment env = environmentObjects.getContent();
-                if (entity.getClass().toString().equals("class my_project.model.Enemy"))
-                    env.reduceHP();
-                keepOutOfBounds(
+                boolean collided = keepOutOfBounds(
                         new double[][]{
                                 {env.getX(), env.getX() + env.getWidth()},
                                 {env.getY() + env.getHeight(), env.getY()}
                         },
                         entity,
                         newPos);
-
+                if (collided) {
+                    env.reduceHP();
+                }
             }
             if (oldPos == newPos)
                 break;
@@ -121,34 +121,39 @@ public class EntityController {
 
     /**
      * Checks if gO is moving within screen. If not, prevents moving further out by adjusting direction
+     *
      * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
      * @param entity     entity that should be checked
      * @param entityDir  direction the entity is moving
      */
-    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir){
-        if(
+    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
+        if (
                 entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
+                        entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
         ) entityDir[0] = 0;
 
-        if(
+        if (
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+                        entityDir[1] < 0 && boundaries[1][1] > entity.getY()
         ) entityDir[1] = 0;
     }
 
     /**
      * Checks if entity is moving within certain boundaries. If not, prevents moving further out by adjusting direction
+     *
      * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
      * @param entity     entity that should be checked
      * @param pos        the entitys position that should be adjusted
+     * @return whether collision was found or not
      */
-    private void keepOutOfBounds(double[][] boundaries, Entity entity, double[] pos) {
+    private boolean keepOutOfBounds(double[][] boundaries, Entity entity, double[] pos) {
+        boolean collided = false;
         if (environmentObjects.getContent().collidesWith(entity)) {
             if (boundaries[0][0] > entity.getX())
                 pos[0] = boundaries[0][0] - entity.getWidth();
             else if (boundaries[0][1] < entity.getX() + entity.getWidth())
                 pos[0] = boundaries[0][1];
+            collided = true;
         }
         entity.setX(pos[0]);
 
@@ -157,8 +162,10 @@ public class EntityController {
                 pos[1] = boundaries[1][0] + 1;
             else if (boundaries[1][1] < entity.getY() + entity.getHeight())
                 pos[1] = boundaries[1][1] - entity.getHeight();
+            collided = true;
         }
         entity.setY(pos[1]);
+        return collided;
     }
 
 }

@@ -24,7 +24,6 @@ public class EntityController {
 
     /**
      * Moves every Enemy towards the Cook
-     *
      * @param dt Time passed between this and last frame
      */
     public void updateEnemies(double dt) {
@@ -36,7 +35,8 @@ public class EntityController {
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
             dir[0] /= distance;
             dir[1] /= distance;
-            checkForCollisions(dt, enemies[i], dir);
+            if(distance < 0)
+                checkForCollisions(dt, enemies[i], dir);
             // TODO 1: distance, therefore dir, is NaN because of squareroot of (0) --> leads to unwanted behavior (enemies move to upper left corner)
 
 
@@ -45,8 +45,7 @@ public class EntityController {
 
     /**
      * updates player movement
-     *
-     * @param dt                  Benötigt um jeden Frame zu Updaten
+     * @param dt                  Time between last frame and this
      * @param cookDir,pYDirPlayer bentöigt, um Richtung der Bewegungsänderung weiterzugeben
      */
     public void updatePlayers(double dt, double[] cookDir, double[] shooterDir) {
@@ -56,7 +55,7 @@ public class EntityController {
 
     /**
      * Checks for any collisions & adjusts Dir accordingly
-     *
+     * @param dt        time passed between this frame and last one
      * @param entity    entity that should be checked
      * @param entityDir direction the entity is moving
      */
@@ -89,6 +88,8 @@ public class EntityController {
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().isColliderActive()) {
                 CollidableEnvironment env = environmentObjects.getContent();
+                if (entity.getClass().toString().equals("class my_project.model.Enemy"))
+                    env.reduceHP();
                 keepOutOfBounds(
                         new double[][]{
                                 {env.getX(), env.getX() + env.getWidth()},
@@ -120,20 +121,19 @@ public class EntityController {
 
     /**
      * Checks if gO is moving within screen. If not, prevents moving further out by adjusting direction
-     *
      * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
      * @param entity     entity that should be checked
      * @param entityDir  direction the entity is moving
      */
-    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
-        if (
+    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir){
+        if(
                 entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                        entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
+                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
         ) entityDir[0] = 0;
 
-        if (
+        if(
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                        entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
         ) entityDir[1] = 0;
     }
 

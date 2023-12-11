@@ -1,8 +1,5 @@
 package my_project.model;
 
-import KAGO_framework.Config;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
-
 public class Shooter extends Player {
     private Dish[] dishes;
     private int currentDish;
@@ -15,16 +12,17 @@ public class Shooter extends Player {
         super(pX, pY);
         dishes = new Dish[5];
         for (int i = dishes.length; i > 0; i--) {
-            dishes[i-1] = new Dish("floortile.png", 1400 + 35 * i,840);
+            dishes[i - 1] = new Dish("floortile.png", 1400 + 35 * i, 840);
         }
     }
 
     /**
      * Returns the current Dish and removes it from the array
+     *
      * @return the current Dish
      */
     public Dish getCurrentDish() {
-        if(currentDish == -1)
+        if (currentDish == -1)
             return null;
 
         Dish output = dishes[currentDish];
@@ -33,30 +31,30 @@ public class Shooter extends Player {
         return output;
     }
 
-    public Dish[] getAllDishes(){
+    public Dish[] getAllDishes() {
         return dishes;
     }
 
     /**
      * sets the current bullet on the next element in the array.
-     * If current bullet is last element, it's set on the first element
+     * If current bullet is last element, it starts searching from the beginning
      */
-    public void nextBullet(){
+    public void nextBullet() {
         currentDish = nextOccupiedIndex();
-        System.out.println(currentDish);
     }
 
     /**
      * finds next index in dishes array that is not null
      * @return next occupied index
      */
-    private int nextOccupiedIndex(){
-        for (int i = currentDish; i < dishes.length; i++)
-            if(dishes[i] != null)
-                return i;
+    private int nextOccupiedIndex() {
+        if (currentDish != dishes.length - 1)
+            for (int i = currentDish + 1; i < dishes.length; i++)
+                if (dishes[i] != null)
+                    return i;
 
-        for(int i = 0; i < currentDish; i++){
-            if(dishes[i] != null)
+        for (int i = 0; i < currentDish; i++) {
+            if (dishes[i] != null)
                 return i;
         }
         return -1;

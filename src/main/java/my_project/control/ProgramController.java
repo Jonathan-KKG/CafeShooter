@@ -35,14 +35,13 @@ public class ProgramController {
     public void startProgram(){
         environmentController = new EnvironmentController(viewController);
         shooter = new Shooter(150,150);
-        cook = new Cook(450,150);
+        cook = new Cook(800,800);
         enemy = new Enemy[2];
 
         try {
             enemy[0] = new Enemy(100.,300.);
             enemy[1] = new Enemy(300.,100.);
         } catch (Exception e){
-            System.out.println("oopsies");
         }
         for (int i = 0; i < shooter.getAllDishes().length; i++) {
             viewController.draw(shooter.getAllDishes()[i]);

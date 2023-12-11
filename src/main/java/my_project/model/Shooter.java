@@ -1,5 +1,8 @@
 package my_project.model;
 
+import KAGO_framework.Config;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
+
 public class Shooter extends Player {
     private Dish[] dishes;
     private int currentDish;
@@ -10,9 +13,9 @@ public class Shooter extends Player {
      */
     public Shooter(double pX, double pY) {
         super(pX, pY);
-        dishes = new Dish[8];
-        for (int i = 0; i <dishes.length; i++) {
-            dishes[i] = new Dish("floortile.png", x, y);
+        dishes = new Dish[5];
+        for (int i = dishes.length; i > 0; i--) {
+            dishes[i-1] = new Dish("floortile.png", 1400 + 35 * i,840);
         }
     }
 

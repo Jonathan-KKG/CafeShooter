@@ -25,6 +25,8 @@ public class DishController {
      */
     public void shoot(double xPos, double yPos) {
         Dish currentDish = shooter.getCurrentDish();
+        currentDish.setX(shooter.getX());
+        currentDish.setY(shooter.getY());
         long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
         long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);

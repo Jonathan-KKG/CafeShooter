@@ -43,7 +43,6 @@ public class EntityController {
 
     /**
      * updates player movement
-     *
      * @param dt         Time between last frame and this
      * @param cookDir    bentöigt, um Richtung der Bewegungsänderung weiterzugeben
      * @param shooterDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben
@@ -61,15 +60,6 @@ public class EntityController {
      * @param entityDir direction the entity is moving
      */
     private void checkForCollisions(double dt, Entity entity, double[] entityDir) {
-        double[] pos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
-        // Check collision w/ other entities
-        checkEntityCollision(entity,pos,cook);
-        checkEntityCollision(entity,pos,shooter);
-        for (int i = 0; i < enemies.length; i++)
-            checkEntityCollision(entity,pos,enemies[i]);
-
-        // Check collision w/ collidable Environment
-        checkEnvironmentCollision(entity, pos);
         // Check collision w/ screen borders
         keepWithinScreen(
                 new double[][]{
@@ -79,6 +69,10 @@ public class EntityController {
                 entity,
                 entityDir
         );
+
+        double[] pos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
+        // Check collision w/ collidable Environment
+        checkEnvironmentCollision(entity, pos);
 
     }
 
@@ -98,8 +92,11 @@ public class EntityController {
                         entity,
                         entityPos);
                 if (collided) {
-                    env.reduceHP();
-                    break;
+
+                    System.out.printf(entity.getClass().toString());
+                    if(entity.getClass().toString().equals("class my_project.model.Enemy"))
+                        env.reduceHP();
+
                 }
             }
             environmentObjects.next();
@@ -124,12 +121,12 @@ public class EntityController {
     private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
         if (
                 entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                        entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
+                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
         ) entityDir[0] = 0;
 
         if (
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                        entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
         ) entityDir[1] = 0;
     }
 

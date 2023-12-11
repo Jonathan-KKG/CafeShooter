@@ -8,18 +8,13 @@ import my_project.model.Player;
 public class CookingController {
     private EnvironmentController environmentController;
     private List<CollidableEnvironment> cookingStations = environmentController.getCookingStations();
-
     private Cook cook;
-
-
-
 
     public CookingController(){
 
     }
 
     /**
-     *
      * @param cookingStations List with all interactable objects
      * @return  returns true if the players midpoint is within objectWidth +-40 and objectHeight +-40
      */

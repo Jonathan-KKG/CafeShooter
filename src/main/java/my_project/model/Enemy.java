@@ -22,7 +22,7 @@ public class Enemy extends Entity {
             if (enemyType == 1)
                 myImage = ImageIO.read(new File("src/main/resources/graphic/habib.png"));
             else if (enemyType == 2)
-                myImage = ImageIO.read(new File("src/main/resources/graphic/Armor.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/jonathan.png"));
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }

@@ -2,6 +2,7 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
+import my_project.control.CookingController;
 import my_project.control.DishController;
 import my_project.control.EntityController;
 import my_project.model.Dish;
@@ -19,6 +20,7 @@ public class InputManager extends InteractiveGraphicalObject {
     private DishController dishController;
     private EntityController entityController;
     private Shooter shooter;
+    private CookingController cookingController;
 
     /**
      * @param pdishController Required for call of shoot-method
@@ -35,6 +37,9 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     public void inputUpdate(double dt){
         exePlayerMovement(dt);
+        if(ViewController.isKeyDown(KeyEvent.VK_E)){
+            cookingController.interact("lol");
+        }
     }
 
     /**

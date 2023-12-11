@@ -32,6 +32,6 @@ public abstract class Item extends GraphicalObject {
      * @param drawTool the tool used to draw things
      */
     public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage,x - myImage.getWidth()/2,y - myImage.getHeight()/2);
+        drawTool.drawImage(myImage,x,y);
     }
 }

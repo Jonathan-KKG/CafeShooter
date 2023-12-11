@@ -64,7 +64,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
         // Erzeuge Fenster und erste Szene
         createWindow();
         // Setzt die Ziel-Zeit zwischen zwei aufeinander folgenden Frames in Millisekunden
-        dt = 35; //Vernuenftiger Startwert
+        dt = 10; //Vernuenftiger Startwert
         if ( Config.INFO_MESSAGES) System.out.println("  > ViewController: Erzeuge ProgramController und starte Spielprozess (Min. dt = "+dt+"ms)...");
         if ( Config.INFO_MESSAGES) System.out.println("     > Es wird nun einmalig die Methode startProgram von dem ProgramController-Objekt aufgerufen.");
         if ( Config.INFO_MESSAGES) System.out.println("     > Es wird wiederholend die Methode updateProgram von dem ProgramController-Objekt aufgerufen.");

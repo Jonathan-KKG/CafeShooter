@@ -4,6 +4,8 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.DishController;
 import my_project.control.EntityController;
+import my_project.model.Dish;
+import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -16,14 +18,16 @@ public class InputManager extends InteractiveGraphicalObject {
 
     private DishController dishController;
     private EntityController entityController;
+    private Shooter shooter;
 
     /**
      * @param pdishController Required for call of shoot-method
      * @param pEntityController Required for call of move-method
      */
-    public InputManager(DishController pdishController, EntityController pEntityController){
+    public InputManager(DishController pdishController, EntityController pEntityController, Shooter pShooter){
         dishController = pdishController;
         entityController = pEntityController;
+        shooter = pShooter;
     }
 
     /**Aufruf mit jeder Frame
@@ -67,6 +71,8 @@ public class InputManager extends InteractiveGraphicalObject {
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == 1){
             dishController.shoot(e.getX(),e.getY());
+        } else if (e.getButton() == 2){
+            shooter.nextBullet();
         }
     }
 }

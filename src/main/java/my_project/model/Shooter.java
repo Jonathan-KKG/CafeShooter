@@ -24,6 +24,9 @@ public class Shooter extends Player {
      * @return the current Dish
      */
     public Dish getCurrentDish() {
+        if(currentDish == -1)
+            return null;
+
         Dish output = dishes[currentDish];
         dishes[currentDish] = null;
         nextBullet();
@@ -39,10 +42,23 @@ public class Shooter extends Player {
      * If current bullet is last element, it's set on the first element
      */
     public void nextBullet(){
-        if(currentDish == dishes.length-1)
-            currentDish = 0;
-        else currentDish++;
+        currentDish = nextOccupiedIndex();
+        System.out.println(currentDish);
     }
 
+    /**
+     * finds next index in dishes array that is not null
+     * @return next occupied index
+     */
+    private int nextOccupiedIndex(){
+        for (int i = currentDish; i < dishes.length; i++)
+            if(dishes[i] != null)
+                return i;
 
+        for(int i = 0; i < currentDish; i++){
+            if(dishes[i] != null)
+                return i;
+        }
+        return -1;
+    }
 }

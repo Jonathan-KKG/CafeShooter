@@ -71,7 +71,8 @@ public class InputManager extends InteractiveGraphicalObject {
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == 1){
             dishController.shoot(e.getX(),e.getY());
-        } else if (e.getButton() == 2){
+        }
+        if (e.getButton() == 3){
             shooter.nextBullet();
         }
     }

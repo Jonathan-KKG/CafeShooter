@@ -25,6 +25,9 @@ public class DishController {
      */
     public void shoot(double xPos, double yPos) {
         Dish currentDish = shooter.getCurrentDish();
+        if(currentDish == null)
+            return;
+
         currentDish.setX(shooter.getX());
         currentDish.setY(shooter.getY());
         long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));

@@ -1,5 +1,6 @@
 package my_project.control;
 
+import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
 
@@ -35,7 +36,7 @@ public class EntityController {
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
             dir[0] /= distance;
             dir[1] /= distance;
-            if (distance > 0 || distance < 0)
+            if (distance != 0)
                 checkForCollisions(dt, enemies[i], dir);
         }
     }
@@ -60,8 +61,15 @@ public class EntityController {
      * @param entityDir direction the entity is moving
      */
     private void checkForCollisions(double dt, Entity entity, double[] entityDir) {
+        double[] pos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
+        // Check collision w/ other entities
+        checkEntityCollision(entity,pos,cook);
+        checkEntityCollision(entity,pos,shooter);
+        for (int i = 0; i < enemies.length; i++)
+            checkEntityCollision(entity,pos,enemies[i]);
+
         // Check collision w/ collidable Environment
-        checkEnvironmentCollision(dt, entity, entityDir);
+        checkEnvironmentCollision(entity, pos);
         // Check collision w/ screen borders
         keepWithinScreen(
                 new double[][]{
@@ -75,49 +83,36 @@ public class EntityController {
     }
 
     /**
-     * Searches for collision with a collidable Environment object & adjusts direction accordingly
+     * Searches for collision with a collidable Environment object & prevents collision by setting position accordingly
      *
-     * @param dt        Time between this frame and last
      * @param entity    The entity that should be checked for collisions
-     * @param entityDir Entity direction that should be adjusted
+     * @param entityPos Entity direction that should be adjusted
      */
-    private void checkEnvironmentCollision(double dt, Entity entity, double[] entityDir) {
-        double[] newPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
-        double[] oldPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
+    private void checkEnvironmentCollision(Entity entity, double[] entityPos) {
         environmentObjects.toFirst();
         while (environmentObjects.hasAccess()) {
             if (environmentObjects.getContent().isColliderActive()) {
                 CollidableEnvironment env = environmentObjects.getContent();
                 boolean collided = keepOutOfBounds(
-                        new double[][]{
-                                {env.getX(), env.getX() + env.getWidth()},
-                                {env.getY() + env.getHeight(), env.getY()}
-                        },
+                        env,
                         entity,
-                        newPos);
+                        entityPos);
                 if (collided) {
                     env.reduceHP();
+                    break;
                 }
             }
-            if (oldPos == newPos)
-                break;
             environmentObjects.next();
         }
     }
 
-    /*
-    private double[] checkEntityCollision(Entity entity, double[] entityDir, Entity collidingEntity){
-        double[] newDir = entityDir;
-        newDir = keepWithinBoundaries(
-        new double[][]{
-                        {collidingEntity.getX() - collidingEntity.getWidth() / 2, collidingEntity.getX() + collidingEntity.getWidth() / 2},
-                        {collidingEntity.getY() - collidingEntity.getHeight() / 2, collidingEntity.getY() + collidingEntity.getHeight() / 2}
-                },
+    private void checkEntityCollision(Entity entity, double[] entityPos, Entity collidingEntity) {
+        keepOutOfBounds(
+                collidingEntity,
                 entity,
-                entityDir
+                entityPos
         );
-        return newDir;
-    }*/
+    }
 
     /**
      * Checks if gO is moving within screen. If not, prevents moving further out by adjusting direction
@@ -139,29 +134,28 @@ public class EntityController {
     }
 
     /**
-     * Checks if entity is moving within certain boundaries. If not, prevents moving further out by adjusting direction
-     *
-     * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
-     * @param entity     entity that should be checked
-     * @param pos        the entitys position that should be adjusted
+     * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
+     * @param collider object the entity could be colliding with
+     * @param entity   entity that should be checked
+     * @param pos      the entitys current position
      * @return whether collision was found or not
      */
-    private boolean keepOutOfBounds(double[][] boundaries, Entity entity, double[] pos) {
+    private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] pos) {
         boolean collided = false;
-        if (environmentObjects.getContent().collidesWith(entity)) {
-            if (boundaries[0][0] > entity.getX())
-                pos[0] = boundaries[0][0] - entity.getWidth();
-            else if (boundaries[0][1] < entity.getX() + entity.getWidth())
-                pos[0] = boundaries[0][1];
+        if (entity.collidesWith(collider)) {
+            if (collider.getX() > entity.getX())
+                pos[0] = collider.getX() - entity.getWidth();
+            else if (collider.getX() + collider.getWidth() < entity.getX() + entity.getWidth())
+                pos[0] = collider.getX() + collider.getWidth();
             collided = true;
         }
         entity.setX(pos[0]);
 
-        if (environmentObjects.getContent().collidesWith(entity)) {
-            if (boundaries[1][0] > entity.getY() && !(boundaries[1][1] > entity.getY()))
-                pos[1] = boundaries[1][0] + 1;
-            else if (boundaries[1][1] < entity.getY() + entity.getHeight())
-                pos[1] = boundaries[1][1] - entity.getHeight();
+        if (entity.collidesWith(collider)) {
+            if (collider.getY() > entity.getY())
+                pos[1] = collider.getY() - entity.getHeight();
+            else if (collider.getY() + collider.getHeight() < entity.getY() + entity.getHeight())
+                pos[1] = collider.getY() + collider.getHeight() + 1;
             collided = true;
         }
         entity.setY(pos[1]);

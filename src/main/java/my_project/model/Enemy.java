@@ -15,14 +15,26 @@ public class Enemy extends Entity {
      */
     public Enemy(Double pX, Double pY) {
         super(pX, pY);
-        enemyType =(int) (Math.random()*2+1);
+        enemyType =(int) (Math.random()*4+1);
         requiredDish = "class my_project.model.Dish";
         speed = 100;
         try{
-            if (enemyType == 1)
+            if (enemyType == 1) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/habib.png"));
-            else if (enemyType == 2)
+                requiredDish = "class my_project.model.Muffin";
+            }
+            else if (enemyType == 2) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/jonathan.png"));
+                requiredDish = "class my_project.model.Spaghet";
+            }
+            else if (enemyType == 3) {
+                myImage = ImageIO.read(new File("src/main/resources/graphic/callus.png"));
+                requiredDish = "class my_project.model.Mikado";
+            }
+            else if (enemyType == 4) {
+                myImage = ImageIO.read(new File("src/main/resources/graphic/mksch.png"));
+                requiredDish = "class my_project.model.Cawfee";
+            }
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");
         }

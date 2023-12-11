@@ -19,28 +19,31 @@ public class DishController {
 
     /**
      * Calculate velocity of thrown Dish and adds it to the List of thrown Dishes
+     *
      * @param xPos x-Position of the Cursor
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
-        for (int i = 0; i < shooter.getDishes().length; i++) {
-            if (shooter.getDishes()[i] != null) {
-                long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
-                long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
-                double playerRotation = Math.atan2(yLength, xLength);
-                double xVel = Math.cos(playerRotation);
-                double yVel = Math.sin(playerRotation);
-                shooter.getDishes()[i].setXVel(xVel);
-                shooter.getDishes()[i].setYVel(yVel);
-                dishes.append(shooter.getDishes()[i]);
-                shooter.getDishes()[i] = null;
-                i = shooter.getDishes().length;
-            }
-        }
+        Dish currentDish = shooter.getCurrentDish();
+        if(currentDish == null)
+            return;
+
+        currentDish.setX(shooter.getX());
+        currentDish.setY(shooter.getY());
+        long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
+        long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
+        double playerRotation = Math.atan2(yLength, xLength);
+        double xVel = Math.cos(playerRotation);
+        double yVel = Math.sin(playerRotation);
+        currentDish.setXVel(xVel);
+        currentDish.setYVel(yVel);
+        dishes.append(currentDish);
+
     }
 
     /**
      * Moves all Dishes that are thrown (all in the List dishes)
+     *
      * @param dt the Time passed between this and the last call of the method
      */
     public void dishUpdate(double dt) {
@@ -55,6 +58,7 @@ public class DishController {
     /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
+     *
      * @param pEnemies an Array of all existing Enemies
      */
     public void checkCollisions(Enemy[] pEnemies) {

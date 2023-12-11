@@ -91,13 +91,8 @@ public class EntityController {
                         env,
                         entity,
                         entityPos);
-                if (collided) {
-
-                    System.out.printf(entity.getClass().toString());
-                    if(entity.getClass().toString().equals("class my_project.model.Enemy"))
+                if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
                         env.reduceHP();
-
-                }
             }
             environmentObjects.next();
         }

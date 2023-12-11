@@ -34,7 +34,7 @@ public class EnvironmentController {
             for (int i = 0; i < 8*32; i = i + 32)
                 for (int j = 0; j < 20*32; j = j + 32)
                     environmentObjects.append(new Environment("floortile.png", kitchenOffset[0]+32+j, kitchenOffset[1]-i));
-            //wall
+            // wall
             for (int i = 0; i < 8*32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("leftwall.png", kitchenOffset[0]+20, kitchenOffset[1]-i));
 
@@ -46,18 +46,30 @@ public class EnvironmentController {
             for (int i = 0; i < 8*32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall.png", kitchenOffset[0]-384+33*32, kitchenOffset[1]-i));
 
-            //stove
+            // stove
             CollidableEnvironment stove = new CollidableEnvironment("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32);
             collidableEnvironmentObjects.append(stove);
             cookingStations.append(stove);
 
-            //tabletop
+            // tabletop
             for (int i = 0; i < 6*64; i = i + 64)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
             for (int i = 32; i < 6*64; i = i + 64)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
 
-            //draws created objects
+            // muffin
+            collidableEnvironmentObjects.append(new CollidableEnvironment("muffin.png", kitchenOffset[0], kitchenOffset[1]));
+
+            // cawfee >w<
+            collidableEnvironmentObjects.append(new CollidableEnvironment("cawfee.png", kitchenOffset[0]-2*32, kitchenOffset[1]));
+
+            // spaghet
+            collidableEnvironmentObjects.append(new CollidableEnvironment("spaghet.png", kitchenOffset[0]-4*32, kitchenOffset[1]));
+
+            // mikado
+            collidableEnvironmentObjects.append(new CollidableEnvironment("mikado.png", kitchenOffset[0]-6*32, kitchenOffset[1]));
+
+            // draws created objects
             environmentObjects.toFirst();
             while(environmentObjects.hasAccess()){
                 viewController.draw(environmentObjects.getContent());

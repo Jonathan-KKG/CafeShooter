@@ -19,7 +19,6 @@ public class CookingController {
      * @return  returns true if the players midpoint is within objectWidth +-40 and objectHeight +-40
      */
     private boolean isObjectInRange(List<CollidableEnvironment> cookingStations){
-
         cookingStations.toFirst();
         while(cookingStations.hasAccess()){
             CollidableEnvironment currentObject = cookingStations.getContent();
@@ -27,9 +26,6 @@ public class CookingController {
             && cook.getY()- cook.getHeight()/2<currentObject.getHeight()+40 && cook.getY()- cook.getHeight()/2>currentObject.getHeight()-40){
                 return true;
             }
-
-
-
         }
         return false;
     }

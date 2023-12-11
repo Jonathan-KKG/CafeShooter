@@ -44,8 +44,8 @@ public class ProgramController {
         } catch (Exception e){
             System.out.println("oopsies");
         }
-        for (int i = 0; i < shooter.getDishes().length; i++) {
-            viewController.draw(shooter.getDishes()[i]);
+        for (int i = 0; i < shooter.getAllDishes().length; i++) {
+            viewController.draw(shooter.getAllDishes()[i]);
         }
         viewController.draw(shooter);
         viewController.draw(cook);

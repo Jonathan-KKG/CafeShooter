@@ -4,23 +4,21 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Cook;
 import my_project.model.Dish;
-import my_project.model.Player;
 
 public class CookingController {
-    private EnvironmentController environmentController;
-    private List<CollidableEnvironment> cookingStations = environmentController.getCookingStations();
+    private List<CollidableEnvironment> cookingStations;
 
     private Cook cook;
 
-    public CookingController(){
-
+    public CookingController(EnvironmentController environmentController, Cook pCook) {
+        cookingStations = environmentController.getCookingStations();
+        cook = pCook;
     }
 
     /**
-     * @param cookingStations List with all interactable objects
-     * @return  returns true if the players midpoint is within objectWidth +-40 and objectHeight +-40
+     * @return returns true if the players midpoint is within objectWidth +-40 and objectHeight +-40
      */
-    private CollidableEnvironment objectInRange(List<CollidableEnvironment> cookingStations) {
+    private CollidableEnvironment objectInRange() {
 
         cookingStations.toFirst();
         double lowestDistance = 100;
@@ -33,18 +31,18 @@ public class CookingController {
                     output = currentObject;
                 }
             }
+            cookingStations.next();
         }
         return output;
     }
 
-  //TODO: swap param image for actual image of the cooked dish
-    public void interact(String image){
+    //TODO: swap param image for actual image of the cooked dish
+    public void interact(String image) {
         cookingStations.toFirst();
-        while(cookingStations.hasAccess()){
-            if(objectInRange(cookingStations)!= null){
-                Dish dish = new Dish(image, cookingStations.getContent().getX(), cookingStations.getContent().getY());
-            }
+        if (objectInRange() != null) {
+            Dish dish = new Dish(image, cookingStations.getContent().getX(), cookingStations.getContent().getY());
         }
+
 
     }
 

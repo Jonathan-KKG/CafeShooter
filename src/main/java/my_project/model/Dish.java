@@ -1,18 +1,11 @@
 package my_project.model;
 
-import KAGO_framework.view.DrawTool;
-
 public class Dish extends Item {
     protected double xVel;
     protected double yVel;
 
     public Dish(String filename, double pX, double pY) {
         super(filename,pX,pY);
-    }
-
-    @Override
-    public void draw(DrawTool drawTool) {
-        super.draw(drawTool);
     }
 
     public void setXVel(double xVel) {

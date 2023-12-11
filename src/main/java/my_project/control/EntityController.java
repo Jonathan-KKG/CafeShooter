@@ -64,7 +64,7 @@ public class EntityController {
         keepWithinScreen(
                 new double[][]{
                         {0, 1920 * 0.85 - 19},
-                        {1080 * 0.85 - 42, 0}
+                        {1080 * 0.85 - 40, 0}
                 },
                 entity,
                 entityDir
@@ -96,14 +96,6 @@ public class EntityController {
             }
             environmentObjects.next();
         }
-    }
-
-    private void checkEntityCollision(Entity entity, double[] entityPos, Entity collidingEntity) {
-        keepOutOfBounds(
-                collidingEntity,
-                entity,
-                entityPos
-        );
     }
 
     /**

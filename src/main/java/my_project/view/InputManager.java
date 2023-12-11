@@ -5,7 +5,6 @@ import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.CookingController;
 import my_project.control.DishController;
 import my_project.control.EntityController;
-import my_project.model.Dish;
 import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
@@ -26,10 +25,11 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param pdishController Required for call of shoot-method
      * @param pEntityController Required for call of move-method
      */
-    public InputManager(DishController pdishController, EntityController pEntityController, Shooter pShooter){
+    public InputManager(DishController pdishController, EntityController pEntityController, Shooter pShooter, CookingController pCookingController){
         dishController = pdishController;
         entityController = pEntityController;
         shooter = pShooter;
+        cookingController = pCookingController;
     }
 
     /**Aufruf mit jeder Frame
@@ -37,9 +37,7 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     public void inputUpdate(double dt){
         exePlayerMovement(dt);
-        if(ViewController.isKeyDown(KeyEvent.VK_E)){
-            cookingController.interact("lol");
-        }
+        exeCooking();
     }
 
     /**
@@ -72,13 +70,21 @@ public class InputManager extends InteractiveGraphicalObject {
         entityController.updatePlayers(dt, new double[]{xDirCook, yDirCook}, new double[]{xDirShooter, yDirShooter});
     }
 
+    private void exeCooking(){
+        if(ViewController.isKeyDown(KeyEvent.VK_Q))
+             cookingController.interact("mikado.png");
+    }
+
+    /**
+     * Überprüft ob die Maus geklickt wurde.
+     * @param e Das übergebene Objekt der Klasse MouseEvent enthält alle Information über das Ereignis.
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == 1){
-            dishController.shoot(e.getX(),e.getY());
-        }
-        if (e.getButton() == 3){
-            shooter.nextBullet();
-        }
+        if (e.getButton() == 1)       // Linksklick
+            dishController.shoot(e.getX(),e.getY()); // schießen
+        if (e.getButton() == 3)       // Rechtsklick
+            shooter.nextBullet();     // Zwischen Munition wechseln
+
     }
 }

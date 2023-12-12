@@ -41,9 +41,9 @@ public class ProgramController {
         viewController.draw(enemies[0]);
         viewController.draw(enemies[1]);
         entityController = new EntityController(environmentController, viewController);
-        cookingController = new CookingController(environmentController, entityController.getCook());
+        cookingController = new CookingController(environmentController);
         dishController = new DishController(this, viewController);
-        inputManager = new InputManager(dishController);
+        inputManager = new InputManager(dishController, this);
         viewController.register(inputManager);
     }
 
@@ -53,7 +53,7 @@ public class ProgramController {
      */
     public void updateProgram(double dt){
         entityController.updateEnemies(dt, enemies, entityController.getCook());
-        inputManager.inputUpdate(dt, cookingController, entityController);
+        inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
         dishController.checkCollisions(enemies);
     }
@@ -68,5 +68,13 @@ public class ProgramController {
 
     public Shooter getShooter(){
         return entityController.getShooter();
+    }
+
+    public Cook getCook(){
+        return entityController.getCook();
+    }
+
+    public CookingController getCookingController(){
+        return cookingController;
     }
 }

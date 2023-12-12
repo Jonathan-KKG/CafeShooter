@@ -6,6 +6,12 @@ public class Dish extends Item {
     private String type;
 
 
+    /**
+     * set starting position & type of Dish
+     * @param filename filename of the sprite
+     * @param pX x position at start
+     * @param pY y position at start
+     */
     public Dish(String filename, double pX, double pY) {
         super(filename,pX,pY);
         type = filename;

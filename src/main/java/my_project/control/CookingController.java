@@ -8,17 +8,15 @@ import my_project.model.Dish;
 public class CookingController {
     private List<CollidableEnvironment> cookingStations;
 
-    private Cook cook;
-
-    public CookingController(EnvironmentController environmentController, Cook pCook) {
+    public CookingController(EnvironmentController environmentController) {
         cookingStations = environmentController.getCookingStations();
-        cook = pCook;
     }
 
     /**
      * @return returns true if the players midpoint is within objectWidth +-40 and objectHeight +-40
+     * @param cook Required to calculate position of cook
      */
-    private CollidableEnvironment objectInRange() {
+    private CollidableEnvironment objectInRange(Cook cook) {
 
         cookingStations.toFirst();
         double lowestDistance = 100;
@@ -37,9 +35,9 @@ public class CookingController {
     }
 
     //TODO: swap param image for actual image of the cooked dish
-    public void interact(String image) {
+    public void interact(String image, Cook cook) {
         cookingStations.toFirst();
-        if (objectInRange() != null) {
+        if (objectInRange(cook) != null) {
             Dish dish = new Dish(image, cookingStations.getContent().getX(), cookingStations.getContent().getY());
         }
 

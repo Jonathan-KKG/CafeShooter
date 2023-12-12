@@ -12,7 +12,15 @@ public class Shooter extends Player {
         super(pX, pY);
         dishes = new Dish[5];
         for (int i = dishes.length; i > 0; i--) {
-            dishes[i - 1] = new Dish("floortile.png", 1400 + 35 * i, 840);
+            int help = (int) (Math.random() * 4 +1);
+            if (help == 1)
+                dishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i, 840);
+            if (help == 2)
+                dishes[i - 1] = new Dish("Spaghet.png", 1400 + 35 * i, 840);
+            if (help == 3)
+                dishes[i - 1] = new Dish("Mikado.png", 1400 + 35 * i, 840);
+            if (help == 4)
+                dishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
         }
     }
 

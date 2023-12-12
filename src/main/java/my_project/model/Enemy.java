@@ -21,19 +21,19 @@ public class Enemy extends Entity {
         try{
             if (enemyType == 1) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/habib.png"));
-                requiredDish = "class my_project.model.Muffin";
+                requiredDish = "Muffin.png";
             }
             else if (enemyType == 2) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/jonathan.png"));
-                requiredDish = "class my_project.model.Spaghet";
+                requiredDish = "Spaghet.png";
             }
             else if (enemyType == 3) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/callus.png"));
-                requiredDish = "class my_project.model.Mikado";
+                requiredDish = "Mikado.png";
             }
             else if (enemyType == 4) {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/mksch.png"));
-                requiredDish = "class my_project.model.Cawfee";
+                requiredDish = "Cawfee.png";
             }
         } catch (Exception e){
             System.out.println("Creating sprite from pathname went wrong!");

@@ -67,12 +67,13 @@ public class DishController {
         while (dishes.hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
                 if (pEnemies[i] != null && dishes.getContent().collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequiredDish().equals(dishes.getContent().getClass().toString())) {
+                    if (pEnemies[i].getRequiredDish().equals(dishes.getContent().getType())) {
                         viewController.removeDrawable(pEnemies[i]);
                         pEnemies[i] = null;
-                        i = pEnemies.length;
+
                         removed = true;
                     }
+                    i = pEnemies.length;
                     viewController.removeDrawable(dishes.getContent());
                     dishes.remove();
                 }

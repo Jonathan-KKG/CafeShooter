@@ -4,17 +4,32 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Dish;
 import my_project.model.Enemy;
-import my_project.model.Shooter;
 
 public class DishController {
-    private List<Dish> dishes;
-    private Shooter shooter;
-    private ViewController viewController;
+    private List<Dish> flyingDishes;
+    private Dish[] storedDishes;
 
-    public DishController(Shooter pShooter, ViewController pViewController) {
-        dishes = new List<>();
-        shooter = pShooter;
-        viewController = pViewController;
+    private ProgramController programController;
+    private int currentDish;
+
+    public DishController(ProgramController pProgramController, ViewController viewController) {
+        flyingDishes = new List<>();
+        programController = pProgramController;
+
+        storedDishes = new Dish[5];
+        for (int i = storedDishes.length; i > 0; i--) {
+            storedDishes[i - 1] = new Dish("floortile.png", 1400 + 35 * i, 840);
+            int help = (int) (Math.random() * 4 +1);
+            if (help == 1)
+                storedDishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i, 840);
+            if (help == 2)
+                storedDishes[i - 1] = new Dish("Spaghet.png", 1400 + 35 * i, 840);
+            if (help == 3)
+                storedDishes[i - 1] = new Dish("Mikado.png", 1400 + 35 * i, 840);
+            if (help == 4)
+                storedDishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
+            viewController.draw(storedDishes[i - 1]);
+        }
     }
 
     /**
@@ -24,20 +39,20 @@ public class DishController {
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
-        Dish currentDish = shooter.getCurrentDish();
-        if(currentDish == null)
+        if(getCurrentDish() == null)
             return;
 
-        currentDish.setX(shooter.getX());
-        currentDish.setY(shooter.getY()) ;
-        long yLength = (long) (yPos - (shooter.getY() + shooter.getImage().getHeight() / 2));
-        long xLength = (long) (xPos - (shooter.getX() + shooter.getImage().getWidth() / 2));
+        getCurrentDish().setX(programController.getShooter().getX());
+        getCurrentDish().setY(programController.getShooter().getY()) ;
+        long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
+        long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xVel = Math.cos(playerRotation);
         double yVel = Math.sin(playerRotation);
-        currentDish.setXVel(xVel);
-        currentDish.setYVel(yVel);
-        dishes.append(currentDish);
+        getCurrentDish().setXVel(xVel);
+        getCurrentDish().setYVel(yVel);
+        flyingDishes.append(getCurrentDish());
+        storedDishes[currentDish] = null;
 
     }
 
@@ -47,11 +62,11 @@ public class DishController {
      * @param dt the Time passed between this and the last call of the method
      */
     public void dishUpdate(double dt) {
-        dishes.toFirst();
-        while (dishes.hasAccess()) {
-            dishes.getContent().setX((dishes.getContent().getX() + dishes.getContent().setXVel() * 500 * dt));
-            dishes.getContent().setY((dishes.getContent().getY() + dishes.getContent().getYVel() * 500 * dt));
-            dishes.next();
+        flyingDishes.toFirst();
+        while (flyingDishes.hasAccess()) {
+            flyingDishes.getContent().setX((flyingDishes.getContent().getX() + flyingDishes.getContent().setXVel() * 500 * dt));
+            flyingDishes.getContent().setY((flyingDishes.getContent().getY() + flyingDishes.getContent().getYVel() * 500 * dt));
+            flyingDishes.next();
         }
     }
 
@@ -62,34 +77,77 @@ public class DishController {
      * @param pEnemies an Array of all existing Enemies
      */
     public void checkCollisions(Enemy[] pEnemies) {
-        dishes.toFirst();
+        flyingDishes.toFirst();
         boolean removed = false;
-        while (dishes.hasAccess()) {
+        while (flyingDishes.hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
-                if (pEnemies[i] != null && dishes.getContent().collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequiredDish().equals(dishes.getContent().getType())) {
-                        viewController.removeDrawable(pEnemies[i]);
+                if (pEnemies[i] != null && flyingDishes.getContent().collidesWith(pEnemies[i])) {
+                    if (pEnemies[i].getRequiredDish().equals(flyingDishes.getContent().getType())) {
+                        programController.removeDrawableFromScene(pEnemies[i]);
                         pEnemies[i] = null;
-
                         removed = true;
                     }
                     i = pEnemies.length;
-                    viewController.removeDrawable(dishes.getContent());
-                    dishes.remove();
+                    programController.removeDrawableFromScene(flyingDishes.getContent());
+                    flyingDishes.remove();
                 }
             }
             if (!removed) {
-                dishes.next();
-                if (dishes.hasAccess() && (dishes.getContent().getY() + dishes.getContent().getHeight() < 0 ||
-                        dishes.getContent().getY() > 1109 ||
-                        dishes.getContent().getX() + dishes.getContent().getWidth() < 0 ||
-                        dishes.getContent().getX() > 1920)
+                flyingDishes.next();
+                if (flyingDishes.hasAccess() && (flyingDishes.getContent().getY() + flyingDishes.getContent().getHeight() < 0 ||
+                        flyingDishes.getContent().getY() > 1109 ||
+                        flyingDishes.getContent().getX() + flyingDishes.getContent().getWidth() < 0 ||
+                        flyingDishes.getContent().getX() > 1920)
                 ) {
-                    viewController.removeDrawable(dishes.getContent());
-                    dishes.remove();
+                    programController.removeDrawableFromScene(flyingDishes.getContent());
+                    flyingDishes.remove();
                 }
             }
         }
+    }
+
+    /**
+     * Returns the current Dish and removes it from the array
+     *
+     * @return the current Dish
+     */
+    public Dish getCurrentDish() {
+        if (currentDish == -1)
+            return null;
+
+        Dish output = storedDishes[currentDish];
+        storedDishes[currentDish] = null;
+        nextBullet();
+        return output;
+    }
+
+    public Dish[] getAllStoredDishes() {
+        return storedDishes;
+    }
+
+    /**
+     * sets the current bullet on the next element in the array.
+     * If current bullet is last element, it starts searching from the beginning
+     */
+    public void nextBullet() {
+        currentDish = nextOccupiedIndex();
+    }
+
+    /**
+     * finds next index in storedDishes array that is not null
+     * @return next occupied index
+     */
+    private int nextOccupiedIndex() {
+        if (currentDish != storedDishes.length - 1)
+            for (int i = currentDish + 1; i < storedDishes.length; i++)
+                if (storedDishes[i] != null)
+                    return i;
+
+        for (int i = 0; i < currentDish; i++) {
+            if (storedDishes[i] != null)
+                return i;
+        }
+        return -1;
     }
 
 }

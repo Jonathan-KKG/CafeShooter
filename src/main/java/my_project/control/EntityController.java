@@ -1,38 +1,42 @@
 package my_project.control;
 
+import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
 
 public class EntityController {
-    private Enemy[] enemies;
-    private Cook cook;
-    private Shooter shooter;
     private List<CollidableEnvironment> environmentObjects;
+    private Shooter shooter;
+    private Cook cook;
 
     /**
-     * @param pEnemies      Array of all Existing enemies
-     * @param pCook         Required for player movement
-     * @param pShooter      Required for player movement
      * @param envController Required for player - CollidableEnvironment Collision
      */
-    public EntityController(Enemy[] pEnemies, Cook pCook, Shooter pShooter, EnvironmentController envController) {
-        enemies = pEnemies;
-        cook = pCook;
-        shooter = pShooter;
+    public EntityController(EnvironmentController envController, ViewController viewController) {
         environmentObjects = envController.getCollidableEnvironmentObjects();
+
+        shooter = new Shooter(150,150);
+        cook = new Cook(800,800);
+
+        viewController.draw(shooter);
+        viewController.draw(cook);
+
     }
 
     /**
-     * Moves every Enemy towards the Cook
-     * @param dt Time passed between this and last frame
+     * Moves every Enemy towards an assigned target
+     *
+     * @param dt      Time passed between this and last frame
+     * @param enemies all enemies that should be moved
+     * @param target  the target the enemies should move to
      */
-    public void updateEnemies(double dt) {
+    public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] == null)
                 return;
 
-            double[] dir = {cook.getX() - enemies[i].getX(), cook.getY() - enemies[i].getY()};
+            double[] dir = {target.getX() - enemies[i].getX(), target.getY() - enemies[i].getY()};
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
             dir[0] /= distance;
             dir[1] /= distance;
@@ -43,13 +47,13 @@ public class EntityController {
 
     /**
      * updates player movement
-     * @param dt         Time between last frame and this
-     * @param cookDir    bentöigt, um Richtung der Bewegungsänderung weiterzugeben
-     * @param shooterDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben
+     *
+     * @param dt        Time between last frame and this
+     * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : Shooter{x,y}, Cook{x,y}
      */
-    public void updatePlayers(double dt, double[] cookDir, double[] shooterDir) {
-        checkForCollisions(dt, cook, cookDir);
-        checkForCollisions(dt, shooter, shooterDir);
+    public void updatePlayers(double dt, double[][] playerDir) {
+        checkForCollisions(dt, shooter, playerDir[0]);
+        checkForCollisions(dt, cook, playerDir[1]);
     }
 
     /**
@@ -92,7 +96,7 @@ public class EntityController {
                         entity,
                         entityPos);
                 if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
-                        env.reduceHP();
+                    env.reduceHP();
             }
             environmentObjects.next();
         }
@@ -108,17 +112,18 @@ public class EntityController {
     private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
         if (
                 entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
+                        entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
         ) entityDir[0] = 0;
 
         if (
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                entityDir[1] < 0 && boundaries[1][1] > entity.getY()
+                        entityDir[1] < 0 && boundaries[1][1] > entity.getY()
         ) entityDir[1] = 0;
     }
 
     /**
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
+     *
      * @param collider object the entity could be colliding with
      * @param entity   entity that should be checked
      * @param pos      the entitys current position
@@ -146,4 +151,11 @@ public class EntityController {
         return collided;
     }
 
+    public Cook getCook() {
+        return cook;
+    }
+
+    public Shooter getShooter() {
+        return shooter;
+    }
 }

@@ -39,20 +39,20 @@ public class DishController {
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
+        Dish currentDish = getCurrentDish();
         if(getCurrentDish() == null)
             return;
 
-        getCurrentDish().setX(programController.getShooter().getX());
-        getCurrentDish().setY(programController.getShooter().getY()) ;
+        currentDish.setX(programController.getShooter().getX());
+        currentDish.setY(programController.getShooter().getY()) ;
         long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
         long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xVel = Math.cos(playerRotation);
         double yVel = Math.sin(playerRotation);
-        getCurrentDish().setXVel(xVel);
-        getCurrentDish().setYVel(yVel);
-        flyingDishes.append(getCurrentDish());
-        storedDishes[currentDish] = null;
+        currentDish.setXVel(xVel);
+        currentDish.setYVel(yVel);
+        flyingDishes.append(currentDish);
 
     }
 

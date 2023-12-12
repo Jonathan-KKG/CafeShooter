@@ -36,7 +36,6 @@ public class CookingController {
 
     //TODO: swap param image for actual image of the cooked dish
     public void interact(String image, Cook cook) {
-        cookingStations.toFirst();
         if (objectInRange(cook) != null) {
             Dish dish = new Dish(image, cookingStations.getContent().getX(), cookingStations.getContent().getY());
         }

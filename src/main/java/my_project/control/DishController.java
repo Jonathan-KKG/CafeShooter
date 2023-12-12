@@ -3,7 +3,6 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Dish;
-import my_project.model.DishUI;
 import my_project.model.Enemy;
 
 public class DishController {
@@ -11,27 +10,23 @@ public class DishController {
     private Dish[] storedDishes;
 
     private ProgramController programController;
-    private DishUI dishUI;
     private int currentDish;
 
     public DishController(ProgramController pProgramController, ViewController viewController) {
         flyingDishes = new List<>();
         programController = pProgramController;
 
-        dishUI = new DishUI(1425,834);
-        viewController.draw(dishUI);
 
         storedDishes = new Dish[5];
         for (int i = storedDishes.length; i > 0; i--) {
-            storedDishes[i - 1] = new Dish("floortile.png", 1400 + 35 * i, 840);
-            int help = (int) (Math.random() * 4 +1);
-            if (help == 1)
-                storedDishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i, 840);
-            if (help == 2)
+            int dishType = (int) (Math.random() * 4 + 1);
+            if (dishType == 1)
+                storedDishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i , 840);
+            if (dishType == 2)
                 storedDishes[i - 1] = new Dish("Spaghet.png", 1400 + 35 * i, 840);
-            if (help == 3)
+            if (dishType == 3)
                 storedDishes[i - 1] = new Dish("Mikado.png", 1400 + 35 * i, 840);
-            if (help == 4)
+            if (dishType == 4)
                 storedDishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
             viewController.draw(storedDishes[i - 1]);
         }
@@ -45,21 +40,24 @@ public class DishController {
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
-        Dish currentDish = getCurrentDish();
-        if(currentDish == null)
+        if(currentDish == -1 || storedDishes[currentDish] == null)
             return;
 
-        currentDish.setX(programController.getShooter().getX());
-        currentDish.setY(programController.getShooter().getY()) ;
+        Dish objCurrentDish = storedDishes[currentDish];
+
+        objCurrentDish.setX(programController.getShooter().getX());
+        objCurrentDish.setY(programController.getShooter().getY()) ;
         long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
         long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xVel = Math.cos(playerRotation);
         double yVel = Math.sin(playerRotation);
-        currentDish.setXVel(xVel);
-        currentDish.setYVel(yVel);
-        flyingDishes.append(currentDish);
+        objCurrentDish.setXVel(xVel);
+        objCurrentDish.setYVel(yVel);
 
+        flyingDishes.append(objCurrentDish);
+        storedDishes[currentDish] = null;
+        nextBullet();
     }
 
     /**
@@ -112,23 +110,8 @@ public class DishController {
         }
     }
 
-    /**
-     * Returns the current Dish and removes it from the array
-     *
-     * @return the current Dish
-     */
-    public Dish getCurrentDish() {
-        if (currentDish == -1)
-            return null;
-
-        Dish output = storedDishes[currentDish];
-        storedDishes[currentDish] = null;
-        nextBullet();
-        return output;
-    }
-
-    public Dish[] getAllStoredDishes() {
-        return storedDishes;
+    public int getCurrentDishIndex() {
+        return currentDish;
     }
 
     /**
@@ -146,17 +129,13 @@ public class DishController {
     private int nextOccupiedIndex() {
         if (currentDish != storedDishes.length - 1)
             for (int i = currentDish + 1; i < storedDishes.length; i++)
-                if (storedDishes[i] != null) {
-                    dishUI.setX(1425+35*i);
+                if (storedDishes[i] != null)
                     return i;
-                }
 
-        for (int i = 0; i < currentDish; i++) {
-            if (storedDishes[i] != null) {
-                dishUI.setX(1425+35*i);
+        for (int i = 0; i < currentDish; i++)
+            if (storedDishes[i] != null)
                 return i;
-            }
-        }
+
         return -1;
     }
 

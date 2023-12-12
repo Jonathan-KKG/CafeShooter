@@ -2,11 +2,8 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
-import my_project.control.CookingController;
-import my_project.control.DishController;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
-import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -17,18 +14,13 @@ import java.awt.event.MouseEvent;
  */
 public class InputManager extends InteractiveGraphicalObject {
 
-
-    private DishController dishController;
     private ProgramController programController;
 
     /**
      * Initializes inputManager
-     *
-     * @param pDishController    Needed for mouse input (to forward ammo and shooting inputs)
-     * @param pProgramController Needed to get Shooter & Cook objects
+     * @param pProgramController Needed to get Shooter & Cook objects as well as other controllers
      */
-    public InputManager(DishController pDishController, ProgramController pProgramController) {
-        dishController = pDishController;
+    public InputManager(ProgramController pProgramController) {
         programController = pProgramController;
     }
 
@@ -71,7 +63,8 @@ public class InputManager extends InteractiveGraphicalObject {
         if (ViewController.isKeyDown(KeyEvent.VK_DOWN))
             yDirShooter = 1;
 
-        entityController.updatePlayers(dt, new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
+        entityController.updatePlayers(dt,
+                new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
     }
 
     /**
@@ -81,10 +74,14 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == 1)       // Linksklick
-            dishController.shoot(e.getX(), e.getY()); // schießen
-        if (e.getButton() == 3)       // Rechtsklick
-            dishController.nextBullet();     // Zwischen Munition wechseln
+        if (e.getButton() == 1) {
+            programController.getDishController().shoot(e.getX(), e.getY());
+            programController.getGUIManager().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
+        }
+        if (e.getButton() == 3) {
+            programController.getDishController().nextBullet();
+            programController.getGUIManager().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
+        }
     }
 
     /**

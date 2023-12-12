@@ -2,9 +2,9 @@ package my_project.control;
 
 import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
-import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import my_project.model.*;
+import my_project.view.GUIManager;
 import my_project.view.InputManager;
 
 public class ProgramController {
@@ -18,12 +18,14 @@ public class ProgramController {
     private InputManager inputManager;
     private DishController dishController;
     private CookingController cookingController;
+    private GUIManager guiManager;
 
     /**
      * @param viewController A class that manages the visuals and inputs.
      */
     public ProgramController(ViewController viewController){
         this.viewController = viewController;
+        enemieWaves = new Queue<>();
     }
 
     /**
@@ -45,10 +47,12 @@ public class ProgramController {
 
         viewController.draw(enemieWaves.front()[0]);
         viewController.draw(enemieWaves.front()[1]);
-        entityController = new EntityController(environmentController, viewController);
+        guiManager = new GUIManager(viewController);
+        entityController = new EntityController(this, viewController);
         cookingController = new CookingController(environmentController);
         dishController = new DishController(this, viewController);
-        inputManager = new InputManager(dishController, this);
+        inputManager = new InputManager(this);
+
         viewController.register(inputManager);
     }
 
@@ -99,5 +103,17 @@ public class ProgramController {
 
     public CookingController getCookingController(){
         return cookingController;
+    }
+
+    public DishController getDishController() {
+        return dishController;
+    }
+
+    public GUIManager getGUIManager() {
+        return guiManager;
+    }
+
+    public EnvironmentController getEnvironmentController() {
+        return environmentController;
     }
 }

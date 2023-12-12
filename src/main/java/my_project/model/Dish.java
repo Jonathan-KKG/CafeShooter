@@ -8,7 +8,7 @@ public class Dish extends Item {
 
     /**
      * set starting position & type of Dish
-     * @param filename filename of the sprite
+     * @param filename filename of the sprite, is the type of Dish at the same time
      * @param pX x position at start
      * @param pY y position at start
      */

@@ -6,18 +6,19 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
 
 public class EntityController {
-    private List<CollidableEnvironment> environmentObjects;
     private Shooter shooter;
     private Cook cook;
+    private ProgramController programController;
 
     /**
-     * @param envController Required for player - CollidableEnvironment Collision
+     * @param pProgramController Required to get other controllers
+     * @param viewController     Required to draw entities
      */
-    public EntityController(EnvironmentController envController, ViewController viewController) {
-        environmentObjects = envController.getCollidableEnvironmentObjects();
+    public EntityController(ProgramController pProgramController, ViewController viewController) {
+        programController = pProgramController;
 
-        shooter = new Shooter(150,150);
-        cook = new Cook(800,800);
+        shooter = new Shooter(150, 150);
+        cook = new Cook(800, 800);
 
         viewController.draw(shooter);
         viewController.draw(cook);
@@ -50,7 +51,6 @@ public class EntityController {
      *
      * @param dt        Time between last frame and this
      * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : Shooter{x,y}, Cook{x,y}
-     *
      */
     public void updatePlayers(double dt, double[][] playerDir) {
         checkForCollisions(dt, shooter, playerDir[0]);
@@ -88,10 +88,11 @@ public class EntityController {
      * @param entityPos Entity direction that should be adjusted
      */
     private void checkEnvironmentCollision(Entity entity, double[] entityPos) {
-        environmentObjects.toFirst();
-        while (environmentObjects.hasAccess()) {
-            if (environmentObjects.getContent().isColliderActive()) {
-                CollidableEnvironment env = environmentObjects.getContent();
+        List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
+        envObjs.toFirst();
+        while (envObjs.hasAccess()) {
+            if (envObjs.getContent().isColliderActive()) {
+                CollidableEnvironment env = envObjs.getContent();
                 boolean collided = keepOutOfBounds(
                         env,
                         entity,
@@ -99,7 +100,7 @@ public class EntityController {
                 if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
                     env.reduceHP();
             }
-            environmentObjects.next();
+            envObjs.next();
         }
     }
 

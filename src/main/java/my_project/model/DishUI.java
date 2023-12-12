@@ -4,7 +4,11 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
 public class DishUI extends GraphicalObject {
+
+    private double[] position;
+
     public DishUI(double px, double py) {
+        position = new double[]{1415, 820};
         x = px;
         y = py;
     }
@@ -13,22 +17,25 @@ public class DishUI extends GraphicalObject {
     public void draw(DrawTool drawTool) {
 
         //UI Background
-        drawTool.setLineWidth(10);
-        drawTool.setCurrentColor(40,40,40,255);
-        drawTool.drawRectangle(1415,820,195, 50);
+        drawTool.setLineWidth(5);
         drawTool.setCurrentColor(40,40,40,200);
-        drawTool.drawFilledRectangle(1415,820,195, 50);
+        drawTool.drawRectangle(position[0],position[1],195, 50);
+        drawTool.setCurrentColor(40,40,40,180);
+        drawTool.drawFilledRectangle(position[0],position[1],195, 50);
 
         //UI Seperators
         drawTool.setLineWidth(3);
         drawTool.setCurrentColor(230,50,50,255);
-        drawTool.drawLine(1460,835,1460,855);
-        drawTool.drawLine(1495,835,1495,855);
-        drawTool.drawLine(1530,835,1530,855);
-        drawTool.drawLine(1565,835,1565,855);
+
+        for(int i = 1; i < 5; i++)
+            drawTool.drawLine(position[0] + 10 + 35 * i, position[1] + 15, position[0] + 10 + 35 * i, position[1] + 35);
 
         //UI Index
-        drawTool.setCurrentColor(20,240,20,255);
-        drawTool.drawRectangle(x,y,35, 25);
+        drawTool.setCurrentColor(20,240,20,180);
+        drawTool.drawRectangle(x+5.5,y,25, 25);
+    }
+
+    public double[] getPosition() {
+        return position;
     }
 }

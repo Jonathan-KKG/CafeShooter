@@ -3,6 +3,7 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Dish;
+import my_project.model.DishUI;
 import my_project.model.Enemy;
 
 public class DishController {
@@ -10,11 +11,15 @@ public class DishController {
     private Dish[] storedDishes;
 
     private ProgramController programController;
+    private DishUI dishUI;
     private int currentDish;
 
     public DishController(ProgramController pProgramController, ViewController viewController) {
         flyingDishes = new List<>();
         programController = pProgramController;
+
+        dishUI = new DishUI(1425,834);
+        viewController.draw(dishUI);
 
         storedDishes = new Dish[5];
         for (int i = storedDishes.length; i > 0; i--) {
@@ -30,6 +35,7 @@ public class DishController {
                 storedDishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
             viewController.draw(storedDishes[i - 1]);
         }
+
     }
 
     /**
@@ -140,12 +146,16 @@ public class DishController {
     private int nextOccupiedIndex() {
         if (currentDish != storedDishes.length - 1)
             for (int i = currentDish + 1; i < storedDishes.length; i++)
-                if (storedDishes[i] != null)
+                if (storedDishes[i] != null) {
+                    dishUI.setX(1425+35*i);
                     return i;
+                }
 
         for (int i = 0; i < currentDish; i++) {
-            if (storedDishes[i] != null)
+            if (storedDishes[i] != null) {
+                dishUI.setX(1425+35*i);
                 return i;
+            }
         }
         return -1;
     }

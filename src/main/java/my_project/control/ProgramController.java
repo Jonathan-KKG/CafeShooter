@@ -2,13 +2,15 @@ package my_project.control;
 
 import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
+import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import my_project.model.*;
 import my_project.view.InputManager;
 
 public class ProgramController {
 
     //Referenzen
-    private Enemy[] enemies;
+    private Queue<Enemy[]> enemieWaves;
 
     private EntityController entityController;
     private ViewController viewController;
@@ -29,17 +31,20 @@ public class ProgramController {
      */
     public void startProgram(){
         environmentController = new EnvironmentController(viewController);
-        enemies = new Enemy[2];
-
-        try {
-            enemies[0] = new Enemy(100.,300.);
-            enemies[1] = new Enemy(300.,100.);
-        } catch (Exception e){
-            e.printStackTrace();
+        for (int i = 2; i < 5; i++) {
+            Enemy[] enemies = new Enemy[i];
+            try {
+                for (int j = 0; j < enemies.length; j++) {
+                    enemies[j] = new Enemy(100., 300.);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            enemieWaves.enqueue(enemies);
         }
 
-        viewController.draw(enemies[0]);
-        viewController.draw(enemies[1]);
+        viewController.draw(enemieWaves.front()[0]);
+        viewController.draw(enemieWaves.front()[1]);
         entityController = new EntityController(environmentController, viewController);
         cookingController = new CookingController(environmentController);
         dishController = new DishController(this, viewController);
@@ -52,10 +57,28 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt){
-        entityController.updateEnemies(dt, enemies, entityController.getCook());
+        entityController.updateEnemies(dt, enemieWaves.front(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
-        dishController.checkCollisions(enemies);
+        dishController.checkCollisions(enemieWaves.front());
+        checkForNewWave();
+    }
+
+    public void checkForNewWave(){
+        boolean isEmpty = true;
+        for (int i = 0; i < enemieWaves.front().length; i++) {
+            if (enemieWaves.front()[i] != null)
+                isEmpty = false;
+        }
+        if (isEmpty)
+            nextWave();
+    }
+
+    private void nextWave(){
+        enemieWaves.dequeue();
+        for (int i = 0; i < enemieWaves.front().length; i++) {
+            viewController.draw(enemieWaves.front()[i]);
+        }
     }
 
     /**

@@ -40,7 +40,7 @@ public class DishController {
      */
     public void shoot(double xPos, double yPos) {
         Dish currentDish = getCurrentDish();
-        if(getCurrentDish() == null)
+        if(currentDish == null)
             return;
 
         currentDish.setX(programController.getShooter().getX());

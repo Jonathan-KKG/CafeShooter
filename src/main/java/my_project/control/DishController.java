@@ -50,10 +50,9 @@ public class DishController {
         long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
         long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
-        double xVel = Math.cos(playerRotation);
-        double yVel = Math.sin(playerRotation);
-        objCurrentDish.setXVel(xVel);
-        objCurrentDish.setYVel(yVel);
+        double xDir = Math.cos(playerRotation);
+        double yDir = Math.sin(playerRotation);
+        objCurrentDish.setDirection(new double[]{xDir, yDir});
 
         flyingDishes.append(objCurrentDish);
         storedDishes[currentDish] = null;
@@ -68,8 +67,8 @@ public class DishController {
     public void dishUpdate(double dt) {
         flyingDishes.toFirst();
         while (flyingDishes.hasAccess()) {
-            flyingDishes.getContent().setX((flyingDishes.getContent().getX() + flyingDishes.getContent().setXVel() * 500 * dt));
-            flyingDishes.getContent().setY((flyingDishes.getContent().getY() + flyingDishes.getContent().getYVel() * 500 * dt));
+            flyingDishes.getContent().setX((flyingDishes.getContent().getX() + flyingDishes.getContent().getDirection()[0] * flyingDishes.getContent().getSpeed() * dt));
+            flyingDishes.getContent().setY((flyingDishes.getContent().getY() + flyingDishes.getContent().getDirection()[1] * flyingDishes.getContent().getSpeed() * dt));
             flyingDishes.next();
         }
     }

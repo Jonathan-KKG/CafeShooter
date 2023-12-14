@@ -3,9 +3,6 @@ package my_project.model;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 public abstract class Player extends Entity {
 
@@ -13,16 +10,8 @@ public abstract class Player extends Entity {
      * @param pX the start x-Position
      * @param pY the stard y-Position
      */
-    public Player(double pX, double pY){
-        super(pX, pY);
-        try {
-            myImage = ImageIO.read(new File("src/main/resources/graphic/img.png"));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        width = myImage.getWidth();
-        height = myImage.getHeight();
+    public Player(String filename, double pX, double pY){
+        super(filename , pX, pY);
     }
 
     /**

@@ -23,7 +23,7 @@ public class ProgramController {
     /**
      * @param viewController A class that manages the visuals and inputs.
      */
-    public ProgramController(ViewController viewController){
+    public ProgramController(ViewController viewController) {
         this.viewController = viewController;
         enemieWaves = new Queue<>();
     }
@@ -31,13 +31,14 @@ public class ProgramController {
     /**
      * Creates all controllers and initializes program
      */
-    public void startProgram(){
+    public void startProgram() {
         environmentController = new EnvironmentController(viewController);
         for (int i = 2; i < 5; i++) {
             Enemy[] enemies = new Enemy[i];
             try {
                 for (int j = 0; j < enemies.length; j++) {
-                    enemies[j] = new Enemy(100., 300.);
+                    int enemyType = (int) (Math.random() * 4 + 1);
+                    enemies[j] = new Enemy(enemyType, 100., 300.);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -58,9 +59,10 @@ public class ProgramController {
 
     /**
      * Updates the Program.
+     *
      * @param dt the Time passed betwen this and the last call of the method
      */
-    public void updateProgram(double dt){
+    public void updateProgram(double dt) {
         entityController.updateEnemies(dt, enemieWaves.front(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
@@ -68,7 +70,7 @@ public class ProgramController {
         checkForNewWave();
     }
 
-    public void checkForNewWave(){
+    public void checkForNewWave() {
         boolean isEmpty = true;
         for (int i = 0; i < enemieWaves.front().length; i++) {
             if (enemieWaves.front()[i] != null)
@@ -78,7 +80,7 @@ public class ProgramController {
             nextWave();
     }
 
-    private void nextWave(){
+    private void nextWave() {
         enemieWaves.dequeue();
         for (int i = 0; i < enemieWaves.front().length; i++) {
             viewController.draw(enemieWaves.front()[i]);
@@ -87,21 +89,22 @@ public class ProgramController {
 
     /**
      * Removes a drawable object from the scene
+     *
      * @param drawable Object to be removed
      */
-    public void removeDrawableFromScene(Drawable drawable){
+    public void removeDrawableFromScene(Drawable drawable) {
         viewController.removeDrawable(drawable);
     }
 
-    public Shooter getShooter(){
+    public Shooter getShooter() {
         return entityController.getShooter();
     }
 
-    public Cook getCook(){
+    public Cook getCook() {
         return entityController.getCook();
     }
 
-    public CookingController getCookingController(){
+    public CookingController getCookingController() {
         return cookingController;
     }
 

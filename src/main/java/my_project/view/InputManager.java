@@ -86,10 +86,12 @@ public class InputManager extends InteractiveGraphicalObject {
 
     /**
      * Checks if keys were pressed and forwards inputs accordingly
-     * @param key Enthält den Zahlencode für die Taste. Kann direkt aus der Klasse KeyEvent geladen werden, z.B. KeyEvent_VK_3
+     * @param key Contains the Numbercode for the key. Can directly be loaded from the Class KeyEvent e.g. KeyEvent_VK_6
      */
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_Q)
-            programController.getCookingController().interact("mikado.png", programController.getCook());
+            programController.getCookingController().cook(1, programController.getCook(), programController.getDishController());
     }
+
+
 }

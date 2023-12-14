@@ -2,33 +2,35 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 import my_project.model.Enemy;
+
+import javax.swing.text.View;
 
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
+    private Stack<Dish> pendingDishes;
 
     private ProgramController programController;
     private int currentDish;
 
-    public DishController(ProgramController pProgramController, ViewController viewController) {
+    /**
+     * creates an array with 5 indexes and fills it with random dishes
+     * creates several other dish-data-structures
+     * @param pProgramController required to access other controllers
+     */
+    public DishController(ProgramController pProgramController) {
         flyingDishes = new List<>();
         programController = pProgramController;
+        pendingDishes = new Stack<>();
 
 
         storedDishes = new Dish[5];
         for (int i = storedDishes.length; i > 0; i--) {
             int dishType = (int) (Math.random() * 4 + 1);
-            if (dishType == 1)
-                storedDishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i , 840);
-            if (dishType == 2)
-                storedDishes[i - 1] = new Dish("Spaghet.png", 1400 + 35 * i, 840);
-            if (dishType == 3)
-                storedDishes[i - 1] = new Dish("Mikado.png", 1400 + 35 * i, 840);
-            if (dishType == 4)
-                storedDishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
-            viewController.draw(storedDishes[i - 1]);
+            storedDishes[i - 1] = createDish(1400 + 35 * i, 840, dishType);
         }
 
     }
@@ -40,13 +42,13 @@ public class DishController {
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
-        if(currentDish == -1 || storedDishes[currentDish] == null)
+        if (currentDish == -1 || storedDishes[currentDish] == null)
             return;
 
         Dish objCurrentDish = storedDishes[currentDish];
 
         objCurrentDish.setX(programController.getShooter().getX());
-        objCurrentDish.setY(programController.getShooter().getY()) ;
+        objCurrentDish.setY(programController.getShooter().getY());
         long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
         long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
@@ -59,6 +61,8 @@ public class DishController {
         storedDishes[currentDish] = null;
         nextBullet();
     }
+
+
 
     /**
      * Moves all Dishes that are thrown (all in the List dishes)
@@ -124,6 +128,7 @@ public class DishController {
 
     /**
      * finds next index in storedDishes array that is not null
+     *
      * @return next occupied index
      */
     private int nextOccupiedIndex() {
@@ -138,5 +143,31 @@ public class DishController {
 
         return -1;
     }
+
+    /**
+     * creates a dish and draws it
+     * @param pX starting position
+     * @param pY starting position
+     * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
+     * @return returns drawn dish
+     */
+    public Dish createDish(double pX, double pY, int dishType) {
+        Dish dish = null;
+        if(dishType>0 && dishType< 5) {
+            if (dishType == 1)
+                dish = new Dish("Muffin.png", pX, pY);
+            if (dishType == 2)
+                dish = new Dish("Spaghet.png", pX, pY);
+            if (dishType == 3)
+                dish = new Dish("Mikado.png", pX, pY);
+            if (dishType == 4)
+                dish = new Dish("Cawfee.png", pX, pY);
+        } else{
+            System.out.println("nu uh wrong dishtype");
+        }
+        programController.getViewController().draw(dish);
+        return dish;
+    }
+
 
 }

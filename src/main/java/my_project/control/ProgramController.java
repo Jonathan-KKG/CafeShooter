@@ -50,7 +50,7 @@ public class ProgramController {
         guiManager = new GUIManager(viewController);
         entityController = new EntityController(this, viewController);
         cookingController = new CookingController(environmentController);
-        dishController = new DishController(this, viewController);
+        dishController = new DishController(this);
         inputManager = new InputManager(this);
 
         viewController.register(inputManager);
@@ -115,5 +115,9 @@ public class ProgramController {
 
     public EnvironmentController getEnvironmentController() {
         return environmentController;
+    }
+
+    public ViewController getViewController() {
+        return viewController;
     }
 }

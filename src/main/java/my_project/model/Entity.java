@@ -2,10 +2,6 @@ package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class Entity extends GraphicalObject {
     protected double speed;
 
@@ -16,17 +12,8 @@ public class Entity extends GraphicalObject {
      * @param pY Starting y position
      */
     public Entity(String filename, double pX, double pY) {
-        try{
-            File file = new File("src/main/resources/graphic/" + filename);
-            myImage = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super(filename,pX,pY);
         speed = 200;
-        x = pX;
-        y = pY;
-        width = myImage.getWidth();
-        height = myImage.getHeight();
     }
 
     /**

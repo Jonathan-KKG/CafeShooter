@@ -21,13 +21,13 @@ public class DishController {
         for (int i = storedDishes.length; i > 0; i--) {
             int dishType = (int) (Math.random() * 4 + 1);
             if (dishType == 1)
-                storedDishes[i - 1] = new Dish("Muffin.png", 1400 + 35 * i , 840);
+                storedDishes[i - 1] = new Dish("muffin.png", 1400 + 35 * i , 840);
             if (dishType == 2)
-                storedDishes[i - 1] = new Dish("Spaghet.png", 1400 + 35 * i, 840);
+                storedDishes[i - 1] = new Dish("spaghet.png", 1400 + 35 * i, 840);
             if (dishType == 3)
-                storedDishes[i - 1] = new Dish("Mikado.png", 1400 + 35 * i, 840);
+                storedDishes[i - 1] = new Dish("mikado.png", 1400 + 35 * i, 840);
             if (dishType == 4)
-                storedDishes[i - 1] = new Dish("Cawfee.png", 1400 + 35 * i, 840);
+                storedDishes[i - 1] = new Dish("cawfee.png", 1400 + 35 * i, 840);
             viewController.draw(storedDishes[i - 1]);
         }
 

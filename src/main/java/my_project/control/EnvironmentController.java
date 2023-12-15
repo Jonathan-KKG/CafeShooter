@@ -25,7 +25,7 @@ public class EnvironmentController {
      */
     private void createObjects(ViewController viewController) {
         try{
-            // grass floor
+            // grasss
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                     environmentObjects.append(new Environment("grass.png", i*500, j*500));
@@ -56,18 +56,6 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
             for (int i = 32; i < 6*64; i = i + 64)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
-
-            // muffin
-            collidableEnvironmentObjects.append(new CollidableEnvironment("muffin.png", kitchenOffset[0], kitchenOffset[1]));
-
-            // cawfee >w<
-            collidableEnvironmentObjects.append(new CollidableEnvironment("cawfee.png", kitchenOffset[0]-2*32, kitchenOffset[1]));
-
-            // spaghet
-            collidableEnvironmentObjects.append(new CollidableEnvironment("spaghet.png", kitchenOffset[0]-4*32, kitchenOffset[1]));
-
-            // mikado
-            collidableEnvironmentObjects.append(new CollidableEnvironment("mikado.png", kitchenOffset[0]-6*32, kitchenOffset[1]));
 
             // draws created objects
             environmentObjects.toFirst();

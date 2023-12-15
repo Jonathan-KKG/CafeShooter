@@ -7,6 +7,7 @@ import my_project.model.DishUI;
 public class GUIManager {
 
     DishUI dishUI;
+
     /**
      * Creates all GUI elements
      * @param viewController Required to draw GUI elements

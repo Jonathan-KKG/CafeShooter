@@ -19,6 +19,7 @@ public class DishController {
     /**
      * creates an array with 5 indexes and fills it with random dishes
      * creates several other dish-data-structures
+     *
      * @param pProgramController required to access other controllers
      */
     public DishController(ProgramController pProgramController) {
@@ -61,7 +62,6 @@ public class DishController {
         storedDishes[currentDish] = null;
         nextBullet();
     }
-
 
 
     /**
@@ -114,10 +114,6 @@ public class DishController {
         }
     }
 
-    public int getCurrentDishIndex() {
-        return currentDish;
-    }
-
     /**
      * sets the current bullet on the next element in the array.
      * If current bullet is last element, it starts searching from the beginning
@@ -132,28 +128,29 @@ public class DishController {
      * @return next occupied index
      */
     private int nextOccupiedIndex() {
-        if (currentDish != storedDishes.length - 1)
-            for (int i = currentDish + 1; i < storedDishes.length; i++)
-                if (storedDishes[i] != null)
-                    return i;
-
-        for (int i = 0; i < currentDish; i++)
-            if (storedDishes[i] != null)
+        for (int i = currentDish + 1; i != currentDish; i++) {
+            System.out.println(i);
+            if (i < storedDishes.length && storedDishes[i] != null)
                 return i;
+            if (i  == storedDishes.length) {
+                i = -1;
+            }
+        }
 
         return -1;
     }
 
     /**
      * creates a dish and draws it
-     * @param pX starting position
-     * @param pY starting position
+     *
+     * @param pX       starting position
+     * @param pY       starting position
      * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, int dishType) {
         Dish dish = null;
-        if(dishType>0 && dishType< 5) {
+        if (dishType > 0 && dishType < 5) {
             if (dishType == 1)
                 dish = new Dish("Muffin.png", pX, pY);
             if (dishType == 2)
@@ -162,12 +159,15 @@ public class DishController {
                 dish = new Dish("Mikado.png", pX, pY);
             if (dishType == 4)
                 dish = new Dish("Cawfee.png", pX, pY);
-        } else{
+        } else {
             System.out.println("nu uh wrong dishtype");
         }
         programController.getViewController().draw(dish);
         return dish;
     }
 
+    public int getCurrentDishIndex() {
+        return currentDish;
+    }
 
 }

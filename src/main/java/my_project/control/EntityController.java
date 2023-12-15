@@ -126,30 +126,30 @@ public class EntityController {
     /**
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
      *
-     * @param collider object the entity could be colliding with
-     * @param entity   entity that should be checked
-     * @param pos      the entitys current position
+     * @param collider  object the entity could be colliding with
+     * @param entity    entity that should be checked
+     * @param futurePos the entitys future position
      * @return whether collision was found or not
      */
-    private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] pos) {
+    private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos) {
         boolean collided = false;
         if (entity.collidesWith(collider)) {
             if (collider.getX() > entity.getX())
-                pos[0] = collider.getX() - entity.getWidth();
+                futurePos[0] = collider.getX() - entity.getWidth();
             else if (collider.getX() + collider.getWidth() < entity.getX() + entity.getWidth())
-                pos[0] = collider.getX() + collider.getWidth();
+                futurePos[0] = collider.getX() + collider.getWidth();
             collided = true;
         }
-        entity.setX(pos[0]);
+        entity.setX(futurePos[0]);
 
         if (entity.collidesWith(collider)) {
             if (collider.getY() > entity.getY())
-                pos[1] = collider.getY() - entity.getHeight();
+                futurePos[1] = collider.getY() - entity.getHeight();
             else if (collider.getY() + collider.getHeight() < entity.getY() + entity.getHeight())
-                pos[1] = collider.getY() + collider.getHeight() + 1;
+                futurePos[1] = collider.getY() + collider.getHeight() + 1;
             collided = true;
         }
-        entity.setY(pos[1]);
+        entity.setY(futurePos[1]);
         return collided;
     }
 

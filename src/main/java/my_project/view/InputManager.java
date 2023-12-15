@@ -65,6 +65,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
         entityController.updatePlayers(dt,
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
+
     }
 
     /**
@@ -89,8 +90,10 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param key Contains the Numbercode for the key. Can directly be loaded from the Class KeyEvent e.g. KeyEvent_VK_6
      */
     public void keyPressed(int key) {
-        if (key == KeyEvent.VK_Q)
+        if (key == KeyEvent.VK_Q) {
             programController.getCookingController().cook(1, programController.getCook(), programController.getDishController());
+
+        }
     }
 
 

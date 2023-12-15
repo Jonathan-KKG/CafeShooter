@@ -50,11 +50,11 @@ public class EntityController {
      * updates player movement
      *
      * @param dt        Time between last frame and this
-     * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : Shooter{x,y}, Cook{x,y}
+     * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : { Cook{x,y}, Shooter{x,y} }
      */
     public void updatePlayers(double dt, double[][] playerDir) {
-        checkForCollisions(dt, shooter, playerDir[0]);
-        checkForCollisions(dt, cook, playerDir[1]);
+        checkForCollisions(dt, cook, playerDir[0]);
+        checkForCollisions(dt, shooter, playerDir[1]);
     }
 
     /**

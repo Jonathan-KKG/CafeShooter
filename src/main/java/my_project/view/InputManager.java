@@ -2,7 +2,6 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
-import my_project.control.DishController;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
 import my_project.model.Cook;
@@ -49,11 +48,9 @@ public class InputManager extends InteractiveGraphicalObject {
         int yDirCook = 0;
         int xDirShooter = 0;
         int yDirShooter = 0;
-        Cook cook = programController.getCook();
 
         if (ViewController.isKeyDown(KeyEvent.VK_A))
             xDirCook = -1;
-
         if (ViewController.isKeyDown(KeyEvent.VK_D))
             xDirCook = 1;
         if (ViewController.isKeyDown(KeyEvent.VK_W))
@@ -72,7 +69,13 @@ public class InputManager extends InteractiveGraphicalObject {
         entityController.updatePlayers(dt,
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
-        moveHeldDish(cook.getX()*dt*cook.getSpeed(), cook.getY()*dt*cook.getSpeed());
+        // Move held dish with cook position
+        Dish currentDish = programController.getDishController().getFirstHeldDish();
+        Cook cook = programController.getCook();
+        if(currentDish != null) {
+            currentDish.setX(cook.getX());
+            currentDish.setY(cook.getY());
+        }
     }
 
     /**
@@ -101,19 +104,5 @@ public class InputManager extends InteractiveGraphicalObject {
 
             programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
     }
-
-    private void moveHeldDish(double pX,double pY){
-        DishController dishController = programController.getDishController();
-        if( dishController.getFirstHeldDish() != null) {
-            dishController.getFirstHeldDish().setX(pX);
-            dishController.getFirstHeldDish().setY(pY);
-
-        }
-
-
-    }
-
-
-
 
 }

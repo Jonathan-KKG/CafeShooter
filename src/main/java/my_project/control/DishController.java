@@ -1,12 +1,10 @@
 package my_project.control;
 
-import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 import my_project.model.Enemy;
 
-import javax.swing.text.View;
 
 public class DishController {
     private List<Dish> flyingDishes;
@@ -141,14 +139,6 @@ public class DishController {
         }
     }
 
-    public int getCurrentDishIndex() {
-        return currentDish;
-    }
-
-    public Dish getFirstHeldDish(){
-        return heldDishes.top();
-    }
-
     /**
      * sets the current bullet on the next element in the array.
      * If current bullet is last element, it starts searching from the beginning
@@ -175,8 +165,12 @@ public class DishController {
         return -1;
     }
 
+    public int getCurrentDishIndex() {
+        return currentDish;
+    }
 
-
-
+    public Dish getFirstHeldDish(){
+        return heldDishes.top();
+    }
 
 }

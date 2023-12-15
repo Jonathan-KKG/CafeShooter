@@ -44,15 +44,14 @@ public class CookingController {
      * @param dishType type of dish from 1-4
      * @param cook cook player to check nearest object
      * @param dishController used to create dish
-     * @return returns null
      */
     public void cook(int dishType, Cook cook, DishController dishController, ViewController viewController) {
-        Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
         CollidableEnvironment objectInRange = objectInRange(cook);
         if (objectInRange != null) {
+            Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
             dishController.addToHeldDishStack(dish);
+            viewController.draw(dish);
         }
-        viewController.draw(dish);
 
     }
 

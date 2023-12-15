@@ -21,6 +21,7 @@ public class DishController {
      * @param pProgramController required to access other controllers
      */
     public DishController(ProgramController pProgramController) {
+        currentDish = 0;
         flyingDishes = new List<>();
         heldDishes = new Stack<>();
         storedDishes = new Dish[5];
@@ -67,30 +68,6 @@ public class DishController {
             flyingDishes.getContent().setY((flyingDishes.getContent().getY() + flyingDishes.getContent().getYVel() * 500 * dt));
             flyingDishes.next();
         }
-    }
-
-    /**
-     * creates a dish
-     * @param pX starting position
-     * @param pY starting position
-     * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
-     * @return returns drawn dish
-     */
-    public Dish createDish(double pX, double pY, int dishType) {
-        Dish dish = null;
-        if(dishType>0 && dishType< 5) {
-            if (dishType == 1)
-                dish = new Dish("Muffin.png", pX, pY);
-            if (dishType == 2)
-                dish = new Dish("Spaghet.png", pX, pY);
-            if (dishType == 3)
-                dish = new Dish("Mikado.png", pX, pY);
-            if (dishType == 4)
-                dish = new Dish("Cawfee.png", pX, pY);
-        } else{
-            System.out.println("nu uh wrong dishtype");
-        }
-        return dish;
     }
 
     /**
@@ -153,9 +130,11 @@ public class DishController {
      * @return next occupied index
      */
     private int nextOccupiedIndex() {
+        if(currentDish == -1)
+            return -1;
+
         for (int i = currentDish + 1; i != currentDish; i++) {
-            System.out.println(i);
-            if (i < storedDishes.length && storedDishes[i] != null)
+            if (i < storedDishes.length && i > -1 && storedDishes[i] != null)
                 return i;
             if (i  == storedDishes.length)
                 i = -1;

@@ -26,6 +26,10 @@ public class DishController {
         heldDishes = new Stack<>();
         storedDishes = new Dish[5];
         programController = pProgramController;
+
+        for (int i = 0; i < storedDishes.length; i++) {
+            storedDishes[i] = createDish(1300 + 45d/2d + 45 * i, 840, 1);
+        }
     }
 
     /**

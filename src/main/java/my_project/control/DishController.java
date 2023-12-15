@@ -11,7 +11,7 @@ import javax.swing.text.View;
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
-    private Stack<Dish> pendingDishes;
+    private Stack<Dish> heldDishes;
 
     private ProgramController programController;
     private int currentDish;
@@ -23,16 +23,9 @@ public class DishController {
      */
     public DishController(ProgramController pProgramController) {
         flyingDishes = new List<>();
-        programController = pProgramController;
-        pendingDishes = new Stack<>();
-
-
+        heldDishes = new Stack<>();
         storedDishes = new Dish[5];
-        for (int i = storedDishes.length; i > 0; i--) {
-            int dishType = (int) (Math.random() * 4 + 1);
-            storedDishes[i - 1] = createDish(1400 + 35 * i, 840, dishType);
-        }
-
+        programController = pProgramController;
     }
 
     /**
@@ -79,6 +72,40 @@ public class DishController {
     }
 
     /**
+     * creates a dish
+     * @param pX starting position
+     * @param pY starting position
+     * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
+     * @return returns drawn dish
+     */
+    public Dish createDish(double pX, double pY, int dishType) {
+        Dish dish = null;
+        if(dishType>0 && dishType< 5) {
+            if (dishType == 1)
+                dish = new Dish("Muffin.png", pX, pY);
+            if (dishType == 2)
+                dish = new Dish("Spaghet.png", pX, pY);
+            if (dishType == 3)
+                dish = new Dish("Mikado.png", pX, pY);
+            if (dishType == 4)
+                dish = new Dish("Cawfee.png", pX, pY);
+        } else{
+            System.out.println("nu uh wrong dishtype");
+        }
+        return dish;
+    }
+
+    /**
+     * adds dish to pendingDishes stack
+     * @param dish dish that gets added
+     */
+    public void addToHeldDishStack(Dish dish){
+        heldDishes.push(dish);
+
+    }
+
+
+    /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
      *
@@ -118,6 +145,10 @@ public class DishController {
         return currentDish;
     }
 
+    public Dish getFirstHeldDish(){
+        return heldDishes.top();
+    }
+
     /**
      * sets the current bullet on the next element in the array.
      * If current bullet is last element, it starts searching from the beginning
@@ -144,30 +175,8 @@ public class DishController {
         return -1;
     }
 
-    /**
-     * creates a dish and draws it
-     * @param pX starting position
-     * @param pY starting position
-     * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
-     * @return returns drawn dish
-     */
-    public Dish createDish(double pX, double pY, int dishType) {
-        Dish dish = null;
-        if(dishType>0 && dishType< 5) {
-            if (dishType == 1)
-                dish = new Dish("Muffin.png", pX, pY);
-            if (dishType == 2)
-                dish = new Dish("Spaghet.png", pX, pY);
-            if (dishType == 3)
-                dish = new Dish("Mikado.png", pX, pY);
-            if (dishType == 4)
-                dish = new Dish("Cawfee.png", pX, pY);
-        } else{
-            System.out.println("nu uh wrong dishtype");
-        }
-        programController.getViewController().draw(dish);
-        return dish;
-    }
+
+
 
 
 }

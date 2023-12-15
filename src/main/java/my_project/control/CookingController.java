@@ -38,13 +38,28 @@ public class CookingController {
     }
 
     //TODO: swap param image for actual image of the cooked dish
-    public Dish cook(int dishType, Cook cook, DishController dishController) {
+
+    /**
+     * creates a new dish in the middle of the nearest object 
+     * @param dishType type of dish from 1-4
+     * @param cook cook player to check nearest object
+     * @param dishController used to create dish
+     * @return returns null
+     */
+    public void cook(int dishType, Cook cook, DishController dishController, ViewController viewController) {
+        Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
         CollidableEnvironment objectInRange = objectInRange(cook);
         if (objectInRange != null) {
-            dishController.createDish((objectInRange.getX()+ objectInRange.getWidth()/2)-6, (objectInRange.getY()+objectInRange.getHeight()/2)-6, dishType);
+            dishController.addToHeldDishStack(dish);
         }
-        return null;
+        viewController.draw(dish);
+
     }
+
+
+
+    
+    
 
 
 

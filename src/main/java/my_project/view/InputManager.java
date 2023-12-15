@@ -4,6 +4,9 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
+import my_project.model.Cook;
+import my_project.model.Dish;
+
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -18,6 +21,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
     /**
      * Initializes inputManager
+     *
      * @param pProgramController Needed to get Shooter & Cook objects as well as other controllers
      */
     public InputManager(ProgramController pProgramController) {
@@ -66,6 +70,13 @@ public class InputManager extends InteractiveGraphicalObject {
         entityController.updatePlayers(dt,
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
+        // Move held dish with cook position
+        Dish currentDish = programController.getDishController().getFirstHeldDish();
+        Cook cook = programController.getCook();
+        if (currentDish != null) {
+            currentDish.setX(cook.getX());
+            currentDish.setY(cook.getY());
+        }
     }
 
     /**
@@ -87,14 +98,12 @@ public class InputManager extends InteractiveGraphicalObject {
 
     /**
      * Checks if keys were pressed and forwards inputs accordingly
+     *
      * @param key Contains the Numbercode for the key. Can directly be loaded from the Class KeyEvent e.g. KeyEvent_VK_6
      */
     public void keyPressed(int key) {
-        if (key == KeyEvent.VK_Q) {
-            programController.getCookingController().cook(1, programController.getCook(), programController.getDishController());
-
-        }
+        if (key == KeyEvent.VK_Q)
+            programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
     }
-
 
 }

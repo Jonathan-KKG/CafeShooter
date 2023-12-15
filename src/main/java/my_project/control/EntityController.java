@@ -3,6 +3,7 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import my_project.model.*;
 
 public class EntityController {
@@ -91,6 +92,34 @@ public class EntityController {
                     dishList.remove();
                 }
 
+            }
+        }
+    }
+
+    public void checkForDishCollisions() {
+        boolean removed = false;
+        programController.getDishController().getFlyingDishes().toFirst();
+        while (programController.getDishController().getFlyingDishes().hasAccess()) {
+            for (int i = 0; i < programController.getWaveController().getWave().length; i++) {
+                if (programController.getWaveController().getWave()[i] != null && programController.getDishController().getFlyingDishes().getContent().collidesWith(programController.getWaveController().getWave()[i])) {
+                    if (programController.getWaveController().getWave()[i].getRequiredDish().equals(programController.getDishController().getFlyingDishes().getContent().getType())) {
+                        programController.removeDrawableFromScene(programController.getWaveController().getWave()[i]);
+                        removed = true;
+                    }
+                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                    programController.getDishController().getFlyingDishes().remove();
+                    if (removed)
+                        programController.getWaveController().getWave()[i] = null;
+                    else if (programController.getDishController().getFlyingDishes().hasAccess() && (programController.getDishController().getFlyingDishes().getContent().getY() + programController.getDishController().getFlyingDishes().getContent().getHeight() < 0 ||
+                            programController.getDishController().getFlyingDishes().getContent().getY() > 1109 ||
+                            programController.getDishController().getFlyingDishes().getContent().getX() + programController.getDishController().getFlyingDishes().getContent().getWidth() < 0 ||
+                            programController.getDishController().getFlyingDishes().getContent().getX() > 1920)
+                    ) {
+                        programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                        programController.getDishController().getFlyingDishes().remove();
+                    } else
+                        programController.getDishController().getFlyingDishes().next();
+                }
             }
         }
     }

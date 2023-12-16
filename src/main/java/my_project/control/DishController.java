@@ -83,43 +83,6 @@ public class DishController {
 
     }
 
-
-    /**
-     * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
-     * All Dishes outside the map get deleted.
-     *
-     * @param pEnemies an Array of all existing Enemies
-     */
-    public void checkCollisions(Enemy[] pEnemies) {
-        flyingDishes.toFirst();
-        boolean removed = false;
-        while (flyingDishes.hasAccess()) {
-            for (int i = 0; i < pEnemies.length; i++) {
-                if (pEnemies[i] != null && flyingDishes.getContent().collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequiredDish().equals(flyingDishes.getContent().getType())) {
-                        programController.removeDrawableFromScene(pEnemies[i]);
-                        pEnemies[i] = null;
-                        removed = true;
-                    }
-                    i = pEnemies.length;
-                    programController.removeDrawableFromScene(flyingDishes.getContent());
-                    flyingDishes.remove();
-                }
-            }
-            if (!removed) {
-                flyingDishes.next();
-                if (flyingDishes.hasAccess() && (flyingDishes.getContent().getY() + flyingDishes.getContent().getHeight() < 0 ||
-                        flyingDishes.getContent().getY() > 1109 ||
-                        flyingDishes.getContent().getX() + flyingDishes.getContent().getWidth() < 0 ||
-                        flyingDishes.getContent().getX() > 1920)
-                ) {
-                    programController.removeDrawableFromScene(flyingDishes.getContent());
-                    flyingDishes.remove();
-                }
-            }
-        }
-    }
-
     /**
      * sets the current bullet on the next element in the array.
      * If current bullet is last element, it starts searching from the beginning
@@ -182,4 +145,7 @@ public class DishController {
         return heldDishes.top();
     }
 
+    public List<Dish> getFlyingDishes() {
+        return flyingDishes;
+    }
 }

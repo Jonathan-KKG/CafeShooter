@@ -82,6 +82,42 @@ public class EntityController {
     }
 
     /**
+     * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
+     * All Dishes outside the map get deleted.
+     *
+     * @param pEnemies an Array of all existing Enemies
+     */
+    public void checkDishCollisions(Enemy[] pEnemies) {
+        programController.getDishController().getFlyingDishes().toFirst();
+        boolean removed = false;
+        while (programController.getDishController().getFlyingDishes().hasAccess()) {
+            for (int i = 0; i < pEnemies.length; i++) {
+                if (pEnemies[i] != null && programController.getDishController().getFlyingDishes().getContent().collidesWith(pEnemies[i])) {
+                    if (pEnemies[i].getRequiredDish().equals(programController.getDishController().getFlyingDishes().getContent().getType())) {
+                        programController.removeDrawableFromScene(pEnemies[i]);
+                        pEnemies[i] = null;
+                        removed = true;
+                    }
+                    i = pEnemies.length;
+                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                    programController.getDishController().getFlyingDishes().remove();
+                }
+            }
+            if (!removed) {
+                programController.getDishController().getFlyingDishes().next();
+                if (programController.getDishController().getFlyingDishes().hasAccess() && (programController.getDishController().getFlyingDishes().getContent().getY() + programController.getDishController().getFlyingDishes().getContent().getHeight() < 0 ||
+                        programController.getDishController().getFlyingDishes().getContent().getY() > 1109 ||
+                        programController.getDishController().getFlyingDishes().getContent().getX() + programController.getDishController().getFlyingDishes().getContent().getWidth() < 0 ||
+                        programController.getDishController().getFlyingDishes().getContent().getX() > 1920)
+                ) {
+                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                    programController.getDishController().getFlyingDishes().remove();
+                }
+            }
+        }
+    }
+
+    /**
      * Searches for collision with a collidable Environment object & prevents collision by setting position accordingly
      *
      * @param entity    The entity that should be checked for collisions

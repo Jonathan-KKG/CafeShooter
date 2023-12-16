@@ -74,10 +74,9 @@ public class EntityController {
                 entity,
                 entityDir
         );
-
         double[] pos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         // Check collision w/ collidable Environment
-        checkEnvironmentCollision(entity, pos);
+        checkEnvironmentCollision(entity, pos, entityDir);
 
     }
 
@@ -123,7 +122,7 @@ public class EntityController {
      * @param entity    The entity that should be checked for collisions
      * @param entityPos Entity direction that should be adjusted
      */
-    private void checkEnvironmentCollision(Entity entity, double[] entityPos) {
+    private void checkEnvironmentCollision(Entity entity, double[] entityPos, double[] entityDir) {
         List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
         envObjs.toFirst();
         while (envObjs.hasAccess()) {
@@ -132,7 +131,7 @@ public class EntityController {
                 boolean collided = keepOutOfBounds(
                         env,
                         entity,
-                        entityPos);
+                        entityPos, entityDir);
                 if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
                     env.reduceHP();
             }
@@ -161,31 +160,39 @@ public class EntityController {
 
     /**
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
-     *
+     * It works don't touch it (Only god knows why it works)
      * @param collider  object the entity could be colliding with
      * @param entity    entity that should be checked
      * @param futurePos the entitys future position
      * @return whether collision was found or not
      */
-    private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos) {
+    private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
         boolean collided = false;
-        if (entity.collidesWith(collider)) {
-            if (collider.getX() > entity.getX())
-                futurePos[0] = collider.getX() - entity.getWidth();
-            else if (collider.getX() + collider.getWidth() < entity.getX() + entity.getWidth())
-                futurePos[0] = collider.getX() + collider.getWidth();
+
+        boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 2.5;
+        boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() <= collider.getY() + 2.5;
+        boolean entityCompletelyIsRightOfCollider = entity.getX() >= collider.getX() + collider.getWidth() - 4;
+        boolean entityCompletelyIsLeftOfCollider = entity.getX() + entity.getWidth() <= collider.getX() + 3.5;
+
+        if (entity.collidesWith(collider) && entityDir[0] > 0 && collider.getX() > futurePos[0] && !(entityCompletelyIsOverCollider || entityCompletelyIsUnderCollider)) {
+            futurePos[0] = collider.getX() - entity.getWidth();
+            collided = true;
+        }
+        if (entity.collidesWith(collider) && entityDir[0] < 0 && collider.getX() + collider.getWidth() < futurePos[0] + entity.getWidth() && !(entityCompletelyIsOverCollider || entityCompletelyIsUnderCollider)) {
+            futurePos[0] = collider.getX() + collider.getWidth();
             collided = true;
         }
         entity.setX(futurePos[0]);
 
-        if (entity.collidesWith(collider)) {
-            if (collider.getY() > entity.getY())
+        if (entity.collidesWith(collider) && !(entityCompletelyIsRightOfCollider || entityCompletelyIsLeftOfCollider)) {
+            if (collider.getY() > futurePos[1])
                 futurePos[1] = collider.getY() - entity.getHeight();
-            else if (collider.getY() + collider.getHeight() < entity.getY() + entity.getHeight())
+            else if (collider.getY() + collider.getHeight() < futurePos[1] + entity.getHeight())
                 futurePos[1] = collider.getY() + collider.getHeight() + 1;
             collided = true;
         }
         entity.setY(futurePos[1]);
+
         return collided;
     }
 

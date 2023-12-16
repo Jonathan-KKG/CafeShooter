@@ -169,11 +169,13 @@ public class EntityController {
     private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
         boolean collided = false;
 
-        boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 2.5;
-        boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() <= collider.getY() + 2.5;
-        boolean entityCompletelyIsRightOfCollider = entity.getX() >= collider.getX() + collider.getWidth() - 4;
-        boolean entityCompletelyIsLeftOfCollider = entity.getX() + entity.getWidth() <= collider.getX() + 3.5;
+        boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 2.5; // I don't know about the offsets don't ask me
+        boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() < collider.getY() + 2.5;
+        boolean entityCompletelyIsRightOfCollider = entity.getX() > collider.getX() + collider.getWidth() - 4;
+        boolean entityCompletelyIsLeftOfCollider = entity.getX() + entity.getWidth() < collider.getX() + 3.5;
 
+        // Do NOT question the structure of the following 5 if statements
+        // correct x position
         if (entity.collidesWith(collider) && entityDir[0] > 0 && collider.getX() > futurePos[0] && !(entityCompletelyIsOverCollider || entityCompletelyIsUnderCollider)) {
             futurePos[0] = collider.getX() - entity.getWidth();
             collided = true;
@@ -184,6 +186,7 @@ public class EntityController {
         }
         entity.setX(futurePos[0]);
 
+        // correct y position
         if (entity.collidesWith(collider) && !(entityCompletelyIsRightOfCollider || entityCompletelyIsLeftOfCollider)) {
             if (collider.getY() > futurePos[1])
                 futurePos[1] = collider.getY() - entity.getHeight();

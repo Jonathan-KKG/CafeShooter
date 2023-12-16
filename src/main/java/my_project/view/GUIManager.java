@@ -13,7 +13,7 @@ public class GUIManager {
      * @param viewController Required to draw GUI elements
      */
     public GUIManager(ViewController viewController){
-        dishUI = new DishUI(1425,834);
+        dishUI = new DishUI(1317,834);
         viewController.draw(dishUI);
     }
 
@@ -23,9 +23,9 @@ public class GUIManager {
      */
     public void moveAmmoIndicator(int element){
         if(element != -1)
-            dishUI.setX(dishUI.getPosition()[0] + 10 + 35 * element);
+            dishUI.setX(1317 + 45 * element);
         else
-            dishUI.setX(dishUI.getPosition()[0] + 10);
+            dishUI.setX(1317);
     }
 
 }

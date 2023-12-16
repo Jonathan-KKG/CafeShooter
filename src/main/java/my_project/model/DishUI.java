@@ -33,7 +33,7 @@ public class DishUI extends GraphicalObject {
         // lets fix this later.
         //UI Index
         drawTool.setCurrentColor(20,240,20,180);
-        drawTool.drawRectangle(x,y,45, 40);
+        drawTool.drawRectangle(x,y,40, 40);
     }
 
     public double[] getPosition() {

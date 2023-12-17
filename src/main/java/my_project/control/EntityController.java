@@ -41,7 +41,7 @@ public class EntityController {
             dir[0] /= distance;
             dir[1] /= distance;
             if (distance != 0)
-                checkForCollisions(dt, enemies[i], dir);
+                checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
         }
     }
 
@@ -52,8 +52,8 @@ public class EntityController {
      * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : { Cook{x,y}, Shooter{x,y} }
      */
     public void updatePlayers(double dt, double[][] playerDir) {
-        checkForCollisions(dt, cook, playerDir[0]);
-        checkForCollisions(dt, shooter, playerDir[1]);
+        checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
+        checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
     }
 
     /**
@@ -86,7 +86,7 @@ public class EntityController {
                 if (currentDish == null) break;
                 double[] futurePos = new double[]{currentDish.getX(), currentDish.getY()};
 
-                if (keepVerticallyInsideScreen(currentDish.getDirection(), futurePos, currentDish) || keepHorizontallyInsideScreen(currentDish.getDirection(), futurePos, currentDish)) {
+                if (keepInsideScreen(currentDish.getDirection(), futurePos, currentDish)) {
                     programController.removeDrawableFromScene(currentDish);
                     dishList.remove();
                 }
@@ -104,7 +104,7 @@ public class EntityController {
      * @param entity    The entity that should be checked for collisions
      * @param entityDir direction the enemy is moving with
      */
-    private void checkForCollisions(double dt, Entity entity, double[] entityDir) {
+    private void checkForScreenAndEnvironCollisions(double dt, Entity entity, double[] entityDir) {
         double[] entityPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
 
@@ -131,12 +131,12 @@ public class EntityController {
      */
     private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
         boolean collided = false;
+        keepInsideScreen(entityDir, futurePos, entity);
+
         if (keepOutOfX(collider, entity, futurePos, entityDir)) collided = true;
-        keepHorizontallyInsideScreen(entityDir, futurePos, entity);
         entity.setX(futurePos[0]);
 
         if (keepOutOfY(collider, entity, futurePos)) collided = true;
-        keepVerticallyInsideScreen(entityDir, futurePos, entity);
         entity.setY(futurePos[1]);
 
         return collided;
@@ -186,13 +186,13 @@ public class EntityController {
         return collided;
     }
 
-    /**Checks whether entity will be horizontally out of the screen and adjusts futurePos accordingly to prevent that
+    /**Checks whether entity will be out of the screen and adjusts futurePos accordingly to prevent that
      * @param entityDir direction the entity is moving with
      * @param futurePos the entitys future position that will be adjusted
      * @param entity entity that should be checked
      * @return whether collision was found or not
      */
-    private boolean keepHorizontallyInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
+    private boolean keepInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
         if (entityDir[0] < 0 && 1 > futurePos[0]) {
             futurePos[0] = 1;
             return true;
@@ -200,16 +200,6 @@ public class EntityController {
             futurePos[0] = 1920 * 0.85 - 16 - entity.getWidth();
             return true;
         }
-        return false;
-    }
-
-    /**Checks whether entity will be vertically out of the screen and adjusts futurePos accordingly to prevent that
-     * @param entityDir direction the entity is moving with
-     * @param futurePos the entitys future position that will be adjusted
-     * @param entity entity that should be checked
-     * @return whether collision was found or not
-     */
-    private boolean keepVerticallyInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
         if (entityDir[1] > 0 && 1080 * 0.85 - 39 < futurePos[1] + entity.getHeight()) {
             futurePos[1] = 1080 * 0.85 - 39 - entity.getWidth();
             return true;

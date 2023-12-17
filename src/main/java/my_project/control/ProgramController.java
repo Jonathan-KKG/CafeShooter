@@ -2,7 +2,6 @@ package my_project.control;
 
 import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import my_project.model.*;
 import my_project.view.GUIManager;
 import my_project.view.InputManager;
@@ -36,7 +35,7 @@ public class ProgramController {
         cookingController = new CookingController(environmentController);
         dishController = new DishController(this);
         inputManager = new InputManager(this);
-        waveController = new WaveController(this);
+        waveController = new WaveController(viewController);
 
         viewController.register(inputManager);
     }
@@ -51,7 +50,7 @@ public class ProgramController {
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
         entityController.checkDishCollisions(waveController.getWave());
-        waveController.checkForNewWave();
+        waveController.checkForNewWave(viewController);
     }
 
     /**

@@ -6,16 +6,14 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Enemy extends Entity {
-    private int enemyType;
     private String requiredDish;
 
-    /**
+    /**Creates Enemy object of a specific type
      * @param pX the start x-Position
      * @param pY the start y-Position
      */
     public Enemy(int enemyType, Double pX, Double pY) {
         super(pX, pY);
-
         String filepath = "src/main/resources/graphic/";
         switch (enemyType) {
             case 1 -> {
@@ -47,7 +45,7 @@ public class Enemy extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        speed = 100;
+        speed = 50;
         width = myImage.getWidth();
         height = myImage.getHeight();
     }

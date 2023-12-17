@@ -34,8 +34,7 @@ public class EntityController {
      */
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] == null)
-                return;
+            if (enemies[i] == null) return;
 
             double[] dir = {target.getX() - enemies[i].getX(), target.getY() - enemies[i].getY()};
             double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
@@ -58,40 +57,18 @@ public class EntityController {
     }
 
     /**
-     * Checks for any collisions & adjusts Dir accordingly
-     *
-     * @param dt        time passed between this frame and last one
-     * @param entity    entity that should be checked
-     * @param entityDir direction the entity is moving
-     */
-    private void checkForCollisions(double dt, Entity entity, double[] entityDir) {
-        // Check collision w/ screen borders
-        keepWithinScreen(
-                new double[][]{
-                        {0, 1920 * 0.85 - 19},
-                        {1080 * 0.85 - 40, 0}
-                },
-                entity,
-                entityDir
-        );
-        double[] pos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
-        // Check collision w/ collidable Environment
-        checkEnvironmentCollision(entity, pos, entityDir);
-
-    }
-
-    /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
      *
      * @param pEnemies an Array of all existing Enemies
      */
     public void checkDishCollisions(Enemy[] pEnemies) {
-        programController.getDishController().getFlyingDishes().toFirst();
+        List<Dish> dishList = programController.getDishController().getFlyingDishes();
+        dishList.toFirst();
         boolean removed = false;
-        while (programController.getDishController().getFlyingDishes().hasAccess()) {
+        while (dishList.hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
-                Dish currentDish = programController.getDishController().getFlyingDishes().getContent();
+                Dish currentDish = dishList.getContent();
                 if (pEnemies[i] != null && currentDish.collidesWith(pEnemies[i])) {
                     if (pEnemies[i].getRequiredDish().equals(currentDish.getType())) {
                         programController.removeDrawableFromScene(pEnemies[i]);
@@ -100,40 +77,42 @@ public class EntityController {
                     }
                     i = pEnemies.length;
                     programController.removeDrawableFromScene(currentDish);
-                    programController.getDishController().getFlyingDishes().remove();
+                    dishList.remove();
                 }
             }
             if (!removed) {
-                programController.getDishController().getFlyingDishes().next();
-                Dish currentDish = programController.getDishController().getFlyingDishes().getContent();
-                if (programController.getDishController().getFlyingDishes().hasAccess() && (currentDish.getY() + currentDish.getHeight() < 0 ||
-                        currentDish.getY() > 1109 ||
-                        currentDish.getX() + currentDish.getWidth() < 0 ||
-                        currentDish.getX() > 1920)
-                ) {
+                dishList.next();
+                Dish currentDish = dishList.getContent();
+                if (currentDish == null) break;
+                double[] futurePos = new double[]{currentDish.getX(), currentDish.getY()};
+
+                if (keepVerticallyInsideScreen(currentDish.getDirection(), futurePos, currentDish) || keepHorizontallyInsideScreen(currentDish.getDirection(), futurePos, currentDish)) {
                     programController.removeDrawableFromScene(currentDish);
-                    programController.getDishController().getFlyingDishes().remove();
+                    dishList.remove();
                 }
+
             }
         }
     }
 
     /**
-     * Searches for collision with a collidable Environment object & prevents collision by setting position accordingly
+     * Searches for collisions with collidable Environment object
+     * <br> or screen border & prevents collision by adjusting
+     * <br> and setting position accordingly
      *
+     * @param dt        Time passed between this and last frame
      * @param entity    The entity that should be checked for collisions
-     * @param entityPos Entity direction that should be adjusted
+     * @param entityDir direction the enemy is moving with
      */
-    private void checkEnvironmentCollision(Entity entity, double[] entityPos, double[] entityDir) {
+    private void checkForCollisions(double dt, Entity entity, double[] entityDir) {
+        double[] entityPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
+
         envObjs.toFirst();
         while (envObjs.hasAccess()) {
             if (envObjs.getContent().isColliderActive()) {
                 CollidableEnvironment env = envObjs.getContent();
-                boolean collided = keepOutOfBounds(
-                        env,
-                        entity,
-                        entityPos, entityDir);
+                boolean collided = keepOutOfBounds(env, entity, entityPos, entityDir);
                 if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
                     env.reduceHP();
             }
@@ -142,36 +121,9 @@ public class EntityController {
     }
 
     /**
-     * Checks if gO is moving within screen. If not, prevents moving further out by adjusting direction
-     *
-     * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
-     * @param entity     entity that should be checked
-     * @param entityDir  direction the entity is moving
-     * @return whether entity's direction had to be adjusted or not
-     */
-    private boolean keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
-        boolean collided = false;
-        if (
-                entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
-                        entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
-        ){
-            entityDir[0] = 0;
-            collided = true;
-        }
-
-        if (
-                entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
-                        entityDir[1] < 0 && boundaries[1][1] > entity.getY()
-        ){
-            entityDir[1] = 0;
-            collided = true;
-        }
-        return collided;
-    }
-
-    /**
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
-     * It works don't touch it (Only god knows why it works)
+     * <br> It works don't touch it (Only god knows why it works)
+     * <br> This method is the only instance of actually setting positions of Players and Enemies
      * @param collider  object the entity could be colliding with
      * @param entity    entity that should be checked
      * @param futurePos the entitys future position
@@ -179,14 +131,29 @@ public class EntityController {
      */
     private boolean keepOutOfBounds(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
         boolean collided = false;
+        if (keepOutOfX(collider, entity, futurePos, entityDir)) collided = true;
+        keepHorizontallyInsideScreen(entityDir, futurePos, entity);
+        entity.setX(futurePos[0]);
 
+        if (keepOutOfY(collider, entity, futurePos)) collided = true;
+        keepVerticallyInsideScreen(entityDir, futurePos, entity);
+        entity.setY(futurePos[1]);
+
+        return collided;
+    }
+
+    /** Checks if entity is horizontally colliding with collider and adjusts futurePos accordingly to prevent clipping
+     * @param collider  object the entity could be colliding with
+     * @param entity entity that should be checked
+     * @param futurePos the entitys future position that will be adjusted
+     * @param entityDir direction the entity is moving with
+     * @return whether collision was found or not
+     */
+    private boolean keepOutOfX(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
+        boolean collided = false;
         boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 2.5; // I don't know about the offsets don't ask me
         boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() < collider.getY() + 2.5;
-        boolean entityCompletelyIsRightOfCollider = entity.getX() > collider.getX() + collider.getWidth() - 4;
-        boolean entityCompletelyIsLeftOfCollider = entity.getX() + entity.getWidth() < collider.getX() + 3.5;
 
-        // Do NOT question the structure of the following 5 if statements
-        // correct x position
         if (entity.collidesWith(collider) && entityDir[0] > 0 && collider.getX() > futurePos[0] && !(entityCompletelyIsOverCollider || entityCompletelyIsUnderCollider)) {
             futurePos[0] = collider.getX() - entity.getWidth();
             collided = true;
@@ -195,19 +162,62 @@ public class EntityController {
             futurePos[0] = collider.getX() + collider.getWidth();
             collided = true;
         }
-        entity.setX(futurePos[0]);
+        return collided;
+    }
 
-        // correct y position
+    /** Checks if entity is vertically colliding with collider and adjusts futurePos accordingly to prevent clipping
+     * @param collider  object the entity could be colliding with
+     * @param entity entity that should be checked
+     * @param futurePos the entitys future position that will be adjusted
+     * @return whether collision was found or not
+     */
+    private boolean keepOutOfY(GraphicalObject collider, Entity entity, double[] futurePos) {
+        boolean collided = false;
+        boolean entityCompletelyIsRightOfCollider = entity.getX() > collider.getX() + collider.getWidth() - 4;
+        boolean entityCompletelyIsLeftOfCollider = entity.getX() + entity.getWidth() < collider.getX() + 3.5;
+
         if (entity.collidesWith(collider) && !(entityCompletelyIsRightOfCollider || entityCompletelyIsLeftOfCollider)) {
-            if (collider.getY() > futurePos[1])
-                futurePos[1] = collider.getY() - entity.getHeight();
+            if (collider.getY() > futurePos[1]) futurePos[1] = collider.getY() - entity.getHeight();
             else if (collider.getY() + collider.getHeight() < futurePos[1] + entity.getHeight())
                 futurePos[1] = collider.getY() + collider.getHeight() + 1;
             collided = true;
         }
-        entity.setY(futurePos[1]);
 
         return collided;
+    }
+
+    /**Checks whether entity will be horizontally out of the screen and adjusts futurePos accordingly to prevent that
+     * @param entityDir direction the entity is moving with
+     * @param futurePos the entitys future position that will be adjusted
+     * @param entity entity that should be checked
+     * @return whether collision was found or not
+     */
+    private boolean keepHorizontallyInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
+        if (entityDir[0] < 0 && 1 > futurePos[0]) {
+            futurePos[0] = 1;
+            return true;
+        } else if (entityDir[0] > 0 && 1920 * 0.85 - 16 < futurePos[0] + entity.getWidth()) {
+            futurePos[0] = 1920 * 0.85 - 16 - entity.getWidth();
+            return true;
+        }
+        return false;
+    }
+
+    /**Checks whether entity will be vertically out of the screen and adjusts futurePos accordingly to prevent that
+     * @param entityDir direction the entity is moving with
+     * @param futurePos the entitys future position that will be adjusted
+     * @param entity entity that should be checked
+     * @return whether collision was found or not
+     */
+    private boolean keepVerticallyInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
+        if (entityDir[1] > 0 && 1080 * 0.85 - 39 < futurePos[1] + entity.getHeight()) {
+            futurePos[1] = 1080 * 0.85 - 39 - entity.getWidth();
+            return true;
+        } else if (entityDir[1] < 0 && 0 > futurePos[1]) {
+            futurePos[1] = 1;
+            return true;
+        }
+        return false;
     }
 
     public Cook getCook() {

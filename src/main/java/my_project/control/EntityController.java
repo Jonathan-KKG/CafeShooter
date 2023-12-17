@@ -91,25 +91,27 @@ public class EntityController {
         boolean removed = false;
         while (programController.getDishController().getFlyingDishes().hasAccess()) {
             for (int i = 0; i < pEnemies.length; i++) {
-                if (pEnemies[i] != null && programController.getDishController().getFlyingDishes().getContent().collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequiredDish().equals(programController.getDishController().getFlyingDishes().getContent().getType())) {
+                Dish currentDish = programController.getDishController().getFlyingDishes().getContent();
+                if (pEnemies[i] != null && currentDish.collidesWith(pEnemies[i])) {
+                    if (pEnemies[i].getRequiredDish().equals(currentDish.getType())) {
                         programController.removeDrawableFromScene(pEnemies[i]);
                         pEnemies[i] = null;
                         removed = true;
                     }
                     i = pEnemies.length;
-                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                    programController.removeDrawableFromScene(currentDish);
                     programController.getDishController().getFlyingDishes().remove();
                 }
             }
             if (!removed) {
                 programController.getDishController().getFlyingDishes().next();
-                if (programController.getDishController().getFlyingDishes().hasAccess() && (programController.getDishController().getFlyingDishes().getContent().getY() + programController.getDishController().getFlyingDishes().getContent().getHeight() < 0 ||
-                        programController.getDishController().getFlyingDishes().getContent().getY() > 1109 ||
-                        programController.getDishController().getFlyingDishes().getContent().getX() + programController.getDishController().getFlyingDishes().getContent().getWidth() < 0 ||
-                        programController.getDishController().getFlyingDishes().getContent().getX() > 1920)
+                Dish currentDish = programController.getDishController().getFlyingDishes().getContent();
+                if (programController.getDishController().getFlyingDishes().hasAccess() && (currentDish.getY() + currentDish.getHeight() < 0 ||
+                        currentDish.getY() > 1109 ||
+                        currentDish.getX() + currentDish.getWidth() < 0 ||
+                        currentDish.getX() > 1920)
                 ) {
-                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
+                    programController.removeDrawableFromScene(currentDish);
                     programController.getDishController().getFlyingDishes().remove();
                 }
             }

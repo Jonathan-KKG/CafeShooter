@@ -14,7 +14,8 @@ public class WaveController {
             Enemy[] enemies = new Enemy[i];
             try {
                 for (int j = 0; j < enemies.length; j++) {
-                    enemies[j] = new Enemy(100., 300.);
+                    int enemyType = (int) (Math.random() * 4 + 1);
+                    enemies[j] = new Enemy(enemyType, 100., 300.);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

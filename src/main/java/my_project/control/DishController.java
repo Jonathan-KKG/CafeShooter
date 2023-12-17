@@ -3,7 +3,6 @@ package my_project.control;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
-import my_project.model.Enemy;
 
 
 public class DishController {
@@ -120,14 +119,12 @@ public class DishController {
     public Dish createDish(double pX, double pY, int dishType) {
         Dish dish = null;
         if (dishType > 0 && dishType < 5) {
-            if (dishType == 1)
-                dish = new Dish("muffin.png", pX, pY);
-            if (dishType == 2)
-                dish = new Dish("spaghet.png", pX, pY);
-            if (dishType == 3)
-                dish = new Dish("mikado.png", pX, pY);
-            if (dishType == 4)
-                dish = new Dish("cawfee.png", pX, pY);
+            switch (dishType) {
+                case 1 -> dish = new Dish("muffin.png", pX, pY);
+                case 2 -> dish = new Dish("spaghet.png", pX, pY);
+                case 3 -> dish = new Dish("mikado.png", pX, pY);
+                case 4 -> dish = new Dish("cawfee.png", pX, pY);
+            }
         } else {
             System.out.println("nu uh wrong dishtype");
         }

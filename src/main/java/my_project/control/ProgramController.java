@@ -22,14 +22,14 @@ public class ProgramController {
     /**
      * @param viewController A class that manages the visuals and inputs.
      */
-    public ProgramController(ViewController viewController){
+    public ProgramController(ViewController viewController) {
         this.viewController = viewController;
     }
 
     /**
      * Creates all controllers and initializes program
      */
-    public void startProgram(){
+    public void startProgram() {
         environmentController = new EnvironmentController(viewController);
         guiManager = new GUIManager(viewController);
         entityController = new EntityController(this, viewController);
@@ -43,6 +43,7 @@ public class ProgramController {
 
     /**
      * Updates the Program.
+     *
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt){
@@ -55,21 +56,22 @@ public class ProgramController {
 
     /**
      * Removes a drawable object from the scene
+     *
      * @param drawable Object to be removed
      */
-    public void removeDrawableFromScene(Drawable drawable){
+    public void removeDrawableFromScene(Drawable drawable) {
         viewController.removeDrawable(drawable);
     }
 
-    public Shooter getShooter(){
+    public Shooter getShooter() {
         return entityController.getShooter();
     }
 
-    public Cook getCook(){
+    public Cook getCook() {
         return entityController.getCook();
     }
 
-    public CookingController getCookingController(){
+    public CookingController getCookingController() {
         return cookingController;
     }
 

@@ -17,8 +17,8 @@ public class EntityController {
     public EntityController(ProgramController pProgramController, ViewController viewController) {
         programController = pProgramController;
 
-        shooter = new Shooter(150, 150);
-        cook = new Cook(800, 800);
+        shooter = new Shooter("img.png", 150, 150);
+        cook = new Cook("img.png", 800, 800);
 
         viewController.draw(shooter);
         viewController.draw(cook);
@@ -145,17 +145,26 @@ public class EntityController {
      * @param boundaries 2D array: {x{LeftBorder, RightBorder}, y{BottomBorder, UpperBorder}}
      * @param entity     entity that should be checked
      * @param entityDir  direction the entity is moving
+     * @return whether entity's direction had to be adjusted or not
      */
-    private void keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
+    private boolean keepWithinScreen(double[][] boundaries, Entity entity, double[] entityDir) {
+        boolean collided = false;
         if (
                 entityDir[0] < 0 && boundaries[0][0] > entity.getX() ||
                         entityDir[0] > 0 && boundaries[0][1] < entity.getX() + entity.getWidth()
-        ) entityDir[0] = 0;
+        ){
+            entityDir[0] = 0;
+            collided = true;
+        }
 
         if (
                 entityDir[1] > 0 && boundaries[1][0] < entity.getY() + entity.getHeight() ||
                         entityDir[1] < 0 && boundaries[1][1] > entity.getY()
-        ) entityDir[1] = 0;
+        ){
+            entityDir[1] = 0;
+            collided = true;
+        }
+        return collided;
     }
 
     /**

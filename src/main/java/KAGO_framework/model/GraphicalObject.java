@@ -44,12 +44,12 @@ public class GraphicalObject implements Drawable {
      * verwendet werden. Zudem kann es positioniert werden.
      * @param x die x-Koordinate (obere linke Ecke)
      * @param y die y-Koordinate (obere linke Ecke)
-     * @param picturePath
+     * @param filename
      */
-    public GraphicalObject(String picturePath, double x, double y){
+    public GraphicalObject(String filename, double x, double y){
         this.x = x;
         this.y = y;
-        this.setNewImage(picturePath);
+        this.setNewImage("src/main/resources/graphic/" + filename);
     }
 
     /**

@@ -1,8 +1,7 @@
 package my_project.model;
 
 public class Dish extends Item {
-    private double xVel;
-    private double yVel;
+    private double direction[];
     private String type;
 
 
@@ -14,23 +13,16 @@ public class Dish extends Item {
      */
     public Dish(String filename, double pX, double pY) {
         super(filename,pX,pY);
+        speed = 500;
         type = filename;
     }
 
-    public void setXVel(double xVel) {
-        this.xVel = xVel;
+    public void setDirection(double[] dir) {
+        direction = dir;
     }
 
-    public void setYVel(double yVel) {
-        this.yVel = yVel;
-    }
-
-    public double setXVel() {
-        return xVel;
-    }
-
-    public double getYVel() {
-        return yVel;
+    public double[] getDirection() {
+        return direction;
     }
 
     public String getType() {

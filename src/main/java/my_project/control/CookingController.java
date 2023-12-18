@@ -11,13 +11,20 @@ public class CookingController {
     private double time;
     private ProgramController programController;
 
-
+    /**
+     * creates an cookingController objet.
+     * @param pProgramController nessesery to reach all others controllers
+     */
     public CookingController(ProgramController pProgramController) {
         programController = pProgramController;
         cookingStations = programController.getEnvironmentController().getCookingStations();
         isCooking = false;
     }
 
+    /**
+     * updates time and removes skillcheck after 3 seconds
+     * @param dt Time passed between this and last frame
+     */
     public void updateCooking(double dt) {
         if (isCooking)
             time += dt;
@@ -71,11 +78,14 @@ public class CookingController {
         }
     }
 
+    /**
+     * if there is an active check addes an click
+     */
     public void addClick() {
         if (isCooking) {
-            String dishType = programController.getUiController().getCurrentSkillCheckType();
             if(!programController.getUiController().progressSkillCheck(programController)){
                 Cook cook = programController.getCook();
+                String dishType = programController.getUiController().getCurrentSkillCheckType();
                 programController.getDishController().addToHeldDishStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
                 isCooking = false;

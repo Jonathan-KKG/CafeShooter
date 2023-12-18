@@ -67,6 +67,10 @@ public class UIController {
         return skillCheckUI.getType();
     }
 
+    /**
+     * Removes skillcheck from Draw and deletes reference.
+     * @param programController Required to remove the skillcheck
+     */
     public void deleteSkillCheckUI(ProgramController programController){
         programController.getViewController().removeDrawable(skillCheckUI);
         skillCheckUI = null;

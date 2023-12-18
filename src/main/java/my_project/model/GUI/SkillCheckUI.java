@@ -44,7 +44,9 @@ public class SkillCheckUI extends UI {
             case "spaghet.png":
                 drawOvenSC(drawTool);
                 break;
-
+            case "cawfee.png":
+                drawOvenSC(drawTool);
+                break;
         }
     }
 

@@ -70,7 +70,7 @@ public class CookingController {
         Cook cook = programController.getCook();
         CollidableEnvironment objectInRange = objectInRange();
 
-        if (objectInRange.getClass() == CookingStation.class && !isCooking) {
+        if (objectInRange != null && objectInRange.getClass() == CookingStation.class && !isCooking) {
             //TODO: stop drawing last held object, when putting new one on stack
             isCooking = true;
             time = 0;
@@ -83,9 +83,9 @@ public class CookingController {
      */
     public void addClick() {
         if (isCooking) {
+            String dishType = programController.getUiController().getCurrentSkillCheckType();
             if(!programController.getUiController().progressSkillCheck(programController)){
                 Cook cook = programController.getCook();
-                String dishType = programController.getUiController().getCurrentSkillCheckType();
                 programController.getDishController().addToHeldDishStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
                 isCooking = false;

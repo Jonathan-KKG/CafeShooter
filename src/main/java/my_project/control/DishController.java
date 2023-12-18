@@ -109,6 +109,7 @@ public class DishController {
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, String dishType) {
+        System.out.println(dishType);
         Dish dish = null;
         if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
                 dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {

@@ -50,7 +50,10 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall.png", kitchenOffset[0]-384+33*32, kitchenOffset[1]-i));
 
             // stove
-            CollidableEnvironment stove = new CookingStation("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32);
+            CollidableEnvironment stove = new CookingStation("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32, 1);
+            collidableEnvironmentObjects.append(stove);
+            cookingStations.append(stove);
+            stove = new CookingStation("stovetop.png", kitchenOffset[0]+400, kitchenOffset[1]-32-3*32,2);
             collidableEnvironmentObjects.append(stove);
             cookingStations.append(stove);
 

@@ -6,12 +6,14 @@ import java.io.File;
 public class CollidableEnvironment extends Environment{
     private boolean isColliderActive;
     private int hp;
+    private String type;
 
     /**
      * Additionally activates the collider
      */
     public CollidableEnvironment(String filename, double pX, double pY) {
         super(filename, pX, pY);
+        type = filename;
         isColliderActive = true;
         hp = 100;
     }
@@ -23,10 +25,6 @@ public class CollidableEnvironment extends Environment{
         super( pX, pY ,pWidth,pHeight);
         isColliderActive = true;
         hp = 5;
-    }
-
-    public boolean isColliderActive() {
-        return isColliderActive;
     }
 
     /**
@@ -43,5 +41,13 @@ public class CollidableEnvironment extends Environment{
             }
 
         }
+    }
+
+    public boolean isColliderActive() {
+        return isColliderActive;
+    }
+
+    public String getType() {
+        return type;
     }
 }

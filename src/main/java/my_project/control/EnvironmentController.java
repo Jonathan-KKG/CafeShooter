@@ -3,12 +3,14 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Environment;
+import my_project.model.Table;
 
 public class EnvironmentController {
     //Referenzen
     private List<Environment> environmentObjects = new List<>();
     private List<CollidableEnvironment> collidableEnvironmentObjects = new List<>();
     private List<CollidableEnvironment> cookingStations = new List<>();
+    private List<Table> tableObjects = new List<>();
 
     //Attribute
     private int[] kitchenOffset = {(int) (1080 * 0.85) - 480, (int) (1920 * 0.85) - 785};
@@ -53,9 +55,9 @@ public class EnvironmentController {
 
             // tabletop
             for (int i = 0; i < 6*64; i = i + 64)
-                collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
+                tableObjects.append(new Table("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
             for (int i = 32; i < 6*64; i = i + 64)
-                collidableEnvironmentObjects.append(new CollidableEnvironment("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
+                tableObjects.append(new Table("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
 
             // draws created objects
             environmentObjects.toFirst();
@@ -68,9 +70,24 @@ public class EnvironmentController {
                 viewController.draw(collidableEnvironmentObjects.getContent());
                 collidableEnvironmentObjects.next();
             }
+            //It ain't a duplicate stoooooppppp T-T
+            tableObjects.toFirst();
+            while(tableObjects.hasAccess()){
+                viewController.draw(tableObjects.getContent());
+                tableObjects.next();
+            }
+            tableObjects.toFirst();
+            while(tableObjects.hasAccess()){
+                viewController.draw(tableObjects.getContent());
+                tableObjects.next();
+            }
         } catch (Exception e){
             System.out.println("Creating Environment object went wrong!");
         }
+    }
+
+    public List<Table> getTableObjects() {
+        return tableObjects;
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {

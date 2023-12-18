@@ -6,7 +6,7 @@ public class CookingStation extends CollidableEnvironment {
 
     public CookingStation(String filename, double pX, double pY) {
         super(filename, pX, pY);
-        switch(filename){
+        switch (filename) {
             case "stovetop.png":
                 cookableObjs = "spaghet.png";
                 break;

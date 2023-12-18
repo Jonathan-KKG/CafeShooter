@@ -16,12 +16,20 @@ public class SkillCheckUI extends UI {
         progress = 0;
     }
 
+    /**
+     * increases the progress attribute and returns whether the skillcheck has not reached 100% completion or yes
+     * @return true if not finished (i.e. if progress was increased) and false otherwise
+     */
     public boolean increaseProgress(){
         progress += 0.1;
 
         return !(progress + 0.1 >= 1);
     }
 
+    /**
+     * Draws the skillcheck respective to its Dishtype
+     * @param drawTool Required to draw the object
+     */
     public void draw(DrawTool drawTool){
         drawTool.setLineWidth(2);
 
@@ -31,6 +39,7 @@ public class SkillCheckUI extends UI {
         setDrawToolColorToRGBABackgroundVal(drawTool);
         drawTool.drawFilledRectangle(absolutePosition[0] - width * 0.5 + 16, absolutePosition[1] - height * 0.9, width, height);
 
+        // vary for each Dishtype
         switch(type) {
             case "spaghet.png":
                 drawOvenSC(drawTool);

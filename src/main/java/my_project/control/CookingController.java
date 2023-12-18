@@ -52,7 +52,7 @@ public class CookingController {
     }
 
     /**
-     * creates a new dish in the middle of the nearest object
+     * creates a new dish if there's a cooking station nearby
      */
     public void cook() {
         Cook cook = programController.getCook();

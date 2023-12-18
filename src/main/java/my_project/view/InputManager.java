@@ -2,7 +2,6 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
-import my_project.control.DishController;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
 import my_project.model.Cook;
@@ -19,7 +18,6 @@ import java.awt.event.MouseEvent;
 public class InputManager extends InteractiveGraphicalObject {
 
     private ProgramController programController;
-    private DishController dishController;
 
     /**
      * Initializes inputManager
@@ -107,7 +105,7 @@ public class InputManager extends InteractiveGraphicalObject {
         if (key == KeyEvent.VK_SPACE)
             programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q) {
-            dishController.putDown();
+            // programController.getDishController().putDown();
             programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController);
         }
     }

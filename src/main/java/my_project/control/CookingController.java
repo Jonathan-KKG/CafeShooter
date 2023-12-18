@@ -1,6 +1,5 @@
 package my_project.control;
 
-import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Cook;
@@ -52,8 +51,6 @@ public class CookingController {
         return output;
     }
 
-
-
     /**
      * creates a new dish in the middle of the nearest object 
      * @param dishType type of dish from 1-4
@@ -69,7 +66,8 @@ public class CookingController {
             programController.getGUIManager().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getType(), programController.getViewController());
             Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
             dishController.addToHeldDishStack(dish);
-            viewController.draw(dish);
+            programController.getViewController().draw(dish);
+        }
     }
 
     public void checkForNerestObject(Cook cook){
@@ -84,7 +82,7 @@ public class CookingController {
 
     private void checkForSucses(){
         if (timesClicked >= 40){
-            cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
+            cook(1, programController.getCook(), programController.getDishController(), programController);
         }
         isCooking = false;
         time = 0;

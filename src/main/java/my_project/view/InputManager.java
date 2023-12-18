@@ -2,6 +2,7 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
+import my_project.control.DishController;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
 import my_project.model.Cook;
@@ -18,6 +19,7 @@ import java.awt.event.MouseEvent;
 public class InputManager extends InteractiveGraphicalObject {
 
     private ProgramController programController;
+    private DishController dishController;
 
     /**
      * Initializes inputManager
@@ -102,8 +104,10 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param key Contains the Numbercode for the key. Can directly be loaded from the Class KeyEvent e.g. KeyEvent_VK_6
      */
     public void keyPressed(int key) {
-        if (key == KeyEvent.VK_Q)
+        if (key == KeyEvent.VK_Q) {
+            dishController.putDown();
             programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
+        }
     }
 
 }

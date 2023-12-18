@@ -1,6 +1,7 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 
@@ -31,6 +32,11 @@ public class DishController {
         }
     }
 
+    public void putDown(){
+        Dish tempObj = heldDishes.top();
+        //queuedDishes.enqueue(tempObj);
+        heldDishes.pop();
+    }
     /**
      * Calculate velocity of thrown Dish and adds it to the List of thrown Dishes
      *

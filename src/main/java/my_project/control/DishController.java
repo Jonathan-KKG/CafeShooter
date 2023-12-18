@@ -28,13 +28,8 @@ public class DishController {
 
         for (int i = 0; i < storedDishes.length; i++) {
             storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "muffin.png");
+            programController.getViewController().draw(storedDishes[i]);
         }
-    }
-
-    public void putDown() {
-        Dish tempObj = heldDishes.top();
-        //queuedDishes.enqueue(tempObj);
-        heldDishes.pop();
     }
 
     /**
@@ -116,13 +111,11 @@ public class DishController {
     public Dish createDish(double pX, double pY, String dishType) {
         Dish dish = null;
         if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
-            dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
+                dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
             dish = new Dish(dishType, pX, pY);
         } else {
             System.out.println("nu uh wrong dishtype");
         }
-
-        programController.getViewController().draw(dish);
         return dish;
     }
 
@@ -132,7 +125,9 @@ public class DishController {
      * @param dish dish that gets added
      */
     public void addToHeldDishStack(Dish dish) {
+        programController.getViewController().removeDrawable(heldDishes.top());
         heldDishes.push(dish);
+        programController.getViewController().draw(heldDishes.top());
     }
 
 

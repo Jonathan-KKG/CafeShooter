@@ -21,6 +21,11 @@ public class CookingController {
     public void updateCooking(double dt) {
         if (isCooking)
             time += dt;
+        if (time > 3){
+            isCooking = false;
+            time = 0;
+            programController.getUiController().deleteSkillCheckUI(programController);
+        }
     }
 
     /**
@@ -60,19 +65,9 @@ public class CookingController {
 
         if (objectInRange.getClass() == CookingStation.class && !isCooking) {
             //TODO: stop drawing last held object, when putting new one on stack
-            //dishController.removeFirstHeldDish();
             isCooking = true;
+            time = 0;
             programController.getUiController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, ((CookingStation) objectInRange).getCookableObjs(), programController.getViewController());
-        }
-    }
-
-    public void checkForNearestObject() {
-        if (!isCooking) {
-            CollidableEnvironment objectInRange = objectInRange();
-            if (objectInRange != null) {
-                isCooking = true;
-                time = 0;
-            }
         }
     }
 

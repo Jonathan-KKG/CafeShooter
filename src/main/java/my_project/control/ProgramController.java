@@ -32,7 +32,7 @@ public class ProgramController {
         environmentController = new EnvironmentController(viewController);
         guiManager = new GUIManager(viewController);
         entityController = new EntityController(this, viewController);
-        cookingController = new CookingController(environmentController);
+        cookingController = new CookingController(environmentController, this);
         dishController = new DishController(this);
         inputManager = new InputManager(this);
         waveController = new WaveController(viewController);
@@ -51,6 +51,7 @@ public class ProgramController {
         dishController.dishUpdate(dt);
         entityController.checkDishCollisions(waveController.getWave());
         waveController.checkForNewWave(viewController);
+        cookingController.updateCooking(dt);
     }
 
     /**

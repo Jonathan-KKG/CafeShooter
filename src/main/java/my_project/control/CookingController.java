@@ -8,9 +8,22 @@ import my_project.model.Dish;
 
 public class CookingController {
     private List<CollidableEnvironment> cookingStations;
+    private boolean isCooking;
+    private double time;
+    private int timesClicked;
+    private ProgramController programController;
 
-    public CookingController(EnvironmentController environmentController) {
+
+    public CookingController(EnvironmentController environmentController, ProgramController pProgramController) {
         cookingStations = environmentController.getCookingStations();
+        programController = pProgramController;
+    }
+
+    public void updateCooking(double dt){
+        if (isCooking)
+            time += dt;
+        if (time > 3)
+            checkForSucses();
     }
 
     /**
@@ -46,21 +59,32 @@ public class CookingController {
      * @param dishController used to create dish
      */
     public void cook(int dishType, Cook cook, DishController dishController, ViewController viewController) {
-        CollidableEnvironment objectInRange = objectInRange(cook);
-        if (objectInRange != null) {
             Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
             dishController.addToHeldDishStack(dish);
             viewController.draw(dish);
-        }
-
     }
 
+    public void checkForNerestObject(Cook cook){
+        if (!isCooking) {
+            CollidableEnvironment objectInRange = objectInRange(cook);
+            if (objectInRange != null) {
+                isCooking = true;
+                time = 0;
+            }
+        }
+    }
 
+    private void checkForSucses(){
+        if (timesClicked >= 40){
+            cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
+        }
+        isCooking = false;
+        time = 0;
+    }
 
-    
-    
-
-
-
-
+    public void addClick(){
+        if (isCooking){
+            timesClicked++;
+        }
+    }
 }

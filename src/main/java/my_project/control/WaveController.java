@@ -12,6 +12,7 @@ public class WaveController {
      * @param viewController Required to draw the first wave
      */
     public WaveController(ViewController viewController) {
+
         enemieWaves = new Queue<>();
 
         // Create x Waves each contaning 2x + i enemies
@@ -37,7 +38,6 @@ public class WaveController {
                     y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
                 }
 
-                System.out.println(x + " & " + y);
                 enemies[j] = new Enemy(enemyType, x, y);
             }
             enemieWaves.enqueue(enemies);

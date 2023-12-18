@@ -103,7 +103,9 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     public void keyPressed(int key) {
         if (key == KeyEvent.VK_Q)
-            programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController.getViewController());
+            programController.getCookingController().checkForNerestObject(programController.getCook());
+        if (key == KeyEvent.VK_SPACE)
+            programController.getCookingController().addClick();
     }
 
 }

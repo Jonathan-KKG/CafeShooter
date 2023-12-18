@@ -1,6 +1,7 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 
@@ -31,6 +32,11 @@ public class DishController {
         }
     }
 
+    public void putDown(){
+        Dish tempObj = heldDishes.top();
+        //queuedDishes.enqueue(tempObj);
+        heldDishes.pop();
+    }
     /**
      * Calculate velocity of thrown Dish and adds it to the List of thrown Dishes
      *
@@ -72,14 +78,6 @@ public class DishController {
         }
     }
 
-    /**
-     * adds dish to pendingDishes stack
-     * @param dish dish that gets added
-     */
-    public void addToHeldDishStack(Dish dish){
-        heldDishes.push(dish);
-
-    }
 
     /**
      * sets the current bullet on the next element in the array.
@@ -133,12 +131,26 @@ public class DishController {
     }
 
 
+
+    /**
+     * adds dish to pendingDishes stack
+     * @param dish dish that gets added
+     */
+    public void addToHeldDishStack(Dish dish){
+        heldDishes.push(dish);
+
+    }
+
+
     public int getCurrentDishIndex() {
         return currentDish;
     }
 
     public Dish getFirstHeldDish(){
         return heldDishes.top();
+    }
+    public void removeFirstHeldDish(){
+        heldDishes.pop();
     }
 
     public List<Dish> getFlyingDishes() {

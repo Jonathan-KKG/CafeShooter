@@ -9,7 +9,6 @@ public class CookingController {
     private List<CollidableEnvironment> cookingStations;
     private boolean isCooking;
     private double time;
-    private int timesClicked;
     private ProgramController programController;
 
 
@@ -22,9 +21,6 @@ public class CookingController {
     public void updateCooking(double dt) {
         if (isCooking)
             time += dt;
-        if (time > 3)
-            // idk?
-        checkForSuccess();
     }
 
     /**
@@ -65,8 +61,8 @@ public class CookingController {
         if (objectInRange.getClass() == CookingStation.class && !isCooking) {
             //TODO: stop drawing last held object, when putting new one on stack
             //dishController.removeFirstHeldDish();
-            programController.getGUIManager().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, ((CookingStation) objectInRange).getCookableObjs(), programController.getViewController());
             isCooking = true;
+            programController.getUiController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, ((CookingStation) objectInRange).getCookableObjs(), programController.getViewController());
         }
     }
 
@@ -80,15 +76,10 @@ public class CookingController {
         }
     }
 
-    private void checkForSuccess() {
-        time = 0;
-    }
-
     public void addClick() {
         if (isCooking) {
-            String dishType = programController.getGUIManager().getCurrentSkillCheckType();
-            timesClicked++;
-            if(!programController.getGUIManager().progressSkillCheck(programController)){
+            String dishType = programController.getUiController().getCurrentSkillCheckType();
+            if(!programController.getUiController().progressSkillCheck(programController)){
                 Cook cook = programController.getCook();
                 programController.getDishController().addToHeldDishStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));

@@ -1,12 +1,10 @@
-package my_project.view;
+package my_project.control;
 
 import KAGO_framework.control.ViewController;
-import my_project.control.ProgramController;
 import my_project.model.GUI.DishUI;
 import my_project.model.GUI.SkillCheckUI;
 
-
-public class GUIManager {
+public class UIController {
 
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
@@ -15,7 +13,7 @@ public class GUIManager {
      * Creates all GUI elements
      * @param viewController Required to draw GUI elements
      */
-    public GUIManager(ViewController viewController){
+    public UIController(ViewController viewController){
         dishUI = new DishUI(1300,820);
 
         viewController.draw(dishUI);

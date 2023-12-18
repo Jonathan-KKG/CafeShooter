@@ -3,7 +3,6 @@ package my_project.control;
 import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
 import my_project.model.*;
-import my_project.view.GUIManager;
 import my_project.view.InputManager;
 
 public class ProgramController {
@@ -16,7 +15,7 @@ public class ProgramController {
     private DishController dishController;
     private CookingController cookingController;
     private WaveController waveController;
-    private GUIManager guiManager;
+    private UIController uiController;
 
     /**
      * @param viewController A class that manages the visuals and inputs.
@@ -30,7 +29,7 @@ public class ProgramController {
      */
     public void startProgram() {
         environmentController = new EnvironmentController(viewController);
-        guiManager = new GUIManager(viewController);
+        uiController = new UIController(viewController);
         entityController = new EntityController(this, viewController);
         cookingController = new CookingController(this);
         dishController = new DishController(this);
@@ -79,10 +78,6 @@ public class ProgramController {
         return dishController;
     }
 
-    public GUIManager getGUIManager() {
-        return guiManager;
-    }
-
     public EnvironmentController getEnvironmentController() {
         return environmentController;
     }
@@ -93,5 +88,9 @@ public class ProgramController {
 
     public WaveController getWaveController() {
         return waveController;
+    }
+
+    public UIController getUiController() {
+        return uiController;
     }
 }

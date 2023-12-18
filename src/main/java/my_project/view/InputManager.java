@@ -88,11 +88,11 @@ public class InputManager extends InteractiveGraphicalObject {
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == 1) {
             programController.getDishController().shoot(e.getX(), e.getY());
-            programController.getGUIManager().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
+            programController.getUiController().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
         }
         if (e.getButton() == 3) {
             programController.getDishController().nextBullet();
-            programController.getGUIManager().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
+            programController.getUiController().moveAmmoIndicator(programController.getDishController().getCurrentDishIndex());
         }
     }
 
@@ -105,7 +105,6 @@ public class InputManager extends InteractiveGraphicalObject {
         if (key == KeyEvent.VK_SPACE)
             programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q) {
-            // programController.getDishController().putDown();
             programController.getCookingController().cook();
         }
     }

@@ -67,4 +67,8 @@ public class UIController {
         return skillCheckUI.getType();
     }
 
+    public void deleteSkillCheckUI(ProgramController programController){
+        programController.getViewController().removeDrawable(skillCheckUI);
+        skillCheckUI = null;
+    }
 }

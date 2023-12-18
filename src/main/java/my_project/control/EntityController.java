@@ -151,8 +151,8 @@ public class EntityController {
      */
     private boolean keepOutOfX(GraphicalObject collider, Entity entity, double[] futurePos, double[] entityDir) {
         boolean collided = false;
-        boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 2.5; // I don't know about the offsets don't ask me
-        boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() < collider.getY() + 2.5;
+        boolean entityCompletelyIsUnderCollider = entity.getY() > collider.getY() + collider.getHeight() - 3.9; // I don't know about the offsets don't ask me
+        boolean entityCompletelyIsOverCollider = entity.getY() + entity.getHeight() < collider.getY() + 3.9;
 
         if (entity.collidesWith(collider) && entityDir[0] > 0 && collider.getX() > futurePos[0] && !(entityCompletelyIsOverCollider || entityCompletelyIsUnderCollider)) {
             futurePos[0] = collider.getX() - entity.getWidth();

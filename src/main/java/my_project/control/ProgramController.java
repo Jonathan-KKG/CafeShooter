@@ -44,7 +44,7 @@ public class ProgramController {
      *
      * @param dt the Time passed betwen this and the last call of the method
      */
-    public void updateProgram(double dt){
+    public void updateProgram(double dt) {
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
@@ -60,14 +60,6 @@ public class ProgramController {
      */
     public void removeDrawableFromScene(Drawable drawable) {
         viewController.removeDrawable(drawable);
-    }
-
-    public Shooter getShooter() {
-        return entityController.getShooter();
-    }
-
-    public Cook getCook() {
-        return entityController.getCook();
     }
 
     public CookingController getCookingController() {
@@ -86,11 +78,11 @@ public class ProgramController {
         return viewController;
     }
 
-    public WaveController getWaveController() {
-        return waveController;
-    }
-
     public UIController getUiController() {
         return uiController;
+    }
+
+    public EntityController getEntityController() {
+        return entityController;
     }
 }

@@ -11,20 +11,22 @@ public class UIController {
 
     /**
      * Creates all GUI elements
+     *
      * @param viewController Required to draw GUI elements
      */
-    public UIController(ViewController viewController){
-        dishUI = new DishUI(1300,820);
+    public UIController(ViewController viewController) {
+        dishUI = new DishUI(1300, 820);
 
         viewController.draw(dishUI);
     }
 
     /**
      * moves green Dish Indicator to next element in ammo count
+     *
      * @param element Index of current element
      */
-    public void moveAmmoIndicator(int element){
-        if(element != -1)
+    public void moveAmmoIndicator(int element) {
+        if (element != -1)
             dishUI.setX(1317 + 45 * element);
         else
             dishUI.setX(1317);
@@ -32,25 +34,27 @@ public class UIController {
 
     /**
      * Creates a new skillcheck
-     * @param pos Position of the cooking station
-     * @param type what type of Dish the cooking station outputs
+     *
+     * @param pos            Position of the cooking station
+     * @param type           what type of Dish the cooking station outputs
      * @param viewController Required to draww the new Object
      */
-    public void createSkillCheck(double[] pos, String type, ViewController viewController){
+    public void createSkillCheck(double[] pos, String type, ViewController viewController) {
         skillCheckUI = new SkillCheckUI(pos[0], pos[1], type);
         viewController.draw(skillCheckUI);
     }
 
     /**
      * Progresses the current skillcheck and removes it if it's finished
+     *
      * @param programController Required to remove the skillcheck
      * @return whether the skillcheck is finished or not - also false if it's null
      */
-    public boolean progressSkillCheck(ProgramController programController){
-        if(skillCheckUI == null)
+    public boolean progressSkillCheck(ProgramController programController) {
+        if (skillCheckUI == null)
             return false;
 
-        if(!skillCheckUI.increaseProgress()){
+        if (!skillCheckUI.increaseProgress()) {
             programController.getViewController().removeDrawable(skillCheckUI);
             skillCheckUI = null;
             return false;
@@ -61,17 +65,18 @@ public class UIController {
     /**
      * @return what Dish the skillCheckUI is producing
      */
-    public String getCurrentSkillCheckType(){
-        if(skillCheckUI == null)
+    public String getCurrentSkillCheckType() {
+        if (skillCheckUI == null)
             return null;
         return skillCheckUI.getType();
     }
 
     /**
      * Removes skillcheck from Draw and deletes reference.
+     *
      * @param programController Required to remove the skillcheck
      */
-    public void deleteSkillCheckUI(ProgramController programController){
+    public void deleteSkillCheckUI(ProgramController programController) {
         programController.getViewController().removeDrawable(skillCheckUI);
         skillCheckUI = null;
     }

@@ -8,7 +8,9 @@ import java.io.File;
 public class Enemy extends Entity {
     private String requiredDish;
 
-    /**Creates Enemy object of a specific type
+    /**
+     * Creates Enemy object of a specific type
+     *
      * @param pX the start x-Position
      * @param pY the start y-Position
      */

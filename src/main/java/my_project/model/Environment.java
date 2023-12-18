@@ -10,7 +10,7 @@ public class Environment extends GraphicalObject {
      * @param pY       Required to set position
      */
     public Environment(String filename, double pX, double pY) {
-        super(filename,pX,pY);
+        super("Environment/" + filename,pX,pY);
         x = pX;
         y = pY;
     }
@@ -29,7 +29,7 @@ public class Environment extends GraphicalObject {
     }
 
     /** draws the image of (this)
-     * @param drawTool
+     * @param drawTool Required to draw the object
      */
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(myImage, x, y);

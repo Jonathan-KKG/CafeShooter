@@ -3,6 +3,7 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Environment;
+import my_project.model.CookingStation;
 import my_project.model.Table;
 
 public class EnvironmentController {
@@ -36,7 +37,7 @@ public class EnvironmentController {
             for (int i = 0; i < 8*32; i = i + 32)
                 for (int j = 0; j < 20*32; j = j + 32)
                     environmentObjects.append(new Environment("floortile.png", kitchenOffset[0]+32+j, kitchenOffset[1]-i));
-            // wall
+            // Collideables:
             for (int i = 0; i < 8*32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("leftwall.png", kitchenOffset[0]+20, kitchenOffset[1]-i));
 
@@ -49,15 +50,21 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall.png", kitchenOffset[0]-384+33*32, kitchenOffset[1]-i));
 
             // stove
-            CollidableEnvironment stove = new CollidableEnvironment("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32);
+            CollidableEnvironment stove = new CookingStation("stovetop.png", kitchenOffset[0]+32, kitchenOffset[1]-32-3*32);
             collidableEnvironmentObjects.append(stove);
             cookingStations.append(stove);
 
             // tabletop
-            for (int i = 0; i < 6*64; i = i + 64)
-                tableObjects.append(new Table("tabletop.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
-            for (int i = 32; i < 6*64; i = i + 64)
-                tableObjects.append(new Table("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32));
+            for (int i = 0; i < 6*64; i = i + 64) {
+                Table table = new Table("tabletop.png", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
+                collidableEnvironmentObjects.append(table);
+                tableObjects.append(table);
+            }
+            for (int i = 32; i < 6*64; i = i + 64){
+                Table table = new Table("tabletop2.png", kitchenOffset[0]+32+i, kitchenOffset[1]-5*32);
+                collidableEnvironmentObjects.append(table);
+                tableObjects.append(table);
+            }
 
             // draws created objects
             environmentObjects.toFirst();
@@ -71,11 +78,6 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.next();
             }
             //It ain't a duplicate stoooooppppp T-T
-            tableObjects.toFirst();
-            while(tableObjects.hasAccess()){
-                viewController.draw(tableObjects.getContent());
-                tableObjects.next();
-            }
             tableObjects.toFirst();
             while(tableObjects.hasAccess()){
                 viewController.draw(tableObjects.getContent());

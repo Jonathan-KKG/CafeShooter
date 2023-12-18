@@ -106,7 +106,7 @@ public class InputManager extends InteractiveGraphicalObject {
             programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q) {
             // programController.getDishController().putDown();
-            programController.getCookingController().cook(1, programController.getCook(), programController.getDishController(), programController);
+            programController.getCookingController().cook();
         }
     }
 

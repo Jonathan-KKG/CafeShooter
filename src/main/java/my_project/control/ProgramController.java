@@ -32,7 +32,7 @@ public class ProgramController {
         environmentController = new EnvironmentController(viewController);
         guiManager = new GUIManager(viewController);
         entityController = new EntityController(this, viewController);
-        cookingController = new CookingController(environmentController, this);
+        cookingController = new CookingController(this);
         dishController = new DishController(this);
         inputManager = new InputManager(this);
         waveController = new WaveController(viewController);

@@ -35,7 +35,7 @@ public class CollidableEnvironment extends Environment{
         if (hp <= 0) {
             isColliderActive = false;
             try {
-                myImage = ImageIO.read(new File("src/main/resources/graphic/window.png"));
+                myImage = ImageIO.read(new File("src/main/resources/graphic/Environment/window.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

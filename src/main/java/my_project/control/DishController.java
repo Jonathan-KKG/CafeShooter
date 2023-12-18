@@ -1,7 +1,6 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 
@@ -28,15 +27,16 @@ public class DishController {
         programController = pProgramController;
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d/2d + 45 * i, 838, 1);
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "muffin.png");
         }
     }
 
-    public void putDown(){
+    public void putDown() {
         Dish tempObj = heldDishes.top();
         //queuedDishes.enqueue(tempObj);
         heldDishes.pop();
     }
+
     /**
      * Calculate velocity of thrown Dish and adds it to the List of thrown Dishes
      *
@@ -93,13 +93,13 @@ public class DishController {
      * @return next occupied index
      */
     private int nextOccupiedIndex() {
-        if(currentDish == -1)
+        if (currentDish == -1)
             return -1;
 
         for (int i = currentDish + 1; i != currentDish; i++) {
             if (i < storedDishes.length && i > -1 && storedDishes[i] != null)
                 return i;
-            if (i  == storedDishes.length)
+            if (i == storedDishes.length)
                 i = -1;
         }
         return -1;
@@ -113,31 +113,26 @@ public class DishController {
      * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
      * @return returns drawn dish
      */
-    public Dish createDish(double pX, double pY, int dishType) {
+    public Dish createDish(double pX, double pY, String dishType) {
         Dish dish = null;
-        if (dishType > 0 && dishType < 5) {
-            switch (dishType) {
-                case 1 -> dish = new Dish("muffin.png", pX, pY);
-                case 2 -> dish = new Dish("spaghet.png", pX, pY);
-                case 3 -> dish = new Dish("mikado.png", pX, pY);
-                case 4 -> dish = new Dish("cawfee.png", pX, pY);
-            }
+        if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
+            dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
+            dish = new Dish(dishType, pX, pY);
         } else {
             System.out.println("nu uh wrong dishtype");
         }
+
         programController.getViewController().draw(dish);
         return dish;
     }
 
-
-
     /**
      * adds dish to pendingDishes stack
+     *
      * @param dish dish that gets added
      */
-    public void addToHeldDishStack(Dish dish){
+    public void addToHeldDishStack(Dish dish) {
         heldDishes.push(dish);
-
     }
 
 
@@ -145,10 +140,11 @@ public class DishController {
         return currentDish;
     }
 
-    public Dish getFirstHeldDish(){
+    public Dish getFirstHeldDish() {
         return heldDishes.top();
     }
-    public void removeFirstHeldDish(){
+
+    public void removeFirstHeldDish() {
         heldDishes.pop();
     }
 

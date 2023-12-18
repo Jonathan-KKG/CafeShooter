@@ -3,7 +3,7 @@ package my_project.control;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Cook;
-import my_project.model.Dish;
+import my_project.model.CookingStation;
 
 public class CookingController {
     private List<CollidableEnvironment> cookingStations;
@@ -13,31 +13,35 @@ public class CookingController {
     private ProgramController programController;
 
 
-    public CookingController(EnvironmentController environmentController, ProgramController pProgramController) {
-        cookingStations = environmentController.getCookingStations();
+    public CookingController(ProgramController pProgramController) {
         programController = pProgramController;
+        cookingStations = programController.getEnvironmentController().getCookingStations();
+        isCooking = false;
     }
 
-    public void updateCooking(double dt){
+    public void updateCooking(double dt) {
         if (isCooking)
             time += dt;
         if (time > 3)
-            checkForSucses();
+            // idk?
+        checkForSuccess();
     }
 
-    /** returns the nearest cooking station in a set range (+-40) of a cook
-     * @param cook Required to calculate position of cook
+    /**
+     * returns the nearest cooking station in a set range (+-40) of a cook
+     *
      * @return returns object that is nearest to the player, if no object is within +-40 of from the player returns null
      */
-    private CollidableEnvironment objectInRange(Cook cook) {
-
-        cookingStations.toFirst();
-        double lowestDistance = 100;
+    private CollidableEnvironment objectInRange() {
         CollidableEnvironment output = null;
+        Cook cook = programController.getCook();
+        double lowestDistance = 100;
         double cookMiddleX = cook.getX() + cook.getWidth() / 2;
         double cookMiddleY = cook.getY() + cook.getHeight() / 2;
+
+        cookingStations.toFirst();
         while (cookingStations.hasAccess()) {
-            if(cookingStations.getContent().isColliderActive()) {
+            if (cookingStations.getContent().isColliderActive()) {
                 CollidableEnvironment currentObject = cookingStations.getContent();
                 if (cookMiddleX < currentObject.getX() + currentObject.getWidth() + 40 || cookMiddleX > currentObject.getX() + currentObject.getWidth() - 40
                         || cookMiddleY < currentObject.getHeight() + 40 || cookMiddleY > currentObject.getHeight() - 40) {
@@ -52,27 +56,23 @@ public class CookingController {
     }
 
     /**
-     * creates a new dish in the middle of the nearest object 
-     * @param dishType type of dish from 1-4
-     * @param cook cook player to check nearest object
-     * @param dishController used to create dish
+     * creates a new dish in the middle of the nearest object
      */
-    public void cook(int dishType, Cook cook, DishController dishController, ProgramController programController) {
-        CollidableEnvironment objectInRange = objectInRange(cook);
+    public void cook() {
+        Cook cook = programController.getCook();
+        CollidableEnvironment objectInRange = objectInRange();
 
-        if (objectInRange != null) {
+        if (objectInRange.getClass() == CookingStation.class && !isCooking) {
             //TODO: stop drawing last held object, when putting new one on stack
             //dishController.removeFirstHeldDish();
-            programController.getGUIManager().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getType(), programController.getViewController());
-            Dish dish = dishController.createDish(cook.getX(), cook.getY(), dishType);
-            dishController.addToHeldDishStack(dish);
-            programController.getViewController().draw(dish);
+            programController.getGUIManager().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, ((CookingStation) objectInRange).getCookableObjs(), programController.getViewController());
+            isCooking = true;
         }
     }
 
-    public void checkForNerestObject(Cook cook){
+    public void checkForNearestObject() {
         if (!isCooking) {
-            CollidableEnvironment objectInRange = objectInRange(cook);
+            CollidableEnvironment objectInRange = objectInRange();
             if (objectInRange != null) {
                 isCooking = true;
                 time = 0;
@@ -80,17 +80,20 @@ public class CookingController {
         }
     }
 
-    private void checkForSucses(){
-        if (timesClicked >= 40){
-            cook(1, programController.getCook(), programController.getDishController(), programController);
-        }
-        isCooking = false;
+    private void checkForSuccess() {
         time = 0;
     }
 
-    public void addClick(){
-        if (isCooking){
+    public void addClick() {
+        if (isCooking) {
+            String dishType = programController.getGUIManager().getCurrentSkillCheckType();
             timesClicked++;
+            if(!programController.getGUIManager().progressSkillCheck(programController)){
+                Cook cook = programController.getCook();
+                programController.getDishController().addToHeldDishStack(
+                        programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
+                isCooking = false;
+            }
         }
     }
 }

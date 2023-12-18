@@ -37,7 +37,6 @@ public class WaveController {
                     y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
                 }
 
-                System.out.println(x + " & " + y);
                 enemies[j] = new Enemy(enemyType, x, y);
             }
             enemieWaves.enqueue(enemies);

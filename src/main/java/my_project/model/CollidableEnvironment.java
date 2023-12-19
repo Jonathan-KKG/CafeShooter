@@ -21,8 +21,8 @@ public class CollidableEnvironment extends Environment {
     /**
      * reduces hp of the Barriers. If hp is <=0 it stops colliding & switches img
      */
-    public void reduceHP() {
-        hp--;
+    public void reduceHP(double dt) {
+        hp -= dt;
         if (hp <= 0) {
             isColliderActive = false;
             try {

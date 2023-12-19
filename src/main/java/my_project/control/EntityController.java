@@ -34,14 +34,15 @@ public class EntityController {
      */
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] == null) return;
+            if (enemies[i] != null) {
+                double[] dir = {target.getX() - enemies[i].getX(), target.getY() - enemies[i].getY()};
+                double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
+                dir[0] /= distance;
+                dir[1] /= distance;
 
-            double[] dir = {target.getX() - enemies[i].getX(), target.getY() - enemies[i].getY()};
-            double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
-            dir[0] /= distance;
-            dir[1] /= distance;
-            if (distance != 0)
-                checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
+                if (distance != 0)
+                    checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
+            }
         }
     }
 
@@ -115,7 +116,7 @@ public class EntityController {
                 CollidableEnvironment env = envObjs.getContent();
                 boolean collided = keepOutOfBounds(env, entity, entityPos, entityDir);
                 if (collided && entity.getClass().toString().equals("class my_project.model.Enemy"))
-                    env.reduceHP();
+                    env.reduceHP(dt);
             }
             envObjs.next();
         }

@@ -27,7 +27,7 @@ public class DishController {
         programController = pProgramController;
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "muffin.png");
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "spaghet.png");
             programController.getViewController().draw(storedDishes[i]);
         }
     }

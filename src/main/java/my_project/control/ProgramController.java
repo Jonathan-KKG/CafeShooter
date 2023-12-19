@@ -2,7 +2,6 @@ package my_project.control;
 
 import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
-import my_project.model.*;
 import my_project.view.InputManager;
 
 public class ProgramController {
@@ -86,4 +85,6 @@ public class ProgramController {
     public EntityController getEntityController() {
         return entityController;
     }
+
+    public WaveController getWaveController(){return waveController;}
 }

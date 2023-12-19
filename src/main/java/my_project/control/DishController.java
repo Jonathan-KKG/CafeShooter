@@ -111,6 +111,13 @@ public class DishController {
         return dish;
     }
 
+    public void moveHeldDishes(){
+        if (heldDishes.top() != null) {
+            heldDishes.top().setX(programController.getEntityController().getCook().getX());
+            heldDishes.top().setY(programController.getEntityController().getCook().getY());
+        }
+    }
+
     /**
      * sets the current bullet on the next element in the array.
      * If current bullet is last element, it starts searching from the beginning

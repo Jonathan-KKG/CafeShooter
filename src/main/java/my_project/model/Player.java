@@ -1,7 +1,5 @@
 package my_project.model;
 
-import KAGO_framework.view.DrawTool;
-
 import java.awt.image.BufferedImage;
 
 public abstract class Player extends Entity {
@@ -14,15 +12,6 @@ public abstract class Player extends Entity {
      */
     public Player(String filename, double pX, double pY) {
         super(filename, pX, pY);
-    }
-
-    /**
-     * Drawes the Enemy
-     *
-     * @param drawTool the tool used to draw things
-     */
-    public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage, x, y);
     }
 
     public BufferedImage getImage() {

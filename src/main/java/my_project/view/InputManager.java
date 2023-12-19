@@ -4,9 +4,6 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.EntityController;
 import my_project.control.ProgramController;
-import my_project.model.Cook;
-import my_project.model.Dish;
-import my_project.model.Item;
 
 
 import java.awt.event.KeyEvent;
@@ -72,12 +69,7 @@ public class InputManager extends InteractiveGraphicalObject {
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
         // Move held dish with cook position
-        Dish currentDish = (Dish) programController.getDishController().getFirstHeldDish();
-        Cook cook = programController.getEntityController().getCook();
-        if (currentDish != null) {
-            currentDish.setX(cook.getX());
-            currentDish.setY(cook.getY());
-        }
+        programController.getDishController().moveHeldDishes();
     }
 
     /**

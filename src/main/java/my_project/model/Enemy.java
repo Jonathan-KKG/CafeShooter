@@ -1,7 +1,5 @@
 package my_project.model;
 
-import KAGO_framework.view.DrawTool;
-
 import javax.imageio.ImageIO;
 import java.io.File;
 
@@ -50,10 +48,6 @@ public class Enemy extends Entity {
         speed = 50;
         width = myImage.getWidth();
         height = myImage.getHeight();
-    }
-
-    public void draw(DrawTool drawTool) {
-        drawTool.drawImage(myImage, x, y);
     }
 
     public String getRequiredDish() {

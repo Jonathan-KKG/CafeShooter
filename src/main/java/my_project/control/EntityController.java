@@ -73,7 +73,7 @@ public class EntityController {
                 Dish currentDish = dishList.getContent();
                 if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
                     if (enemies[i].getRequiredDish().equals(currentDish.getType())) {
-                        programController.getUiController().deleteEnemyUI(i, programController.getViewController());
+                        programController.getUiController().deleteEnemyBubble(i, programController.getViewController());
                         programController.removeDrawableFromScene(enemies[i]);
                         enemies[i] = null;
                         removed = true;

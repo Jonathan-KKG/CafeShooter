@@ -116,7 +116,7 @@ public class UIController {
      * @param index          Enemy's position in the wave array
      * @param viewController Required to stop drawing the UI
      */
-    public void deleteEnemyUI(int index, ViewController viewController) {
+    public void deleteEnemyBubble(int index, ViewController viewController) {
         if (index < enemyDishUIs.length && enemyDishUIs[index] != null) {
             viewController.removeDrawable(enemyDishUIs[index]);
             enemyDishUIs[index] = null;

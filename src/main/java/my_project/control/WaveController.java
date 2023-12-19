@@ -13,7 +13,6 @@ public class WaveController {
      * @param programController Required to draw the first wave and its Wants-Bubbles
      */
     public WaveController(ProgramController programController) {
-
         enemieWaves = new Queue<>();
 
         // Create x Waves each contaning 2x + i enemies

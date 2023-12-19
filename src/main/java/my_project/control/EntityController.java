@@ -3,7 +3,6 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import my_project.model.*;
 
 public class EntityController {
@@ -61,22 +60,23 @@ public class EntityController {
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
      *
-     * @param pEnemies an Array of all existing Enemies
      */
-    public void checkDishCollisions(Enemy[] pEnemies) {
+    public void checkDishCollisions() {
         List<Dish> dishList = programController.getDishController().getFlyingDishes();
+        Enemy[] enemies = programController.getWaveController().getWave();
         dishList.toFirst();
         boolean removed = false;
         while (dishList.hasAccess()) {
-            for (int i = 0; i < pEnemies.length; i++) {
+            for (int i = 0; i < enemies.length; i++) {
                 Dish currentDish = dishList.getContent();
-                if (pEnemies[i] != null && currentDish.collidesWith(pEnemies[i])) {
-                    if (pEnemies[i].getRequiredDish().equals(currentDish.getType())) {
-                        programController.removeDrawableFromScene(pEnemies[i]);
-                        pEnemies[i] = null;
+                if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
+                    if (enemies[i].getRequiredDish().equals(currentDish.getType())) {
+                        programController.getUiController().deleteEnemyUI(i, programController.getViewController());
+                        programController.removeDrawableFromScene(enemies[i]);
+                        enemies[i] = null;
                         removed = true;
                     }
-                    i = pEnemies.length;
+                    i = enemies.length;
                     programController.removeDrawableFromScene(currentDish);
                     dishList.remove();
                 }

@@ -29,12 +29,12 @@ public class ProgramController {
      */
     public void startProgram() {
         environmentController = new EnvironmentController(viewController);
-        uiController = new UIController(viewController);
         entityController = new EntityController(this, viewController);
         cookingController = new CookingController(this);
-        dishController = new DishController(this);
         inputManager = new InputManager(this);
-        waveController = new WaveController(viewController);
+        uiController = new UIController(viewController);
+        waveController = new WaveController(this);
+        dishController = new DishController(this);
 
         viewController.register(inputManager);
     }
@@ -48,9 +48,10 @@ public class ProgramController {
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
-        entityController.checkDishCollisions(waveController.getWave());
-        waveController.checkForNewWave(viewController);
+        entityController.checkDishCollisions();
+        waveController.checkForNewWave(this);
         cookingController.updateCooking(dt);
+        uiController.updateEnemyBubbles(waveController.getWave());
     }
 
     /**

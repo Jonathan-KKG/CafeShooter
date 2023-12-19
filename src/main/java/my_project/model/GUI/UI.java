@@ -5,19 +5,19 @@ import KAGO_framework.view.DrawTool;
 
 public abstract class UI extends GraphicalObject {
 
-    private int[] RGBABorderValues;
-    private int[] RGBABackgroundValues;
-    protected double[] absolutePosition;
+    private int[] rgbaBorderValues;
+    private int[] rgbaBackgroundValues;
+    protected double[] startingPosition;
 
     /**
      * Initializes UI Model
-     * @param pX Absolute location of the Model
-     * @param pY Absolute location of the Model
+     * @param pX Starting location of the Model
+     * @param pY Starting location of the Model
      */
     public UI(double pX, double pY) {
-        RGBABackgroundValues = new int[]{40,40,40,200};
-        RGBABorderValues = new int[]{40,40,40,180};
-        absolutePosition = new double[]{pX, pY};
+        rgbaBackgroundValues = new int[]{40,40,40,160};
+        rgbaBorderValues = new int[]{40,40,40,200};
+        startingPosition = new double[]{pX, pY};
     }
 
     /**
@@ -31,7 +31,7 @@ public abstract class UI extends GraphicalObject {
      * @param drawTool Required to set the color
      */
     protected void setDrawToolColorToRGBABackgroundVal(DrawTool drawTool){
-        drawTool.setCurrentColor(RGBABackgroundValues[0], RGBABackgroundValues[1], RGBABackgroundValues[2], RGBABackgroundValues[3]);
+        drawTool.setCurrentColor(rgbaBackgroundValues[0], rgbaBackgroundValues[1], rgbaBackgroundValues[2], rgbaBackgroundValues[3]);
     }
 
     /**
@@ -39,6 +39,6 @@ public abstract class UI extends GraphicalObject {
      * @param drawTool Required to draw the object
      */
     protected void setDrawToolColorToRGBABorderVal(DrawTool drawTool){
-        drawTool.setCurrentColor(RGBABorderValues[0], RGBABorderValues[1], RGBABorderValues[2], RGBABorderValues[3]);        
+        drawTool.setCurrentColor(rgbaBorderValues[0], rgbaBorderValues[1], rgbaBorderValues[2], rgbaBorderValues[3]);
     }
 }

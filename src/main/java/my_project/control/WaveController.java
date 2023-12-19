@@ -9,14 +9,14 @@ public class WaveController {
 
     /**
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
-     * @param viewController Required to draw the first wave
+     * @param programController Required to draw the first wave and its Wants-Bubbles
      */
-    public WaveController(ViewController viewController) {
+    public WaveController(ProgramController programController) {
 
         enemieWaves = new Queue<>();
 
         // Create x Waves each contaning 2x + i enemies
-        for (int i = 2; i < 10; i += 2) {
+        for (int i = 0; i < 10; i += 2) {
             Enemy[] enemies = new Enemy[i];
 
             // Create enemies to fill the waves
@@ -42,7 +42,7 @@ public class WaveController {
             }
             enemieWaves.enqueue(enemies);
         }
-        addToDraw(viewController);
+        nextWave(programController);
     }
 
     /**
@@ -57,28 +57,30 @@ public class WaveController {
 
     /**
      * Checks if the Wave is over: If so, starts new one.
-     * @param viewController Required to draw the new wave
+     * @param programController Required to draw the new wave and its Wants-Bubbles
      */
-    public void checkForNewWave(ViewController viewController) {
+    public void checkForNewWave(ProgramController programController) {
         boolean isEmpty = true;
         for (int i = 0; i < enemieWaves.front().length; i++) {
             if (enemieWaves.front()[i] != null)
                 isEmpty = false;
         }
         if (isEmpty)
-            nextWave(viewController);
+            nextWave(programController);
     }
 
     /**
      * Deletes old Wave and draws the new one.
-     * @param viewController Required to draw the new Wave
+     * @param programController Required to draw the new Wave and its Wants-Bubbles
      */
-    private void nextWave(ViewController viewController) {
+    private void nextWave(ProgramController programController) {
         enemieWaves.dequeue();
-        addToDraw(viewController);
+        addToDraw(programController.getViewController());
+        programController.getUiController().createEnemyBubblesOfWave(enemieWaves.front(), programController.getViewController());
     }
 
     public Enemy[] getWave() {
         return enemieWaves.front();
     }
+
 }

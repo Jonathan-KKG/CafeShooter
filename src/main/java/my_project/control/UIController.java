@@ -1,13 +1,16 @@
 package my_project.control;
 
 import KAGO_framework.control.ViewController;
+import my_project.model.Enemy;
 import my_project.model.GUI.DishUI;
+import my_project.model.GUI.EnemyDishUI;
 import my_project.model.GUI.SkillCheckUI;
 
 public class UIController {
 
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
+    private EnemyDishUI[] enemyDishUIs;
 
     /**
      * Creates all GUI elements
@@ -67,8 +70,51 @@ public class UIController {
         return skillCheckUI.getType();
     }
 
+    /**
+     * stops drawing the current skillCheckUI and deletes it
+     * @param programController Required to stop the drawing
+     */
     public void deleteSkillCheckUI(ProgramController programController){
         programController.getViewController().removeDrawable(skillCheckUI);
         skillCheckUI = null;
     }
+
+    /**
+     * moves all enemybubbles of the current wave to their enemy
+     * @param enemies
+     */
+    public void updateEnemyBubbles(Enemy[] enemies){
+        for(int i = 0; i < enemies.length; i++){
+            if(enemies[i] == null)
+                i++;
+            enemyDishUIs[i].setX(enemies[i].getX());
+            enemyDishUIs[i].setY(enemies[i].getY());
+        }
+    }
+
+    /**
+     * creates all bubbles for a new wave
+     * @param enemies The new wave for which bubbles should be created
+     * @param viewController Required to draw the UI
+     */
+    public void createEnemyBubblesOfWave(Enemy[] enemies, ViewController viewController){
+        enemyDishUIs = new EnemyDishUI[enemies.length];
+        for (int i = 0; i < enemies.length; i++) {
+            enemyDishUIs[i] = new EnemyDishUI(enemies[i].getX(), enemies[i].getY(), enemies[i].getRequiredDish());
+            viewController.draw(enemyDishUIs[i]);
+        }
+    }
+
+    /**
+     * @param index Enemy's position in the wave array
+     * @param viewController Required to stop drawing the UI
+     */
+    public void deleteEnemyUI(int index, ViewController viewController){
+        if (index < enemyDishUIs.length && enemyDishUIs[index] != null) {
+            viewController.removeDrawable(enemyDishUIs[index]);
+            enemyDishUIs[index] = null;
+        }
+    }
+
+
 }

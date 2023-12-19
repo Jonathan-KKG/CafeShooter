@@ -60,10 +60,9 @@ public class CookingController {
      * creates a new dish if there's a cooking station nearby
      */
     public void cook() {
-        Cook cook = programController.getCook();
         CollidableEnvironment objectInRange = objectInRange();
 
-        if (objectInRange.getClass() == CookingStation.class && !isCooking) {
+        if (objectInRange != null && objectInRange.getClass() == CookingStation.class && !isCooking) {
             //TODO: stop drawing last held object, when putting new one on stack
             isCooking = true;
             time = 0;

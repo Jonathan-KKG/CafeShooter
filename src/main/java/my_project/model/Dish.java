@@ -13,9 +13,8 @@ public class Dish extends Item {
      * @param pY       y position at start
      */
     public Dish(String filename, double pX, double pY) {
-        super("Dishes/" + filename, pX, pY);
+        super("Dishes/" + filename, pX, pY, filename);
         speed = 500;
-        type = filename;
     }
 
     public void setDirection(double[] dir) {

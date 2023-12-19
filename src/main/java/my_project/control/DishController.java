@@ -5,13 +5,15 @@ import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 import my_project.model.Item;
 
+import java.io.File;
+
 
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
     private Stack<Item> heldDishes;
     private ProgramController programController;
-    private int currentDish;
+    private int currentDishIndex;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -20,7 +22,7 @@ public class DishController {
      * @param pProgramController required to access other controllers
      */
     public DishController(ProgramController pProgramController) {
-        currentDish = 0;
+        currentDishIndex = 0;
         flyingDishes = new List<>();
         heldDishes = new Stack<>();
         storedDishes = new Dish[5];
@@ -39,10 +41,10 @@ public class DishController {
      * @param yPos y-Position of the Cursor
      */
     public void shoot(double xPos, double yPos) {
-        if (currentDish == -1 || storedDishes[currentDish] == null)
+        if (currentDishIndex == -1 || storedDishes[currentDishIndex] == null)
             return;
 
-        Dish objCurrentDish = storedDishes[currentDish];
+        Dish objCurrentDish = storedDishes[currentDishIndex];
 
         objCurrentDish.setX(programController.getEntityController().getCook().getX());
         objCurrentDish.setY(programController.getEntityController().getCook().getY());
@@ -54,7 +56,7 @@ public class DishController {
         objCurrentDish.setDirection(new double[]{xDir, yDir});
 
         flyingDishes.append(objCurrentDish);
-        storedDishes[currentDish] = null;
+        storedDishes[currentDishIndex] = null;
         nextBullet();
     }
 
@@ -74,22 +76,24 @@ public class DishController {
     }
 
 
-    /**
+    /** TODO: Fix StackOverflow after picking up ammo is implemented (annoy me (Habib) when it's implemented, I'll do it)
      * finds next index in storedDishes array that is not null
      *
      * @return next occupied index
      */
-    private int nextOccupiedIndex() {
-        if (currentDish == -1)
+    private int nextOccupiedIndex(int startingIndex, int modifiedIndex) {
+        modifiedIndex++;
+
+        if(modifiedIndex >= storedDishes.length)
+            return nextOccupiedIndex(startingIndex, -1);
+
+        if(storedDishes[modifiedIndex] != null)
+            return modifiedIndex;
+
+        if(modifiedIndex == startingIndex)
             return -1;
 
-        for (int i = currentDish + 1; i != currentDish; i++) {
-            if (i < storedDishes.length && i > -1 && storedDishes[i] != null)
-                return i;
-            if (i == storedDishes.length)
-                i = -1;
-        }
-        return -1;
+        return nextOccupiedIndex(startingIndex, modifiedIndex);
     }
 
     /**
@@ -101,13 +105,18 @@ public class DishController {
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, String dishType) {
+        File folder = new File("src/main/resources/graphic/Dishes/");
+        File[] dishTypes = folder.listFiles();
         Dish dish = null;
-        if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
-                dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
-            dish = new Dish(dishType, pX, pY);
-        } else {
-            System.out.println("nu uh wrong dishtype");
+
+        for (int i = 0; i < dishTypes.length; i++) {
+            if(dishType.equals(dishTypes[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", ""))) {
+                dish = new Dish(dishType, pX, pY);
+                i = dishTypes.length;
+            }
         }
+        if (dish == null) System.out.println("nu uh wrong dishtype");
+
         return dish;
     }
 
@@ -123,7 +132,9 @@ public class DishController {
      * If current bullet is last element, it starts searching from the beginning
      */
     public void nextBullet() {
-        currentDish = nextOccupiedIndex();
+        int current = currentDishIndex;
+        currentDishIndex = nextOccupiedIndex(current, currentDishIndex);
+        programController.getUiController().moveAmmoIndicator(currentDishIndex);
     }
 
     /**
@@ -139,7 +150,7 @@ public class DishController {
 
 
     public int getCurrentDishIndex() {
-        return currentDish;
+        return currentDishIndex;
     }
 
     public Item getFirstHeldDish() {

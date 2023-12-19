@@ -55,12 +55,13 @@ public class EntityController {
     public void updatePlayers(double dt, double[][] playerDir) {
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
         checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
+        updateClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook);
+        updateClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), shooter);
     }
 
     /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
-     *
      */
     public void checkDishCollisions() {
         List<Dish> dishList = programController.getDishController().getFlyingDishes();
@@ -120,6 +121,32 @@ public class EntityController {
             }
             envObjs.next();
         }
+    }
+
+    /**
+     * sets the nearest interactable Environment in a set range (+-lowestDistance) of a player
+     */
+    private void updateClosestObjectInRange(List<CollidableEnvironment> interactables, Player player) {
+        CollidableEnvironment closestObj = null;
+        double lowestDistance = 70;
+        double cookMiddleX = cook.getX() + cook.getWidth() / 2;
+        double cookMiddleY = cook.getY() + cook.getHeight() / 2;
+
+        interactables.toFirst();
+        while (interactables.hasAccess()) {
+            if (interactables.getContent().isColliderActive()) {
+                CollidableEnvironment currentObject = interactables.getContent();
+                if (currentObject.getDistanceTo(cook) < lowestDistance && (cookMiddleX < currentObject.getX() + currentObject.getWidth() + 20 || cookMiddleX > currentObject.getX() + currentObject.getWidth() - 20
+                        || cookMiddleY < currentObject.getHeight() + 20 || cookMiddleY > currentObject.getHeight() - 20)) {
+                    if (closestObj != null) {
+                        if (currentObject.getDistanceTo(cook) < closestObj.getDistanceTo(cook))
+                            closestObj = currentObject;
+                    } else closestObj = currentObject;
+                }
+            }
+            interactables.next();
+        }
+        player.setClosestObjectInRange(closestObj);
     }
 
     /**

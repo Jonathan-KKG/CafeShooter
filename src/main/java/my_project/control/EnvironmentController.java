@@ -11,7 +11,7 @@ public class EnvironmentController {
     //Referenzen
     private List<Environment> environmentObjects = new List<>();
     private List<CollidableEnvironment> collidableEnvironmentObjects = new List<>();
-    private List<CollidableEnvironment> cookingStations = new List<>();
+    private List<CollidableEnvironment> interactableEnvironmentObjects = new List<>();
     private List<Table> tableObjects = new List<>();
 
     //Attribute
@@ -57,21 +57,23 @@ public class EnvironmentController {
             // stove
             CollidableEnvironment stove = new CookingStation("stovetop.png", kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32, 1);
             collidableEnvironmentObjects.append(stove);
-            cookingStations.append(stove);
+            interactableEnvironmentObjects.append(stove);
             stove = new CookingStation("stovetop.png", kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32, 2);
             collidableEnvironmentObjects.append(stove);
-            cookingStations.append(stove);
+            interactableEnvironmentObjects.append(stove);
 
             // tabletop
             for (int i = 0; i < 6 * 64; i = i + 64) {
                 Table table = new Table("tabletop.png", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
                 collidableEnvironmentObjects.append(table);
                 tableObjects.append(table);
+                interactableEnvironmentObjects.append((table));
             }
             for (int i = 32; i < 6 * 64; i = i + 64) {
                 Table table = new Table("tabletop2.png", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
                 collidableEnvironmentObjects.append(table);
                 tableObjects.append(table);
+                interactableEnvironmentObjects.append((table));
             }
 
             // draws created objects
@@ -85,26 +87,16 @@ public class EnvironmentController {
                 viewController.draw(collidableEnvironmentObjects.getContent());
                 collidableEnvironmentObjects.next();
             }
-            //It ain't a duplicate stoooooppppp T-T
-            tableObjects.toFirst();
-            while (tableObjects.hasAccess()) {
-                viewController.draw(tableObjects.getContent());
-                tableObjects.next();
-            }
         } catch (Exception e) {
             System.out.println("Creating Environment object went wrong!");
         }
-    }
-
-    public List<Table> getTableObjects() {
-        return tableObjects;
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {
         return collidableEnvironmentObjects;
     }
 
-    public List<CollidableEnvironment> getCookingStations() {
-        return cookingStations;
+    public List<CollidableEnvironment> getInteractableEnvironmentObjects() {
+        return interactableEnvironmentObjects;
     }
 }

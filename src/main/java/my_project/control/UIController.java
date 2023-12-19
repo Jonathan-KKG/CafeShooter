@@ -87,14 +87,14 @@ public class UIController {
     /**
      * moves all enemybubbles of the current wave to their enemy
      *
-     * @param enemies
+     * @param enemies Enemies of the current wave
      */
     public void updateEnemyBubbles(Enemy[] enemies) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] == null)
-                i++;
-            enemyDishUIs[i].setX(enemies[i].getX());
-            enemyDishUIs[i].setY(enemies[i].getY());
+            if(enemies[i] != null) {
+                enemyDishUIs[i].setX(enemies[i].getX());
+                enemyDishUIs[i].setY(enemies[i].getY());
+            }
         }
     }
 
@@ -122,6 +122,5 @@ public class UIController {
             enemyDishUIs[index] = null;
         }
     }
-
 
 }

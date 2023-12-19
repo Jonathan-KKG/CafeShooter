@@ -7,21 +7,23 @@ public class Entity extends GraphicalObject {
 
     /**
      * Creates new Entity
+     *
      * @param filename The image the entity should have, file being located in the graphics folder
-     * @param pX Starting x position
-     * @param pY Starting y position
+     * @param pX       Starting x position
+     * @param pY       Starting y position
      */
     public Entity(String filename, double pX, double pY) {
-        super(filename,pX,pY);
+        super(filename, pX, pY);
         speed = 200;
     }
 
     /**
      * default constructor
+     *
      * @param pX Starting x position
      * @param pY Starting y position
      */
-    public Entity(double pX, double pY){
+    public Entity(double pX, double pY) {
         speed = 200;
         x = pX;
         y = pY;

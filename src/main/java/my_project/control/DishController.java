@@ -44,10 +44,10 @@ public class DishController {
 
         Dish objCurrentDish = storedDishes[currentDish];
 
-        objCurrentDish.setX(programController.getShooter().getX());
-        objCurrentDish.setY(programController.getShooter().getY());
-        long yLength = (long) (yPos - (programController.getShooter().getY() + programController.getShooter().getImage().getHeight() / 2));
-        long xLength = (long) (xPos - (programController.getShooter().getX() + programController.getShooter().getImage().getWidth() / 2));
+        objCurrentDish.setX(programController.getEntityController().getCook().getX());
+        objCurrentDish.setY(programController.getEntityController().getCook().getY());
+        long yLength = (long) (yPos - (programController.getEntityController().getCook().getY() + programController.getEntityController().getCook().getImage().getHeight() / 2));
+        long xLength = (long) (xPos - (programController.getEntityController().getCook().getX() + programController.getEntityController().getCook().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xDir = Math.cos(playerRotation);
         double yDir = Math.sin(playerRotation);
@@ -73,14 +73,6 @@ public class DishController {
         }
     }
 
-
-    /**
-     * sets the current bullet on the next element in the array.
-     * If current bullet is last element, it starts searching from the beginning
-     */
-    public void nextBullet() {
-        currentDish = nextOccupiedIndex();
-    }
 
     /**
      * finds next index in storedDishes array that is not null
@@ -109,6 +101,7 @@ public class DishController {
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, String dishType) {
+        System.out.println(dishType);
         Dish dish = null;
         if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
                 dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
@@ -117,6 +110,14 @@ public class DishController {
             System.out.println("nu uh wrong dishtype");
         }
         return dish;
+    }
+
+    /**
+     * sets the current bullet on the next element in the array.
+     * If current bullet is last element, it starts searching from the beginning
+     */
+    public void nextBullet() {
+        currentDish = nextOccupiedIndex();
     }
 
     /**

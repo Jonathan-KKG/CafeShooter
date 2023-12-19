@@ -72,7 +72,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
         // Move held dish with cook position
         Dish currentDish = programController.getDishController().getFirstHeldDish();
-        Cook cook = programController.getCook();
+        Cook cook = programController.getEntityController().getCook();
         if (currentDish != null) {
             currentDish.setX(cook.getX());
             currentDish.setY(cook.getY());

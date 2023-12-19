@@ -11,17 +11,26 @@ public class CookingController {
     private double time;
     private ProgramController programController;
 
-
+    /**
+     * creates an cookingController objet.
+     *
+     * @param pProgramController nessesery to reach all others controllers
+     */
     public CookingController(ProgramController pProgramController) {
         programController = pProgramController;
         cookingStations = programController.getEnvironmentController().getCookingStations();
         isCooking = false;
     }
 
+    /**
+     * updates time and removes skillcheck after 3 seconds
+     *
+     * @param dt Time passed between this and last frame
+     */
     public void updateCooking(double dt) {
         if (isCooking)
             time += dt;
-        if (time > 3){
+        if (time > 3) {
             isCooking = false;
             time = 0;
             programController.getUiController().deleteSkillCheckUI(programController);
@@ -35,7 +44,7 @@ public class CookingController {
      */
     private CollidableEnvironment objectInRange() {
         CollidableEnvironment output = null;
-        Cook cook = programController.getCook();
+        Cook cook = programController.getEntityController().getCook();
         double lowestDistance = 100;
         double cookMiddleX = cook.getX() + cook.getWidth() / 2;
         double cookMiddleY = cook.getY() + cook.getHeight() / 2;
@@ -70,11 +79,14 @@ public class CookingController {
         }
     }
 
+    /**
+     * if there is an active check addes an click
+     */
     public void addClick() {
         if (isCooking) {
             String dishType = programController.getUiController().getCurrentSkillCheckType();
-            if(!programController.getUiController().progressSkillCheck(programController)){
-                Cook cook = programController.getCook();
+            if (!programController.getUiController().progressSkillCheck(programController)) {
+                Cook cook = programController.getEntityController().getCook();
                 programController.getDishController().addToHeldDishStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
                 isCooking = false;

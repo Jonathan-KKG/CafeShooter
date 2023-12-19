@@ -21,20 +21,20 @@ public class DishUI extends UI {
         //UI Background
         drawTool.setLineWidth(5);
         setDrawToolColorToRGBABackgroundVal(drawTool);
-        drawTool.drawRectangle(startingPosition[0]+5, startingPosition[1],5 * 45+ 45d/2, 100);
+        drawTool.drawRectangle(startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 100);
         setDrawToolColorToRGBABorderVal(drawTool);
-        drawTool.drawFilledRectangle(startingPosition[0]+5, startingPosition[1],5 * 45 + 45d/2, 80);
+        drawTool.drawFilledRectangle(startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 80);
 
         //UI Seperators
         drawTool.setLineWidth(3);
-        drawTool.setCurrentColor(230,50,50,255);
+        drawTool.setCurrentColor(230, 50, 50, 255);
 
-        for(int i = 1; i < 5; i++)
-            drawTool.drawLine(startingPosition[0]-60 + 75 + 45 * i, startingPosition[1]-30 + 45, startingPosition[0]-60 + 75 + 45 * i, startingPosition[1]-30 + 75);
+        for (int i = 1; i < 5; i++)
+            drawTool.drawLine(startingPosition[0] - 60 + 75 + 45 * i, startingPosition[1] - 30 + 45, startingPosition[0] - 60 + 75 + 45 * i, startingPosition[1] - 30 + 75);
 
         //UI Index
-        drawTool.setCurrentColor(20,240,20,180);
-        drawTool.drawRectangle(x,y,40, 40);
+        drawTool.setCurrentColor(20, 240, 20, 180);
+        drawTool.drawRectangle(x, y, 40, 40);
 
         // Pacman
         // Remove comment to find Pacman

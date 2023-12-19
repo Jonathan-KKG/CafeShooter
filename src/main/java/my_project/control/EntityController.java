@@ -96,34 +96,6 @@ public class EntityController {
         }
     }
 
-    public void checkForDishCollisions() {
-        boolean removed = false;
-        programController.getDishController().getFlyingDishes().toFirst();
-        while (programController.getDishController().getFlyingDishes().hasAccess()) {
-            for (int i = 0; i < programController.getWaveController().getWave().length; i++) {
-                if (programController.getWaveController().getWave()[i] != null && programController.getDishController().getFlyingDishes().getContent().collidesWith(programController.getWaveController().getWave()[i])) {
-                    if (programController.getWaveController().getWave()[i].getRequiredDish().equals(programController.getDishController().getFlyingDishes().getContent().getType())) {
-                        programController.removeDrawableFromScene(programController.getWaveController().getWave()[i]);
-                        removed = true;
-                    }
-                    programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
-                    programController.getDishController().getFlyingDishes().remove();
-                    if (removed)
-                        programController.getWaveController().getWave()[i] = null;
-                    else if (programController.getDishController().getFlyingDishes().hasAccess() && (programController.getDishController().getFlyingDishes().getContent().getY() + programController.getDishController().getFlyingDishes().getContent().getHeight() < 0 ||
-                            programController.getDishController().getFlyingDishes().getContent().getY() > 1109 ||
-                            programController.getDishController().getFlyingDishes().getContent().getX() + programController.getDishController().getFlyingDishes().getContent().getWidth() < 0 ||
-                            programController.getDishController().getFlyingDishes().getContent().getX() > 1920)
-                    ) {
-                        programController.removeDrawableFromScene(programController.getDishController().getFlyingDishes().getContent());
-                        programController.getDishController().getFlyingDishes().remove();
-                    } else
-                        programController.getDishController().getFlyingDishes().next();
-                }
-            }
-        }
-    }
-
     /**
      * Searches for collisions with collidable Environment object
      * <br> or screen border & prevents collision by adjusting
@@ -153,6 +125,7 @@ public class EntityController {
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
      * <br> It works don't touch it (Only god knows why it works)
      * <br> This method is the only instance of actually setting positions of Players and Enemies
+     *
      * @param collider  object the entity could be colliding with
      * @param entity    entity that should be checked
      * @param futurePos the entitys future position
@@ -171,9 +144,11 @@ public class EntityController {
         return collided;
     }
 
-    /** Checks if entity is horizontally colliding with collider and adjusts futurePos accordingly to prevent clipping
+    /**
+     * Checks if entity is horizontally colliding with collider and adjusts futurePos accordingly to prevent clipping
+     *
      * @param collider  object the entity could be colliding with
-     * @param entity entity that should be checked
+     * @param entity    entity that should be checked
      * @param futurePos the entitys future position that will be adjusted
      * @param entityDir direction the entity is moving with
      * @return whether collision was found or not
@@ -194,9 +169,11 @@ public class EntityController {
         return collided;
     }
 
-    /** Checks if entity is vertically colliding with collider and adjusts futurePos accordingly to prevent clipping
+    /**
+     * Checks if entity is vertically colliding with collider and adjusts futurePos accordingly to prevent clipping
+     *
      * @param collider  object the entity could be colliding with
-     * @param entity entity that should be checked
+     * @param entity    entity that should be checked
      * @param futurePos the entitys future position that will be adjusted
      * @return whether collision was found or not
      */
@@ -215,10 +192,12 @@ public class EntityController {
         return collided;
     }
 
-    /**Checks whether entity will be out of the screen and adjusts futurePos accordingly to prevent that
+    /**
+     * Checks whether entity will be out of the screen and adjusts futurePos accordingly to prevent that
+     *
      * @param entityDir direction the entity is moving with
      * @param futurePos the entitys future position that will be adjusted
-     * @param entity entity that should be checked
+     * @param entity    entity that should be checked
      * @return whether collision was found or not
      */
     private boolean keepInsideScreen(double[] entityDir, double[] futurePos, Entity entity) {
@@ -241,9 +220,5 @@ public class EntityController {
 
     public Cook getCook() {
         return cook;
-    }
-
-    public Shooter getShooter() {
-        return shooter;
     }
 }

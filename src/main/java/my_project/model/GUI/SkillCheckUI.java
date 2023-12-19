@@ -7,8 +7,8 @@ public class SkillCheckUI extends UI {
     private String type;
     private double progress; // progress value between 0 and 1
 
-    public SkillCheckUI(double pX, double pY, String pType){
-        super(pX,pY);
+    public SkillCheckUI(double pX, double pY, String pType) {
+        super(pX, pY);
         type = pType;
         width = 80;
         height = 200;
@@ -16,21 +16,13 @@ public class SkillCheckUI extends UI {
         progress = 0;
     }
 
-    /**
-     * increases the progress attribute and returns whether the skillcheck has not reached 100% completion or yes
-     * @return true if not finished (i.e. if progress was increased) and false otherwise
-     */
-    public boolean increaseProgress(){
-        progress += 0.1;
-
-        return !(progress + 0.1 >= 1);
-    }
 
     /**
      * Draws the skillcheck respective to its Dishtype
+     *
      * @param drawTool Required to draw the object
      */
-    public void draw(DrawTool drawTool){
+    public void draw(DrawTool drawTool) {
         drawTool.setLineWidth(2);
 
         // Standard UI Template
@@ -40,15 +32,17 @@ public class SkillCheckUI extends UI {
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
 
         // vary for each Dishtype
-        switch(type) {
+        switch (type) {
             case "spaghet.png":
                 drawOvenSC(drawTool);
                 break;
-
+            case "cawfee.png":
+                drawOvenSC(drawTool);
+                break;
         }
     }
 
-    private void drawOvenSC(DrawTool drawTool){
+    private void drawOvenSC(DrawTool drawTool) {
         // "Progress Bar"
         drawTool.setCurrentColor(120, 117, 117, 255);
         drawTool.drawRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4, startingPosition[1] - height * 0.8, width * 0.4, height * 0.8);
@@ -58,6 +52,17 @@ public class SkillCheckUI extends UI {
         // moveable part of the "Progress Bar"
         drawTool.setCurrentColor(255, 0, 0, 255);
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4 + 2, y - height * 0.8 * progress + 2,width * 0.4 - 4, height * 0.8 * progress - 4);
+    }
+
+    /**
+     * increases the progress attribute and returns whether the skillcheck has not reached 100% completion or yes
+     *
+     * @return true if not finished (i.e. if progress was increased) and false otherwise
+     */
+    public boolean increaseProgress() {
+        progress += 0.1;
+
+        return !(progress + 0.1 >= 1);
     }
 
     public String getType() {

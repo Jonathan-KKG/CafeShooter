@@ -10,13 +10,17 @@ public class CookingStation extends CollidableEnvironment {
      * @param pX Starting x pos
      * @param pY Starting y pos
      */
-    public CookingStation(String filename, double pX, double pY) {
+    public CookingStation(String filename, double pX, double pY, int help) {
         super(filename, pX, pY);
         switch (filename) {
             case "stovetop.png":
                 cookableObjs = "spaghet.png";
                 break;
         }
+        if (help == 1)
+            cookableObjs = "spaghet.png";
+        else if (help == 2)
+            cookableObjs = "cawfee.png";
     }
 
     public String getCookableObjs() {

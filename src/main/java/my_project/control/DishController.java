@@ -3,12 +3,13 @@ package my_project.control;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
+import my_project.model.Item;
 
 
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
-    private Stack<Dish> heldDishes;
+    private Stack<Item> heldDishes;
     private ProgramController programController;
     private int currentDish;
 
@@ -100,7 +101,6 @@ public class DishController {
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, String dishType) {
-        System.out.println(dishType);
         Dish dish = null;
         if (dishType.equals("muffin.png") || dishType.equals("spaghet.png") ||
                 dishType.equals("mikado.png") || dishType.equals("cawfee.png")) {
@@ -124,7 +124,7 @@ public class DishController {
      *
      * @param dish dish that gets added
      */
-    public void addToHeldDishStack(Dish dish) {
+    public void addToHeldDishStack(Item dish) {
         programController.getViewController().removeDrawable(heldDishes.top());
         heldDishes.push(dish);
         programController.getViewController().draw(heldDishes.top());
@@ -135,12 +135,14 @@ public class DishController {
         return currentDish;
     }
 
-    public Dish getFirstHeldDish() {
+    public Item getFirstHeldDish() {
         return heldDishes.top();
     }
 
     public void removeFirstHeldDish() {
+        programController.getViewController().removeDrawable(heldDishes.top());
         heldDishes.pop();
+        programController.getViewController().draw(heldDishes.top());
     }
 
     public List<Dish> getFlyingDishes() {

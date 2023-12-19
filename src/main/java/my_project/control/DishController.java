@@ -76,12 +76,14 @@ public class DishController {
     }
 
 
-    /** TODO: Fix StackOverflow after picking up ammo is implemented (annoy me (Habib) when it's implemented, I'll do it)
+    /**
      * finds next index in storedDishes array that is not null
      *
      * @return next occupied index
      */
     private int nextOccupiedIndex(int startingIndex, int modifiedIndex) {
+        if(startingIndex == -1)
+            startingIndex++;
         modifiedIndex++;
 
         if(modifiedIndex >= storedDishes.length)
@@ -132,8 +134,7 @@ public class DishController {
      * If current bullet is last element, it starts searching from the beginning
      */
     public void nextBullet() {
-        int current = currentDishIndex;
-        currentDishIndex = nextOccupiedIndex(current, currentDishIndex);
+        currentDishIndex = nextOccupiedIndex(currentDishIndex, currentDishIndex);
         programController.getUiController().moveAmmoIndicator(currentDishIndex);
     }
 

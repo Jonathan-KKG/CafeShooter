@@ -43,7 +43,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
     private DrawFrame drawFrame;    // das Fenster des Programms
     private ProgramController programController; // das Objekt, das das Programm steuern soll
     private Timer gameProcess;
-    private static ArrayList<Integer> currentlyPressedKeys = new ArrayList<>();;
+    private static ArrayList<Integer> currentlyPressedKeys = new ArrayList<>();
     private ArrayList<Scene> scenes;
     private SoundController soundController;
 
@@ -384,7 +384,8 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (!currentlyPressedKeys.contains(e.getKeyCode())) currentlyPressedKeys.add(e.getKeyCode());
+        // Commented out this line because it leads to restriction of clicking
+        // if (!currentlyPressedKeys.contains(e.getKeyCode())) currentlyPressedKeys.add(e.getKeyCode());
         Iterator<Interactable> iterator = scenes.get(currentScene).interactables.iterator();
         while (iterator.hasNext() && notChangingInteractables){
             Interactable tmpInteractable = iterator.next();

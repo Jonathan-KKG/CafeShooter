@@ -1,5 +1,8 @@
 package my_project.model;
 
+/**
+ * A collidableEnvironment that is able to create Dishes.
+ */
 public class CookingStation extends CollidableEnvironment {
 
     private String cookableObjs;

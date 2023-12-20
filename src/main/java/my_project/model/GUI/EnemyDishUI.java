@@ -1,8 +1,9 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
+import my_project.model.UI;
 
-public class EnemyDishUI extends UI{
+public class EnemyDishUI extends UI {
 
     private int[] bubbleRadius = new int[]{70,40};
     private int[] markerRadius = new int[]{46,46};

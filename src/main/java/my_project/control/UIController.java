@@ -7,7 +7,9 @@ import my_project.model.Enemy;
 import my_project.model.Cook;
 import my_project.model.GUI.*;
 
-
+/**
+ * Responsible for drawing and managing every GUI on the screen
+ */
 public class UIController {
 
     private DishUI dishUI;
@@ -24,7 +26,7 @@ public class UIController {
     public UIController(ViewController viewController) {
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
-        dishStackUI = new DishStackUI(500, 100);
+        dishStackUI = new DishStackUI(816, 797);
 
         viewController.draw(dishUI);
         viewController.draw(dishStackUI);

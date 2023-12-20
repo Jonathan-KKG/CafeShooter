@@ -2,7 +2,10 @@ package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
 
-public class Entity extends GraphicalObject {
+/**
+ * Blueprint to create most other drawables in the game
+ */
+public abstract class Entity extends GraphicalObject {
     protected double speed;
 
     /**
@@ -15,18 +18,6 @@ public class Entity extends GraphicalObject {
     public Entity(String filename, double pX, double pY) {
         super(filename, pX, pY);
         speed = 200;
-    }
-
-    /**
-     * default constructor
-     *
-     * @param pX Starting x position
-     * @param pY Starting y position
-     */
-    public Entity(double pX, double pY) {
-        speed = 200;
-        x = pX;
-        y = pY;
     }
 
     public double getSpeed() {

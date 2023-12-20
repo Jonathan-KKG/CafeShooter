@@ -2,6 +2,9 @@ package my_project.model.Dishes;
 
 import my_project.model.Dish;
 
+/**
+ * The Mikado Dish.
+ */
 public class Mikado extends Dish {
     /**
      * set starting position & type of Dish

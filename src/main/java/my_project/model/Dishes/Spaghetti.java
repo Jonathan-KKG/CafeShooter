@@ -2,6 +2,9 @@ package my_project.model.Dishes;
 
 import my_project.model.Dish;
 
+/**
+ * The Spaghetti Dish.
+ */
 public class Spaghetti extends Dish {
     /**
      * set starting position & type of Dish

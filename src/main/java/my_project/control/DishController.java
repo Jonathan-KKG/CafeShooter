@@ -11,7 +11,9 @@ import my_project.model.Item;
 
 import java.io.File;
 
-
+/**
+ * Controls every instance of Dish-class and ensures proper handling
+ */
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
@@ -61,8 +63,8 @@ public class DishController {
 
         objCurrentDish.setX(programController.getEntityController().getShooter().getX());
         objCurrentDish.setY(programController.getEntityController().getShooter().getY());
-        long yLength = (long) (yPos - (programController.getEntityController().getShooter().getY() + programController.getEntityController().getShooter().getImage().getHeight() / 2));
-        long xLength = (long) (xPos - (programController.getEntityController().getShooter().getX() + programController.getEntityController().getShooter().getImage().getWidth() / 2));
+        long yLength = (long) (yPos - (programController.getEntityController().getShooter().getY() + programController.getEntityController().getShooter().getHeight() / 2));
+        long xLength = (long) (xPos - (programController.getEntityController().getShooter().getX() + programController.getEntityController().getShooter().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xDir = Math.cos(playerRotation);
         double yDir = Math.sin(playerRotation);

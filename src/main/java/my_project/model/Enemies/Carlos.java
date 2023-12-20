@@ -2,6 +2,9 @@ package my_project.model.Enemies;
 
 import my_project.model.Enemy;
 
+/**
+ * The Carlos Enemy.
+ */
 public class Carlos extends Enemy {
     /**
      * Creates Enemy object of a specific type

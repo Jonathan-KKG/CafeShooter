@@ -2,6 +2,9 @@ package my_project.model;
 
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
 
+/**
+ * Table object that can store Dishes
+ */
 public class Table extends CollidableEnvironment {
 
     public Queue<Dish> tableDishes;

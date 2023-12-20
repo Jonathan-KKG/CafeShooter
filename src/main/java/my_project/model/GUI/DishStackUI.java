@@ -1,6 +1,7 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
+import my_project.model.UI;
 
 import java.awt.*;
 
@@ -14,7 +15,7 @@ public class DishStackUI extends UI {
      * @param pY Starting location of the Model
      */
     public DishStackUI(double pX, double pY) {
-        super(816, 797);
+        super(pX, pY);
 
     }
 

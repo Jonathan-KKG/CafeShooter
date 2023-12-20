@@ -1,8 +1,11 @@
-package my_project.model.GUI;
+package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
+/**
+ * Contains values and methods to ensure uniform colors and a draw method for UIs
+ */
 public abstract class UI extends GraphicalObject {
 
     private int[] rgbaBorderValues;

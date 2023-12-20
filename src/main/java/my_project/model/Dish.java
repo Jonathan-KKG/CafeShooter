@@ -1,5 +1,8 @@
 package my_project.model;
 
+/**
+ * a Dish Item that is able to satisfy enemies
+ */
 public abstract class Dish extends Item {
     private double direction[];
 

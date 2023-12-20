@@ -1,10 +1,11 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
+import my_project.model.UI;
 
 import java.awt.*;
 
-public class EndGameUI extends UI{
+public class EndGameUI extends UI {
 
     /**
      * Initializes UI Model

@@ -7,6 +7,10 @@ import my_project.model.*;
 
 import java.io.File;
 
+/**
+ * Controls all aspects of Enemy and Player objects, which includes movement, collision and update;
+ * Additionally handles DishCollisions of "flyingDishes"
+ */
 public class EntityController {
     private Shooter shooter;
     private Cook cook;

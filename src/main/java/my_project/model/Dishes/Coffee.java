@@ -2,6 +2,9 @@ package my_project.model.Dishes;
 
 import my_project.model.Dish;
 
+/**
+ * The Coffee Dish.
+ */
 public class Coffee extends Dish {
     /**
      * set starting position & type of Dish

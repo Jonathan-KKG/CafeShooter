@@ -1,5 +1,8 @@
 package my_project.model;
 
+/**
+ * An enemy entity that is able to damage environment, follow the player and are able to lead to game over
+ */
 public abstract class Enemy extends Entity {
     protected String requiredDish;
 

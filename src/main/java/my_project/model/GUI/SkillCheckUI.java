@@ -1,6 +1,7 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
+import my_project.model.UI;
 
 
 public class SkillCheckUI extends UI {

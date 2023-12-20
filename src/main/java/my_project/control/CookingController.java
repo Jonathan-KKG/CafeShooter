@@ -4,6 +4,9 @@ import my_project.model.CollidableEnvironment;
 import my_project.model.Cook;
 import my_project.model.CookingStation;
 
+/**
+ *  Controls Cooking mechanic
+ */
 public class CookingController {
     private boolean isCooking;
     private double time;

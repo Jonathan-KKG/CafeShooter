@@ -1,5 +1,8 @@
 package my_project.model;
 
+/**
+ * Items that can be held by the cook and interacted with
+ */
 public abstract class Item extends Entity {
     private String type;
 

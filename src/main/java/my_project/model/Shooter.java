@@ -1,8 +1,11 @@
 package my_project.model;
 
+/**
+ * The "Shooter" player
+ */
 public class Shooter extends Player {
 
-    private boolean isRepairing;
+    private boolean isRepairing; // inputs (w/ exception of repair-related inputs) will stop getting detected until isRepairing = false
 
     /**
      * @param filename Sprite the Player should apply

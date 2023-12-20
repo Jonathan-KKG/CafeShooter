@@ -4,6 +4,9 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
 
+/**
+ * Controls all Environment objects by creating, storing, drawing and, if required, enabling influence (through methods) on them.
+ */
 public class EnvironmentController {
     //Referenzen
     private List<Environment> environmentObjects = new List<>();

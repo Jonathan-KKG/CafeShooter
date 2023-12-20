@@ -3,6 +3,9 @@ package my_project.model;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
+/**
+ * A class for every object on the screen that isn't moving and isn't UI
+ */
 public class Environment extends GraphicalObject {
     /**
      * @param filename Required to load sprite

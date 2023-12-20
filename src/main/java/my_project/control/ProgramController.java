@@ -3,6 +3,11 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import my_project.view.InputManager;
 
+/**
+ * Creates all Controllers and enables communication between them
+ * Calls updaateProgram to update every Controller
+ * Deals with ending the game
+ */
 public class ProgramController {
 
     //Referenzen

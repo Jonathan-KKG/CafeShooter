@@ -1,7 +1,8 @@
 package my_project.model;
 
-import java.awt.image.BufferedImage;
-
+/**
+ * Blueprint for both player instances
+ */
 public abstract class Player extends Entity {
 
     private CollidableEnvironment closestObjectInRange;
@@ -13,10 +14,6 @@ public abstract class Player extends Entity {
      */
     public Player(String filename, double pX, double pY) {
         super(filename, pX, pY);
-    }
-
-    public BufferedImage getImage() {
-        return myImage;
     }
 
     public void setClosestObjectInRange(CollidableEnvironment pClosestObjectInRange) {

@@ -1,7 +1,10 @@
 package my_project.model;
 
+/**
+ * The "Cook" player
+ */
 public class Cook extends Player {
-    private boolean isCooking;
+    private boolean isCooking; // inputs (w/ exception of cooking-related inputs) will stop getting detected until isCooking = false
 
     /**
      * @param filename Sprite the Player should apply

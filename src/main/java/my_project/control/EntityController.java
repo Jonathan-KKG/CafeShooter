@@ -76,6 +76,8 @@ public class EntityController {
             for (int i = 0; i < enemies.length; i++) {
                 Dish currentDish = dishList.getContent();
                 if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
+                    System.out.println(enemies[i].getRequiredDish());
+                    System.out.println(currentDish.getType());
                     if (enemies[i].getRequiredDish().equals(currentDish.getType())) {
                         programController.getUiController().deleteEnemyBubble(i, programController.getViewController());
                         programController.getViewController().removeDrawable(enemies[i]);
@@ -252,5 +254,9 @@ public class EntityController {
 
     public Cook getCook() {
         return cook;
+    }
+
+    public Shooter getShooter() {
+        return shooter;
     }
 }

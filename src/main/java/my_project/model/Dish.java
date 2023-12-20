@@ -3,6 +3,7 @@ package my_project.model;
 public class Dish extends Item {
     private double direction[];
 
+
     /**
      * set starting position & type of Dish
      *
@@ -22,5 +23,4 @@ public class Dish extends Item {
     public double[] getDirection() {
         return direction;
     }
-
 }

@@ -46,10 +46,10 @@ public class DishController {
 
         Dish objCurrentDish = storedDishes[currentDishIndex];
 
-        objCurrentDish.setX(programController.getEntityController().getCook().getX());
-        objCurrentDish.setY(programController.getEntityController().getCook().getY());
-        long yLength = (long) (yPos - (programController.getEntityController().getCook().getY() + programController.getEntityController().getCook().getImage().getHeight() / 2));
-        long xLength = (long) (xPos - (programController.getEntityController().getCook().getX() + programController.getEntityController().getCook().getImage().getWidth() / 2));
+        objCurrentDish.setX(programController.getEntityController().getShooter().getX());
+        objCurrentDish.setY(programController.getEntityController().getShooter().getY());
+        long yLength = (long) (yPos - (programController.getEntityController().getShooter().getY() + programController.getEntityController().getShooter().getImage().getHeight() / 2));
+        long xLength = (long) (xPos - (programController.getEntityController().getShooter().getX() + programController.getEntityController().getShooter().getImage().getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xDir = Math.cos(playerRotation);
         double yDir = Math.sin(playerRotation);
@@ -110,7 +110,6 @@ public class DishController {
         File folder = new File("src/main/resources/graphic/Dishes/");
         File[] dishTypes = folder.listFiles();
         Dish dish = null;
-
         for (int i = 0; i < dishTypes.length; i++) {
             if(dishType.equals(dishTypes[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", ""))) {
                 dish = new Dish(dishType, pX, pY);

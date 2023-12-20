@@ -5,11 +5,7 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Enemy;
 import my_project.model.Cook;
-import my_project.model.GUI.DishStackUI;
-import my_project.model.GUI.DishUI;
-import my_project.model.GUI.EnemyDishUI;
-import my_project.model.GUI.HPBar;
-import my_project.model.GUI.SkillCheckUI;
+import my_project.model.GUI.*;
 
 
 public class UIController {
@@ -181,8 +177,8 @@ public class UIController {
     /**
      * Draws the final frame after the player has failed
      */
-    public void drawEndGameScreen() {
-        // penis
+    public void drawEndGameScreen(ViewController viewController) {
+        viewController.draw(new EndGameUI(250, 1080* 0.85 / 2));
     }
 
 }

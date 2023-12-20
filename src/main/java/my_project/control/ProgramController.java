@@ -46,7 +46,7 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt) {
-        //if(!isRunning) return;
+        if(!isRunning) return;
 
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
@@ -64,7 +64,8 @@ public class ProgramController {
      */
     public void endGame(){
         isRunning = false;
-        uiController.drawEndGameScreen();
+        uiController.drawEndGameScreen(viewController);
+        entityController.endGame();
     }
 
     public CookingController getCookingController() {

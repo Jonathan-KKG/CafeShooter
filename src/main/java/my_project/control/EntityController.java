@@ -185,6 +185,14 @@ public class EntityController {
     }
 
     /**
+     * Changes player sprites to how did you do in pe today?
+     */
+    public void endGame(){
+        cook.setNewImage("src/main/resources/graphic/playerDefeated.png");
+        shooter.setNewImage("src/main/resources/graphic/playerDefeated.png");
+    }
+
+    /**
      * Checks if entity is colliding with a GraphicalObject and sets new position of entity appropiately to prevent clipping
      * <br> It works don't touch it (Only god knows why it works)
      * <br> This method is the only instance of actually setting positions of Players and Enemies

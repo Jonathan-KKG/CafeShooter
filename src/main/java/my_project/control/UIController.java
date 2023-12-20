@@ -121,4 +121,11 @@ public class UIController {
         }
     }
 
+    /**
+     * Draws the final frame after the player has failed
+     */
+    public void drawEndGameScreen(){
+        // penis
+    }
+
 }

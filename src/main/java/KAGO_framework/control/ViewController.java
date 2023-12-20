@@ -384,8 +384,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // Commented out this line because it leads to restriction of clicking
-        // if (!currentlyPressedKeys.contains(e.getKeyCode())) currentlyPressedKeys.add(e.getKeyCode());
+        if (!currentlyPressedKeys.contains(e.getKeyCode())) currentlyPressedKeys.add(e.getKeyCode());
         Iterator<Interactable> iterator = scenes.get(currentScene).interactables.iterator();
         while (iterator.hasNext() && notChangingInteractables){
             Interactable tmpInteractable = iterator.next();

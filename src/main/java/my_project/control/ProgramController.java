@@ -1,6 +1,5 @@
 package my_project.control;
 
-import KAGO_framework.control.Drawable;
 import KAGO_framework.control.ViewController;
 import my_project.view.InputManager;
 
@@ -15,6 +14,8 @@ public class ProgramController {
     private CookingController cookingController;
     private WaveController waveController;
     private UIController uiController;
+
+    private boolean isRunning;
 
     /**
      * @param viewController A class that manages the visuals and inputs.
@@ -34,6 +35,7 @@ public class ProgramController {
         uiController = new UIController(viewController);
         waveController = new WaveController(this);
         dishController = new DishController(this);
+        isRunning = true;
 
         viewController.register(inputManager);
     }
@@ -44,22 +46,25 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt) {
+        if(!isRunning) return;
+
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt, entityController);
         dishController.dishUpdate(dt);
-        entityController.checkDishCollisions();
+        entityController.dishCollisionUpdate();
         waveController.checkForNewWave(this);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubbles(waveController.getWave());
+
+
     }
 
     /**
-     * Removes a drawable object from the scene
-     *
-     * @param drawable Object to be removed
+     * prevents updateProgram from executing & draws the finishing frame
      */
-    public void removeDrawableFromScene(Drawable drawable) {
-        viewController.removeDrawable(drawable);
+    public void endGame(){
+        isRunning = false;
+        uiController.drawEndGameScreen();
     }
 
     public CookingController getCookingController() {

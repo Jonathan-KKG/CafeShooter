@@ -42,6 +42,9 @@ public class EntityController {
 
                 if (distance != 0)
                     checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
+
+                if(enemies[i].collidesWith(cook))
+                    programController.endGame();
             }
         }
     }
@@ -62,27 +65,30 @@ public class EntityController {
     /**
      * Checks collision between Enemy and Dishes. If a Dish hits an Enemy, it gets deleted and if it has the right type the Enemy dies.
      * All Dishes outside the map get deleted.
+     * Moves dishes.
      */
-    public void checkDishCollisions() {
+    public void dishCollisionUpdate() {
         List<Dish> dishList = programController.getDishController().getFlyingDishes();
         Enemy[] enemies = programController.getWaveController().getWave();
         dishList.toFirst();
         boolean removed = false;
         while (dishList.hasAccess()) {
+            // Check Dish-Enemy collision
             for (int i = 0; i < enemies.length; i++) {
                 Dish currentDish = dishList.getContent();
                 if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
                     if (enemies[i].getRequiredDish().equals(currentDish.getType())) {
                         programController.getUiController().deleteEnemyBubble(i, programController.getViewController());
-                        programController.removeDrawableFromScene(enemies[i]);
+                        programController.getViewController().removeDrawable(enemies[i]);
                         enemies[i] = null;
                         removed = true;
                     }
                     i = enemies.length;
-                    programController.removeDrawableFromScene(currentDish);
+                    programController.getViewController().removeDrawable(currentDish);
                     dishList.remove();
                 }
             }
+            // Check Dish-Screen collision
             if (!removed) {
                 dishList.next();
                 Dish currentDish = dishList.getContent();
@@ -90,10 +96,9 @@ public class EntityController {
                 double[] futurePos = new double[]{currentDish.getX(), currentDish.getY()};
 
                 if (keepInsideScreen(currentDish.getDirection(), futurePos, currentDish)) {
-                    programController.removeDrawableFromScene(currentDish);
+                    programController.getViewController().removeDrawable(currentDish);
                     dishList.remove();
                 }
-
             }
         }
     }

@@ -70,6 +70,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
         // Move held dish with cook position
         programController.getDishController().moveHeldItems();
+        programController.getUiController().updateDishStackUI(programController.getEntityController().getCook());
     }
 
     /**

@@ -18,6 +18,7 @@ public class DishController {
     private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
+    private int heldStackAmmount;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -122,6 +123,7 @@ public class DishController {
                     case "Muffin" -> dish = new Muffin(dishType,pX,pY);
                     case "Spaghetti" -> dish = new Spaghetti(dishType,pX,pY);
                 }
+
                 i = dishTypes.length;
             }
         }
@@ -146,8 +148,10 @@ public class DishController {
         programController.getUiController().moveAmmoIndicator(currentDishIndex);
     }
 
+
+
     /**
-     * adds dish to pendingDishes stack
+     * adds dish to pendingDishes stack, draws it and increases heldDishStack
      *
      * @param dish dish that gets added
      */
@@ -155,6 +159,7 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.push(dish);
         programController.getViewController().draw(heldItems.top());
+        programController.getUiController().updateHeldStackAmmount(true);
     }
 
 
@@ -170,9 +175,11 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
+        programController.getUiController().updateHeldStackAmmount(false);
     }
 
     public List<Dish> getFlyingDishes() {
         return flyingDishes;
     }
+
 }

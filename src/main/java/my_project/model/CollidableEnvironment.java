@@ -1,19 +1,16 @@
 package my_project.model;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-
 public class CollidableEnvironment extends Environment {
     private boolean isColliderActive;
     private int hp;
-    private String type;
+    private String legacyFilename;
 
     /**
      * Additionally activates the collider
      */
     public CollidableEnvironment(String filename, double pX, double pY) {
         super(filename, pX, pY);
-        type = filename;
+        legacyFilename = filename;
         isColliderActive = true;
         hp = 100;
     }
@@ -25,20 +22,25 @@ public class CollidableEnvironment extends Environment {
         hp -= dt;
         if (hp <= 0) {
             isColliderActive = false;
-            try {
-                myImage = ImageIO.read(new File("src/main/resources/graphic/Environment/window.png"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+            setNewImage("src/main/resources/graphic/Environment/window.png");
         }
+    }
+
+    public void increaseHP() {
+        if (!isColliderActive) {
+            isColliderActive = true;
+            setNewImage("src/main/resources/graphic/Environment/" + legacyFilename + ".png");
+        }
+
+        if (hp < 100)
+            hp += 5;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     public boolean isColliderActive() {
         return isColliderActive;
-    }
-
-    public String getType() {
-        return type;
     }
 }

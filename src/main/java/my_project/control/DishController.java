@@ -18,6 +18,7 @@ public class DishController {
     private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
+    private String[] dishTypes;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -32,10 +33,18 @@ public class DishController {
         storedDishes = new Dish[5];
         programController = pProgramController;
 
+        File[] dishFiles = new File("src/main/resources/graphic/Dishes").listFiles();
+        dishTypes = new String[dishFiles.length];
+        for (int i = 0; i < dishFiles.length; i++) {
+             dishTypes[i] = dishFiles[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", "").replaceAll(".png", "");
+        }
+
+
         for (int i = 0; i < storedDishes.length; i++) {
             storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Spaghetti");
             programController.getViewController().draw(storedDishes[i]);
         }
+
     }
 
     /**
@@ -111,11 +120,10 @@ public class DishController {
      * @return returns drawn dish
      */
     public Dish createDish(double pX, double pY, String dishType) {
-        File folder = new File("src/main/resources/graphic/Dishes/");
-        File[] dishTypes = folder.listFiles();
         Dish dish = null;
+
         for (int i = 0; i < dishTypes.length; i++) {
-            if(dishType.equals(dishTypes[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", "").replaceAll(".png", ""))) {
+            if(dishType.equals(dishTypes[i])) {
                 switch (dishType){
                     case "Coffee" -> dish = new Coffee(dishType,pX,pY);
                     case "Mikado" -> dish = new Mikado(dishType,pX,pY);

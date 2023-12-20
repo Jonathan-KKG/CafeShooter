@@ -7,6 +7,12 @@ public class SkillCheckUI extends UI {
     private String type;
     private double progress; // progress value between 0 and 1
 
+    /**
+     * Initializes UI Model
+     *
+     * @param pX Starting location of the Model
+     * @param pY Starting location of the Model
+     */
     public SkillCheckUI(double pX, double pY, String pType) {
         super(pX, pY);
         type = pType;
@@ -15,7 +21,6 @@ public class SkillCheckUI extends UI {
         y = startingPosition[1];
         progress = 0;
     }
-
 
     /**
      * Draws the skillcheck respective to its Dishtype

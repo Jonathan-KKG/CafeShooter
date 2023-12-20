@@ -56,13 +56,13 @@ public class InputManager extends InteractiveGraphicalObject {
             yDirCook = -1;
         if (ViewController.isKeyDown(KeyEvent.VK_S))
             yDirCook = 1;
-        if (ViewController.isKeyDown(KeyEvent.VK_LEFT))
+        if (ViewController.isKeyDown(KeyEvent.VK_J))
             xDirShooter = -1;
-        if (ViewController.isKeyDown(KeyEvent.VK_RIGHT))
+        if (ViewController.isKeyDown(KeyEvent.VK_L))
             xDirShooter = 1;
-        if (ViewController.isKeyDown(KeyEvent.VK_UP))
+        if (ViewController.isKeyDown(KeyEvent.VK_I))
             yDirShooter = -1;
-        if (ViewController.isKeyDown(KeyEvent.VK_DOWN))
+        if (ViewController.isKeyDown(KeyEvent.VK_K))
             yDirShooter = 1;
 
         entityController.updatePlayers(dt,
@@ -97,7 +97,8 @@ public class InputManager extends InteractiveGraphicalObject {
             programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q)
             programController.getCookingController().cook();
-
+        if (key == KeyEvent.VK_O)
+            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getClosestObjectInRange(), programController.getUiController(), programController.getViewController());
     }
 
 }

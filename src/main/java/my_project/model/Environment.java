@@ -22,6 +22,5 @@ public class Environment extends GraphicalObject {
      */
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(myImage, x, y);
-        drawTool.drawRectangle(x, y, width, height);
     }
 }

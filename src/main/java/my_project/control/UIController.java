@@ -1,15 +1,20 @@
 package my_project.control;
 
 import KAGO_framework.control.ViewController;
+import KAGO_framework.model.abitur.datenstrukturen.List;
+import my_project.model.CollidableEnvironment;
 import my_project.model.Enemy;
 import my_project.model.GUI.DishUI;
 import my_project.model.GUI.EnemyDishUI;
+import my_project.model.GUI.HPBar;
 import my_project.model.GUI.SkillCheckUI;
+
 
 public class UIController {
 
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
+    private List<HPBar> hpBars;
     private EnemyDishUI[] enemyDishUIs;
 
     /**
@@ -19,6 +24,7 @@ public class UIController {
      */
     public UIController(ViewController viewController) {
         dishUI = new DishUI(1300, 820);
+        hpBars = new List<>();
 
         viewController.draw(dishUI);
     }
@@ -48,15 +54,15 @@ public class UIController {
     /**
      * Progresses the current skillcheck and removes it if it's finished
      *
-     * @param programController Required to remove the skillcheck
+     * @param viewController Required to remove the skillcheck
      * @return whether the skillcheck is finished or not - also false if it's null
      */
-    public boolean progressSkillCheck(ProgramController programController) {
+    public boolean progressSkillCheck(ViewController viewController) {
         if (skillCheckUI == null)
             return false;
 
         if (!skillCheckUI.increaseProgress()) {
-            programController.getViewController().removeDrawable(skillCheckUI);
+            viewController.removeDrawable(skillCheckUI);
             skillCheckUI = null;
             return false;
         }
@@ -75,10 +81,10 @@ public class UIController {
     /**
      * stops drawing the current skillCheckUI and deletes it
      *
-     * @param programController Required to stop the drawing
+     * @param viewController Required to stop the drawing
      */
-    public void deleteSkillCheckUI(ProgramController programController) {
-        programController.getViewController().removeDrawable(skillCheckUI);
+    public void deleteSkillCheckUI(ViewController viewController) {
+        viewController.removeDrawable(skillCheckUI);
         skillCheckUI = null;
     }
 
@@ -89,7 +95,7 @@ public class UIController {
      */
     public void updateEnemyBubbles(Enemy[] enemies) {
         for (int i = 0; i < enemies.length; i++) {
-            if(enemies[i] != null) {
+            if (enemies[i] != null) {
                 enemyDishUIs[i].setX(enemies[i].getX());
                 enemyDishUIs[i].setY(enemies[i].getY());
             }
@@ -122,9 +128,38 @@ public class UIController {
     }
 
     /**
+     * draws HPBar for a certain CollidableEnvironment
+     * @param env The environment object that needs an HPBar
+     * @param viewController Required to draw the new UI
+     */
+    public void drawHPBar(CollidableEnvironment env, ViewController viewController) {
+        HPBar newHPBar = new HPBar(env);
+        hpBars.append(newHPBar);
+        viewController.draw(newHPBar);
+    }
+
+    /** TODO: Check if removing an HPBar works
+     *  TODO: Check if "resurrecting" an HPBar works
+     * updates all HPBars for CollidableEnvironments
+     * @param viewController Required to deleted the HPBar in case it's not required anymore
+     */
+    public void updateHPBars(ViewController viewController){
+        hpBars.toFirst();
+        while (hpBars.hasAccess()){
+            hpBars.getContent().updateHealth();
+            if(hpBars.getContent().getHealth() >= 100) {
+                viewController.removeDrawable(hpBars.getContent());
+                hpBars.remove();
+            }
+            else
+                hpBars.next();
+        }
+    }
+
+    /**
      * Draws the final frame after the player has failed
      */
-    public void drawEndGameScreen(){
+    public void drawEndGameScreen() {
         // penis
     }
 

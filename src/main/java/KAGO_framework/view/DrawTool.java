@@ -109,7 +109,7 @@ public class DrawTool {
      */
     public void setCurrentColor(int r, int g, int b, int alpha){
         if (graphics2D!= null) {
-            graphics2D.setColor( new Color(r,g,b,alpha) );
+            graphics2D.setColor(new Color(r,g,b,alpha) );
         }
     }
 

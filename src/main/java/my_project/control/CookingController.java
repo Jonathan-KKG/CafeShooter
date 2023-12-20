@@ -37,7 +37,7 @@ public class CookingController {
         if (time > 3) {
             isCooking = false;
             time = 0;
-            programController.getUiController().deleteSkillCheckUI(programController);
+            programController.getUiController().deleteSkillCheckUI(programController.getViewController());
         }
     }
 
@@ -62,7 +62,7 @@ public class CookingController {
     public void addClick() {
         if (isCooking) {
             String dishType = programController.getUiController().getCurrentSkillCheckType();
-            if (!programController.getUiController().progressSkillCheck(programController)) {
+            if (!programController.getUiController().progressSkillCheck(programController.getViewController())) {
                 Cook cook = programController.getEntityController().getCook();
                 programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));

@@ -2,10 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import my_project.model.CollidableEnvironment;
-import my_project.model.Environment;
-import my_project.model.CookingStation;
-import my_project.model.Table;
+import my_project.model.*;
 
 public class EnvironmentController {
     //Referenzen
@@ -89,6 +86,19 @@ public class EnvironmentController {
             }
         } catch (Exception e) {
             System.out.println("Creating Environment object went wrong!");
+        }
+    }
+
+    /**
+     * Calls necessary methods to repair an object
+     * @param envObj the object to be repaired
+     * @param uiController Required to update UI
+     * @param viewController Required to update UI
+     */
+    public void repair(CollidableEnvironment envObj, UIController uiController, ViewController viewController){
+        if(envObj != null) {
+            envObj.increaseHP();
+            uiController.updateHPBars(viewController);
         }
     }
 

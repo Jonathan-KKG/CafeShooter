@@ -2,7 +2,6 @@ package my_project.model;
 
 public class Dish extends Item {
     private double direction[];
-    private String type;
 
 
     /**
@@ -23,9 +22,5 @@ public class Dish extends Item {
 
     public double[] getDirection() {
         return direction;
-    }
-
-    public String getType() {
-        return type;
     }
 }

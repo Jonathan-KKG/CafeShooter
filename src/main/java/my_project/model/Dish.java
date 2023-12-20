@@ -1,6 +1,6 @@
 package my_project.model;
 
-public class Dish extends Item {
+public abstract class Dish extends Item {
     private double direction[];
 
 

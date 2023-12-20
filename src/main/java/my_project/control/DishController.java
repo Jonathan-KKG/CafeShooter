@@ -3,6 +3,10 @@ package my_project.control;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
+import my_project.model.Dishes.Coffee;
+import my_project.model.Dishes.Mikado;
+import my_project.model.Dishes.Muffin;
+import my_project.model.Dishes.Spaghetti;
 import my_project.model.Item;
 
 import java.io.File;
@@ -29,7 +33,7 @@ public class DishController {
         programController = pProgramController;
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "spaghet.png");
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Spaghetti");
             programController.getViewController().draw(storedDishes[i]);
         }
     }
@@ -111,8 +115,13 @@ public class DishController {
         File[] dishTypes = folder.listFiles();
         Dish dish = null;
         for (int i = 0; i < dishTypes.length; i++) {
-            if(dishType.equals(dishTypes[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", ""))) {
-                dish = new Dish(dishType, pX, pY);
+            if(dishType.equals(dishTypes[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", "").replaceAll(".png", ""))) {
+                switch (dishType){
+                    case "Coffee" -> dish = new Coffee(dishType,pX,pY);
+                    case "Mikado" -> dish = new Mikado(dishType,pX,pY);
+                    case "Muffin" -> dish = new Muffin(dishType,pX,pY);
+                    case "Spaghetti" -> dish = new Spaghetti(dishType,pX,pY);
+                }
                 i = dishTypes.length;
             }
         }

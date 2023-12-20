@@ -1,8 +1,8 @@
-package my_project.model.Disches;
+package my_project.model.Dishes;
 
 import my_project.model.Dish;
 
-public class Muffin extends Dish {
+public class Coffee extends Dish {
     /**
      * set starting position & type of Dish
      *
@@ -10,7 +10,7 @@ public class Muffin extends Dish {
      * @param pX       x position at start
      * @param pY       y position at start
      */
-    public Muffin(String filename, double pX, double pY) {
+    public Coffee(String filename, double pX, double pY) {
         super(filename, pX, pY);
     }
 }

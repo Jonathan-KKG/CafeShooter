@@ -17,7 +17,7 @@ public class EnemyDishUI extends UI{
      */
     public EnemyDishUI(double pX, double pY, String filename) {
         super(pX, pY);
-        setNewImage("src/main/resources/graphic/Dishes/" + filename);
+        setNewImage("src/main/resources/graphic/Dishes/" + filename + ".png");
     }
 
     /**

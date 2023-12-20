@@ -2,6 +2,10 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
+import my_project.model.Enemies.Carlos;
+import my_project.model.Enemies.Habib;
+import my_project.model.Enemies.Jonathan;
+import my_project.model.Enemies.Max;
 import my_project.model.Enemy;
 
 public class WaveController {
@@ -26,7 +30,7 @@ public class WaveController {
                 double x;
                 double y;
                 int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
-                // Following values contain off-by-one errors
+                                                                            // Following values contain off-by-one errors
                 if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
                     x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
                     y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
@@ -38,7 +42,13 @@ public class WaveController {
                     y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
                 }
 
-                enemies[j] = new Enemy(enemyType, x, y);
+                switch (enemyType){
+                    case 1 -> enemies[j] = new Jonathan(x, y);
+                    case 2 -> enemies[j] = new Max(x, y);
+                    case 3 -> enemies[j] = new Carlos(x, y);
+                    case 4 -> enemies[j] = new Habib(x, y);
+                }
+
             }
             enemieWaves.enqueue(enemies);
         }

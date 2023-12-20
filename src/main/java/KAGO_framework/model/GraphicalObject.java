@@ -49,7 +49,7 @@ public class GraphicalObject implements Drawable {
     public GraphicalObject(String filename, double x, double y){
         this.x = x;
         this.y = y;
-        this.setNewImage("src/main/resources/graphic/" + filename);
+        this.setNewImage("src/main/resources/graphic/" + filename + ".png");
     }
 
     /**

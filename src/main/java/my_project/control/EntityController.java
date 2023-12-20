@@ -17,8 +17,8 @@ public class EntityController {
     public EntityController(ProgramController pProgramController, ViewController viewController) {
         programController = pProgramController;
 
-        shooter = new Shooter("img.png", 150, 150);
-        cook = new Cook("img.png", 800, 800);
+        shooter = new Shooter("img", 150, 150);
+        cook = new Cook("img", 800, 800);
 
         viewController.draw(shooter);
         viewController.draw(cook);

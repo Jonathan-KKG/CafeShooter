@@ -33,10 +33,10 @@ public class SkillCheckUI extends UI {
 
         // vary for each Dishtype
         switch (type) {
-            case "spaghet.png":
+            case "Spaghetti":
                 drawOvenSC(drawTool);
                 break;
-            case "cawfee.png":
+            case "Coffee":
                 drawOvenSC(drawTool);
                 break;
         }

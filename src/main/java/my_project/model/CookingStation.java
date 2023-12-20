@@ -14,13 +14,13 @@ public class CookingStation extends CollidableEnvironment {
         super(filename, pX, pY);
         switch (filename) {
             case "stovetop.png":
-                cookableObjs = "spaghet.png";
+                cookableObjs = "Spaghetti";
                 break;
         }
         if (help == 1)
-            cookableObjs = "spaghet.png";
+            cookableObjs = "Spaghetti";
         else if (help == 2)
-            cookableObjs = "cawfee.png";
+            cookableObjs = "Coffee";
     }
 
     public String getCookableObjs() {

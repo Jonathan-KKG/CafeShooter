@@ -1,8 +1,8 @@
-package my_project.model.Disches;
+package my_project.model.Dishes;
 
 import my_project.model.Dish;
 
-public class Mikado extends Dish {
+public class Spaghetti extends Dish {
     /**
      * set starting position & type of Dish
      *
@@ -10,7 +10,7 @@ public class Mikado extends Dish {
      * @param pX       x position at start
      * @param pY       y position at start
      */
-    public Mikado(String filename, double pX, double pY) {
+    public Spaghetti(String filename, double pX, double pY) {
         super(filename, pX, pY);
     }
 }

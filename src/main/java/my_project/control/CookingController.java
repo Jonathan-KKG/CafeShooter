@@ -19,10 +19,10 @@ public class CookingController {
         programController = pProgramController;
         isCooking = false;
         recipes = new String[][][]{
-                {{"Nudel.png", "false"}, {"Sahne.png", "false"}, {"Speck.png", "false"}, {"Kaese.png", "false"}},
-                {{"Kaffebohnen.png", "false"}, {"Milch.png", "false"}, {"Zucker.png", "false"}},
-                {{"Mehl.png", "false"}, {"Milch.png", "false"}, {"Ei.png", "false"}, {"Zucker.png", "false"}, {"Schokolade.png", "false"}},
-                {{"Schokolade.png", "false"}, {"Stiks.png", "false"}}
+                {{"Nudel", "false"}, {"Sahne ", "false"}, {"Speck ", "false"}, {"Kaese ", "false"}},
+                {{"Kaffebohnen ", "false"}, {"Milch ", "false"}, {"Zucker ", "false"}},
+                {{"Mehl ", "false"}, {"Milch ", "false"}, {"Ei ", "false"}, {"Zucker ", "false"}, {"Schokolade ", "false"}},
+                {{"Schokolade ", "false"}, {"Stiks ", "false"}}
         };
     }
 
@@ -74,10 +74,10 @@ public class CookingController {
     private boolean checkForRightIngredients(String type) {
         int dish;
         switch (type) {
-            case "spaghet.png" -> dish = 0;
-            case "cawfee.png" -> dish = 1;
-            case "muffin.png" -> dish = 2;
-            case "mikado.png" -> dish = 3;
+            case "spaghetti" -> dish = 0;
+            case "Coffee" -> dish = 1;
+            case "Muffin" -> dish = 2;
+            case "Mikado" -> dish = 3;
             default -> dish = -1;
         }
         for (int i = 0; i < recipes[dish].length; i++) {

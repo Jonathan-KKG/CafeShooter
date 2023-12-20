@@ -17,6 +17,7 @@ public class UIController {
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
     private EnemyDishUI[] enemyDishUIs;
+    private List<HPBar> hpBars;
     private DishStackUI dishStackUI;
 
     /**

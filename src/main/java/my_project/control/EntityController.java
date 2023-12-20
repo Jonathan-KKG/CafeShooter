@@ -43,7 +43,7 @@ public class EntityController {
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null) {
-                double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth()/2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight()/2};
+                double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth() / 2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight() / 2};
                 double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
                 dir[0] /= distance;
                 dir[1] /= distance;
@@ -64,9 +64,19 @@ public class EntityController {
      * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : { Cook{x,y}, Shooter{x,y} }
      */
     public void updatePlayers(double dt, double[][] playerDir) {
+        if (cook.isCooking()) {
+            playerDir[0][0] = 0;
+            playerDir[0][1] = 0;
+        }
+        if (shooter.isRepairing()) {
+            playerDir[1][0] = 0;
+            playerDir[1][1] = 0;
+        }
+
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
-        checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
         updateClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook);
+
+        checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
         updateClosestObjectInRange(programController.getEnvironmentController().getCollidableEnvironmentObjects(), shooter);
     }
 
@@ -133,7 +143,7 @@ public class EntityController {
                 if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
                     for (int i = 0; i < enemyTypes.length; i++) {
                         if (entity.getClass().getName().replaceAll("my_project.model.Enemies.", "").equals(enemyTypes[i])) {
-                            if(env.getHp() == 100)
+                            if (env.getHp() == 100)
                                 programController.getUiController().drawHPBar(env, programController.getViewController());
                             env.reduceHP(dt);
                             i = enemyTypes.length;
@@ -144,7 +154,7 @@ public class EntityController {
             }
             envObjs.next();
         }
-        if(damaged)
+        if (damaged)
             programController.getUiController().updateHPBars(programController.getViewController());
     }
 

@@ -75,8 +75,7 @@ public class UIController {
             return false;
 
         if (!skillCheckUI.increaseProgress()) {
-            viewController.removeDrawable(skillCheckUI);
-            skillCheckUI = null;
+            deleteSkillCheckUI(viewController);
             return false;
         }
         return true;

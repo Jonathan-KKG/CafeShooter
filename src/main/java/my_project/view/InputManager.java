@@ -68,9 +68,11 @@ public class InputManager extends InteractiveGraphicalObject {
         entityController.updatePlayers(dt,
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
-        // Move held dish with cook position
-        programController.getDishController().moveHeldItems();
-        programController.getUiController().updateDishStackUI(programController.getEntityController().getCook());
+        // Move heldDishes and the UI along with cook position
+        if (!programController.getEntityController().getCook().isCooking()) {
+            programController.getDishController().moveHeldItems();
+            programController.getUiController().updateDishStackUI(programController.getEntityController().getCook());
+        }
     }
 
     /**
@@ -80,12 +82,14 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(programController.getEntityController().getShooter().isRepairing())
+            return;
+
         if (e.getButton() == 1)
             programController.getDishController().shoot(e.getX(), e.getY());
 
         if (e.getButton() == 3)
             programController.getDishController().nextBullet();
-
     }
 
     /**

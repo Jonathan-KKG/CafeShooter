@@ -38,6 +38,7 @@ public class CookingController {
             isCooking = false;
             time = 0;
             programController.getUiController().deleteSkillCheckUI(programController.getViewController());
+            programController.getEntityController().getCook().setCooking(false);
         }
     }
 
@@ -50,6 +51,7 @@ public class CookingController {
         if (objectInRange != null && objectInRange.getClass() == CookingStation.class && !isCooking) {
             //if (checkForRightIngrediens(((CookingStation) objectInRange).getCookableObjs())) {
                 isCooking = true;
+                programController.getEntityController().getCook().setCooking(true);
                 time = 0;
                 programController.getUiController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, ((CookingStation) objectInRange).getCookableObjs(), programController.getViewController());
             //}
@@ -66,6 +68,7 @@ public class CookingController {
                 Cook cook = programController.getEntityController().getCook();
                 programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
+                programController.getEntityController().getCook().setCooking(false);
                 isCooking = false;
             }
         }

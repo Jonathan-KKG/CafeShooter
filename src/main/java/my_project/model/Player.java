@@ -7,6 +7,7 @@ public abstract class Player extends Entity {
     private CollidableEnvironment closestObjectInRange;
 
     /**
+     * @param filename Sprite the Player should apply
      * @param pX the start x-Position
      * @param pY the stard y-Position
      */

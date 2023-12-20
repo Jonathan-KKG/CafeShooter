@@ -11,7 +11,7 @@ import java.io.File;
 public class DishController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
-    private Stack<Item> heldDishes;
+    private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
 
@@ -24,7 +24,7 @@ public class DishController {
     public DishController(ProgramController pProgramController) {
         currentDishIndex = 0;
         flyingDishes = new List<>();
-        heldDishes = new Stack<>();
+        heldItems = new Stack<>();
         storedDishes = new Dish[5];
         programController = pProgramController;
 
@@ -122,10 +122,10 @@ public class DishController {
         return dish;
     }
 
-    public void moveHeldDishes(){
-        if (heldDishes.top() != null) {
-            heldDishes.top().setX(programController.getEntityController().getCook().getX());
-            heldDishes.top().setY(programController.getEntityController().getCook().getY());
+    public void moveHeldItems(){
+        if (heldItems.top() != null) {
+            heldItems.top().setX(programController.getEntityController().getCook().getX());
+            heldItems.top().setY(programController.getEntityController().getCook().getY());
         }
     }
 
@@ -143,10 +143,10 @@ public class DishController {
      *
      * @param dish dish that gets added
      */
-    public void addToHeldDishStack(Item dish) {
-        programController.getViewController().removeDrawable(heldDishes.top());
-        heldDishes.push(dish);
-        programController.getViewController().draw(heldDishes.top());
+    public void addToHeldItemStack(Item dish) {
+        programController.getViewController().removeDrawable(heldItems.top());
+        heldItems.push(dish);
+        programController.getViewController().draw(heldItems.top());
     }
 
 
@@ -154,14 +154,14 @@ public class DishController {
         return currentDishIndex;
     }
 
-    public Item getFirstHeldDish() {
-        return heldDishes.top();
+    public Item getFirstHeldItem() {
+        return heldItems.top();
     }
 
-    public void removeFirstHeldDish() {
-        programController.getViewController().removeDrawable(heldDishes.top());
-        heldDishes.pop();
-        programController.getViewController().draw(heldDishes.top());
+    public void removeFirstHeldItem() {
+        programController.getViewController().removeDrawable(heldItems.top());
+        heldItems.pop();
+        programController.getViewController().draw(heldItems.top());
     }
 
     public List<Dish> getFlyingDishes() {

@@ -22,7 +22,6 @@ public class EntityController {
 
         viewController.draw(shooter);
         viewController.draw(cook);
-
     }
 
     /**

@@ -69,7 +69,7 @@ public class InputManager extends InteractiveGraphicalObject {
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
         // Move held dish with cook position
-        programController.getDishController().moveHeldDishes();
+        programController.getDishController().moveHeldItems();
     }
 
     /**

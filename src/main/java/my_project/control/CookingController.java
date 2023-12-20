@@ -8,7 +8,7 @@ public class CookingController {
     private boolean isCooking;
     private double time;
     private ProgramController programController;
-    private String[][][] resepies;
+    private String[][][] recipes;
 
     /**
      * creates an cookingController object.
@@ -18,7 +18,7 @@ public class CookingController {
     public CookingController(ProgramController pProgramController) {
         programController = pProgramController;
         isCooking = false;
-        resepies = new String[][][]{
+        recipes = new String[][][]{
                 {{"Nudel.png", "false"}, {"Sahne.png", "false"}, {"Speck.png", "false"}, {"Kaese.png", "false"}},
                 {{"Kaffebohnen.png", "false"}, {"Milch.png", "false"}, {"Zucker.png", "false"}},
                 {{"Mehl.png", "false"}, {"Milch.png", "false"}, {"Ei.png", "false"}, {"Zucker.png", "false"}, {"Schokolade.png", "false"}},
@@ -64,31 +64,32 @@ public class CookingController {
             String dishType = programController.getUiController().getCurrentSkillCheckType();
             if (!programController.getUiController().progressSkillCheck(programController)) {
                 Cook cook = programController.getEntityController().getCook();
-                programController.getDishController().addToHeldDishStack(
+                programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), dishType));
                 isCooking = false;
             }
         }
     }
 
-    private boolean checkForRightIngrediens(String type) {
-        int dish = 4;
+    private boolean checkForRightIngredients(String type) {
+        int dish;
         switch (type) {
             case "spaghet.png" -> dish = 0;
             case "cawfee.png" -> dish = 1;
             case "muffin.png" -> dish = 2;
             case "mikado.png" -> dish = 3;
+            default -> dish = -1;
         }
-        for (int i = 0; i < resepies[dish].length; i++) {
-            if (programController.getDishController().getFirstHeldDish().getType().equals(resepies[dish][i][0])) {
-                resepies[dish][i][1] = "true";
-                programController.getDishController().removeFirstHeldDish();
+        for (int i = 0; i < recipes[dish].length; i++) {
+            if (programController.getDishController().getFirstHeldItem().getType().equals(recipes[dish][i][0])) {
+                recipes[dish][i][1] = "true";
+                programController.getDishController().removeFirstHeldItem();
             } else {
-                for (int j = 0; j < resepies[dish].length; j++) {
-                    if (resepies[dish][i][1].equals("true")) {
-                        resepies[dish][i][1] = "true";
+                for (int j = 0; j < recipes[dish].length; j++) {
+                    if (recipes[dish][i][1].equals("true")) {
+                        recipes[dish][i][1] = "true";
                         Cook cook = programController.getEntityController().getCook();
-                        programController.getDishController().addToHeldDishStack(
+                        programController.getDishController().addToHeldItemStack(
                                 programController.getDishController().createDish(cook.getX(), cook.getY(), type));
                         return false;
                     }
@@ -96,8 +97,8 @@ public class CookingController {
             }
         }
         boolean isEverythingThere = true;
-        for (int i = 0; i < resepies[dish].length; i++) {
-            if (resepies[dish][i][1].equals("false"))
+        for (int i = 0; i < recipes[dish].length; i++) {
+            if (recipes[dish][i][1].equals("false"))
                 isEverythingThere = false;
         }
         return isEverythingThere;

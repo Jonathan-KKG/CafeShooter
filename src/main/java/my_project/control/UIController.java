@@ -4,6 +4,8 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.CollidableEnvironment;
 import my_project.model.Enemy;
+import my_project.model.Cook;
+import my_project.model.GUI.DishStackUI;
 import my_project.model.GUI.DishUI;
 import my_project.model.GUI.EnemyDishUI;
 import my_project.model.GUI.HPBar;
@@ -14,8 +16,8 @@ public class UIController {
 
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
-    private List<HPBar> hpBars;
     private EnemyDishUI[] enemyDishUIs;
+    private DishStackUI dishStackUI;
 
     /**
      * Creates all GUI elements
@@ -25,8 +27,18 @@ public class UIController {
     public UIController(ViewController viewController) {
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
+        dishStackUI = new DishStackUI(500, 100);
 
         viewController.draw(dishUI);
+        viewController.draw(dishStackUI);
+    }
+
+    /**
+     * updates the amount heldDishStack
+     * @param increase boolean to calculate amount ofheldDishStack
+     */
+    public void updateHeldStackAmmount(boolean increase) {
+        dishStackUI.setDishStackAmount(increase);
     }
 
     /**
@@ -100,6 +112,16 @@ public class UIController {
                 enemyDishUIs[i].setY(enemies[i].getY());
             }
         }
+    }
+
+
+    /**
+     * moves dishStackUi with cook
+     * @param cook used to get position
+     */
+    public void updateDishStackUI(Cook cook){
+        dishStackUI.setX(cook.getX());
+        dishStackUI.setY(cook.getY());
     }
 
     /**

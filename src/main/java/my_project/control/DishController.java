@@ -130,6 +130,7 @@ public class DishController {
                     case "Muffin" -> dish = new Muffin(dishType,pX,pY);
                     case "Spaghetti" -> dish = new Spaghetti(dishType,pX,pY);
                 }
+
                 i = dishTypes.length;
             }
         }
@@ -155,7 +156,7 @@ public class DishController {
     }
 
     /**
-     * adds dish to pendingDishes stack
+     * adds dish to pendingDishes stack, draws it and increases heldDishStack
      *
      * @param dish dish that gets added
      */
@@ -163,6 +164,7 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.push(dish);
         programController.getViewController().draw(heldItems.top());
+        programController.getUiController().updateHeldStackAmmount(true);
     }
 
 

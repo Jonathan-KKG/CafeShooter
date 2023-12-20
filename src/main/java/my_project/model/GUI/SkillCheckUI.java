@@ -27,6 +27,7 @@ public class SkillCheckUI extends UI {
      *
      * @param drawTool Required to draw the object
      */
+    @Override
     public void draw(DrawTool drawTool) {
         drawTool.setLineWidth(2);
 

@@ -8,11 +8,14 @@ import my_project.model.Enemies.Jonathan;
 import my_project.model.Enemies.Max;
 import my_project.model.Enemy;
 
+import java.io.File;
+
 /**
  * Responsible for EnemyWaves: Creates, stores and manages Waves
  */
 public class WaveController {
     private Queue<Enemy[]> enemyWaves;
+    private String[] enemyTypes;
 
     /**
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
@@ -20,6 +23,12 @@ public class WaveController {
      * @param programController Required to draw the first wave and its Wants-Bubbles
      */
     public WaveController(ProgramController programController) {
+        File[] enemyFiles = new File("src/main/java/my_project/model/Enemies").listFiles();
+        enemyTypes = new String[enemyFiles.length];
+        for (int i = 0; i < enemyFiles.length; i++) {
+            enemyTypes[i] = enemyFiles[i].toString().replaceAll("src\\\\main\\\\java\\\\my_project\\\\model\\\\Enemies\\\\", "").replaceAll(".java", "");
+        }
+
         enemyWaves = new Queue<>();
 
         // Create x Waves each contaning 2x + i enemies

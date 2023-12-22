@@ -17,11 +17,11 @@ public class CookingStation extends CollidableEnvironment {
         super(filename, pX, pY);
         switch (filename) {
             case "stovetop.png":
-                cookableObjs = "Spaghetti";
+                cookableObjs = "SpaghettiCarbonara";
                 break;
         }
         if (help == 1)
-            cookableObjs = "Spaghetti";
+            cookableObjs = "SpaghettiCarbonara";
         else if (help == 2)
             cookableObjs = "Coffee";
     }

@@ -14,6 +14,6 @@ public class Jonathan extends Enemy {
      */
     public Jonathan(Double pX, Double pY) {
         super("Jonathan", pX, pY);
-        requiredDish = "Spaghetti";
+        requiredDish = "SpaghettiCarbonara";
     }
 }

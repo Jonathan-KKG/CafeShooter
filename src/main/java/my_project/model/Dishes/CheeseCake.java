@@ -3,16 +3,17 @@ package my_project.model.Dishes;
 import my_project.model.Dish;
 
 /**
- * The Muffin Dish.
+ * The CheeseCake Dish.
  */
-public class Muffin extends Dish {
+public class CheeseCake extends Dish {
+
     /**
-     * set starting position & type of Dish
+     * set starting position of Dish
      *
      * @param pX       x position at start
      * @param pY       y position at start
      */
-    public Muffin(double pX, double pY) {
-        super("Muffin", pX, pY);
+    public CheeseCake(double pX, double pY) {
+        super("CheeseCake", pX, pY);
     }
 }

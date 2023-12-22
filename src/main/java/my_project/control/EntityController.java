@@ -5,7 +5,6 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
 
-import java.io.File;
 
 /**
  * Controls all aspects of Enemy and Player objects, which includes movement, collision and update;
@@ -15,7 +14,6 @@ public class EntityController {
     private Shooter shooter;
     private Cook cook;
     private ProgramController programController;
-    private String[] enemyTypes;
 
     /**
      * @param pProgramController Required to get other controllers
@@ -30,11 +28,6 @@ public class EntityController {
         viewController.draw(shooter);
         viewController.draw(cook);
 
-        File[] enemyFiles = new File("src/main/java/my_project/model/Enemies").listFiles();
-        enemyTypes = new String[enemyFiles.length];
-        for (int i = 0; i < enemyFiles.length; i++) {
-            enemyTypes[i] = enemyFiles[i].toString().replaceAll("src\\\\main\\\\java\\\\my_project\\\\model\\\\Enemies\\\\", "").replaceAll(".java", "");
-        }
     }
 
     /**
@@ -145,14 +138,11 @@ public class EntityController {
             if (envObjs.getContent().isColliderActive()) {
                 CollidableEnvironment env = envObjs.getContent();
                 if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
-                    for (int i = 0; i < enemyTypes.length; i++) {
-                        if (entity.getClass().getName().replaceAll("my_project.model.Enemies.", "").equals(enemyTypes[i])) {
-                            if (env.getHp() == 100)
-                                programController.getUiController().drawHPBar(env, programController.getViewController());
-                            env.reduceHP(dt);
-                            i = enemyTypes.length;
-                            damaged = true;
-                        }
+                    if (entity instanceof Enemy) {
+                        if (env.getHp() == 100)
+                            programController.getUiController().drawHPBar(env, programController.getViewController());
+                        env.reduceHP(dt);
+                        damaged = true;
                     }
                 }
             }
@@ -191,7 +181,7 @@ public class EntityController {
     /**
      * Changes player sprites to how did you do in pe today?
      */
-    public void endGame(){
+    public void endGame() {
         cook.setNewImage("src/main/resources/graphic/playerDefeated.png");
         shooter.setNewImage("src/main/resources/graphic/playerDefeated.png");
     }

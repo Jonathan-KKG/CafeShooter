@@ -6,7 +6,7 @@ import my_project.model.Dish;
 import my_project.model.Dishes.Coffee;
 import my_project.model.Dishes.Mikado;
 import my_project.model.Dishes.Muffin;
-import my_project.model.Dishes.Spaghetti;
+import my_project.model.Dishes.SpaghettiCarbonara;
 import my_project.model.Item;
 
 import java.io.File;
@@ -43,7 +43,7 @@ public class DishController {
 
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Spaghetti");
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "SpaghettiCarbonara");
             programController.getViewController().draw(storedDishes[i]);
         }
 
@@ -127,10 +127,10 @@ public class DishController {
         for (int i = 0; i < dishTypes.length; i++) {
             if(dishType.equals(dishTypes[i])) {
                 switch (dishType){
-                    case "Coffee" -> dish = new Coffee(dishType,pX,pY);
-                    case "Mikado" -> dish = new Mikado(dishType,pX,pY);
-                    case "Muffin" -> dish = new Muffin(dishType,pX,pY);
-                    case "Spaghetti" -> dish = new Spaghetti(dishType,pX,pY);
+                    case "Coffee" -> dish = new Coffee(pX,pY);
+                    case "Mikado" -> dish = new Mikado(pX,pY);
+                    case "Muffin" -> dish = new Muffin(pX,pY);
+                    case "SpaghettiCarbonara" -> dish = new SpaghettiCarbonara(pX,pY);
                 }
 
                 i = dishTypes.length;

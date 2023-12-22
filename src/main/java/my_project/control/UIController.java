@@ -17,6 +17,7 @@ public class UIController {
     private EnemyDishUI[] enemyDishUIs;
     private List<HPBar> hpBars;
     private DishStackUI dishStackUI;
+    private EndGameUI endGameUI;
 
     /**
      * Creates all GUI elements
@@ -170,7 +171,19 @@ public class UIController {
      * Draws the final frame after the player has failed
      */
     public void drawEndGameScreen(ViewController viewController) {
-        viewController.draw(new EndGameUI(250, 1080* 0.85 / 2));
+        endGameUI = new EndGameUI(250, 1080* 0.85 / 4);
+        viewController.draw(endGameUI);
+    }
+
+    /**
+     * Restarts game if mouse is on the Restart button.
+     * @param pX x position of mouse
+     * @param pY y position of mouse
+     * @param programController Required to restart the game if needed
+     */
+    public void restartGame(double pX, double pY, ProgramController programController){
+        if(endGameUI.isOnRestartButton(pX,pY))
+            programController.restartGame();
     }
 
 }

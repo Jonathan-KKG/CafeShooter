@@ -71,7 +71,7 @@ public class InputManager extends InteractiveGraphicalObject {
         // Move heldDishes and the UI along with cook position
         if (!programController.getEntityController().getCook().isCooking()) {
             programController.getDishController().moveHeldItems();
-            programController.getUiController().updateDishStackUI(programController.getEntityController().getCook());
+            programController.getUIController().updateDishStackUI(programController.getEntityController().getCook());
         }
     }
 
@@ -81,8 +81,14 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param e Object of class MouseEvent which contains all information about the event.
      */
     @Override
-    public void mouseClicked(MouseEvent e) {
-        if(programController.getEntityController().getShooter().isRepairing())
+    public void mousePressed(MouseEvent e) {
+        if (!programController.isRunning()) {
+            if (e.getButton() == 1)
+                programController.getUIController().restartGame(e.getX(), e.getY(), programController);
+            return;
+        }
+
+        if (programController.getEntityController().getShooter().isRepairing())
             return;
 
         if (e.getButton() == 1)
@@ -98,12 +104,15 @@ public class InputManager extends InteractiveGraphicalObject {
      * @param key Contains the Numbercode for the key. Can directly be loaded from the Class KeyEvent e.g. KeyEvent_VK_6
      */
     public void keyPressed(int key) {
+        if (!programController.isRunning())
+            return;
+
         if (key == KeyEvent.VK_SPACE)
             programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q)
             programController.getCookingController().cook();
         if (key == KeyEvent.VK_O)
-            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getClosestObjectInRange(), programController.getUiController(), programController.getViewController());
+            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getClosestObjectInRange(), programController.getUIController(), programController.getViewController());
     }
 
 }

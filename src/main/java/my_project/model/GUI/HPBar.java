@@ -28,14 +28,10 @@ public class HPBar extends UI {
      */
     @Override
     public void draw(DrawTool drawTool) {
-        setDrawToolColorToRGBABorderVal(drawTool);
-        drawTool.drawRectangle(x,y,20,6);
-
-        setDrawToolColorToRGBABackgroundVal(drawTool);
-        drawTool.drawFilledRectangle(x,y,20,6);
+        drawUsualBorder(drawTool, 3, x,y,18,6);
 
         drawTool.setCurrentColor((int) (240 - health * 0.01 * 220), (int) (20 + health * 0.01 * 220), 20, 220);
-        drawTool.drawFilledRectangle(x+1,y+1,health * 0.01 * 18,4);
+        drawTool.drawFilledRectangle(x+1.5,y+1,health * 0.01 * 16 - 0.5,4);
     }
 
     /**

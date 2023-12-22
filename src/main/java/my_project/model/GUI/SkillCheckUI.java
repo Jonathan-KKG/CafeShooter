@@ -33,10 +33,7 @@ public class SkillCheckUI extends UI {
         drawTool.setLineWidth(2);
 
         // Standard UI Template
-        setDrawToolColorToRGBABorderVal(drawTool);
-        drawTool.drawRectangle(startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
-        setDrawToolColorToRGBABackgroundVal(drawTool);
-        drawTool.drawFilledRectangle(startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
+        drawUsualBorder(drawTool, -1, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
 
         // vary for each CookingStation
         switch (type) {

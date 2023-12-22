@@ -48,4 +48,26 @@ public abstract class UI extends GraphicalObject {
     protected void setDrawToolColorToRGBABorderVal(DrawTool drawTool) {
         drawTool.setCurrentColor(rgbaBorderValues[0], rgbaBorderValues[1], rgbaBorderValues[2], rgbaBorderValues[3]);
     }
+
+    /**
+     * Draws a rectangular border with background that is uniform across all GUIs that utilize it
+     * @param drawTool DrawTool that should be drawn with
+     * @param lineWidth desired linewidth; -1 for default
+     * @param pX leftmost x pos
+     * @param pY uppermost y pos
+     * @param width width of the border & background
+     * @param height height of the border & background
+     */
+    protected void drawUsualBorder(DrawTool drawTool, int lineWidth, double pX, double pY, double width, double height){
+        if(lineWidth <= 0)
+            drawTool.setLineWidth(5);
+        else
+            drawTool.setLineWidth(lineWidth);
+
+        setDrawToolColorToRGBABorderVal(drawTool);
+        drawTool.drawRectangle(pX,pY,width,height);
+
+        setDrawToolColorToRGBABackgroundVal(drawTool);
+        drawTool.drawFilledRectangle(pX,pY,width,height);
+    }
 }

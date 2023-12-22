@@ -61,7 +61,6 @@ public class ProgramController {
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
 
-
     }
 
     /**
@@ -71,6 +70,18 @@ public class ProgramController {
         isRunning = false;
         uiController.drawEndGameScreen(viewController);
         entityController.endGame();
+    }
+
+    /**
+     * Resets the ViewController and restarts the program
+     */
+    public void restartGame(){
+        viewController.reset();
+        startProgram();
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public CookingController getCookingController() {
@@ -89,7 +100,7 @@ public class ProgramController {
         return viewController;
     }
 
-    public UIController getUiController() {
+    public UIController getUIController() {
         return uiController;
     }
 

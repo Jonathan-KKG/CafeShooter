@@ -101,7 +101,7 @@ public class WaveController {
     private void nextWave(ProgramController programController) {
         enemyWaves.dequeue();
         addToDraw(programController.getViewController());
-        programController.getUiController().createEnemyBubblesOfWave(enemyWaves.front(), programController.getViewController());
+        programController.getUIController().createEnemyBubblesOfWave(enemyWaves.front(), programController.getViewController());
     }
 
     public Enemy[] getWave() {

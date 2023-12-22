@@ -95,7 +95,7 @@ public class EntityController {
                 Dish currentDish = dishList.getContent();
                 if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
                     if (enemies[i].getRequiredDish().equals(currentDish.getClass().getSimpleName())) {
-                        programController.getUiController().deleteEnemyBubble(i, programController.getViewController());
+                        programController.getUIController().deleteEnemyBubble(i, programController.getViewController());
                         programController.getViewController().removeDrawable(enemies[i]);
                         enemies[i] = null;
                         removed = true;
@@ -141,7 +141,7 @@ public class EntityController {
                 if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
                     if (entity instanceof Enemy) {
                         if (env.getHp() == 100)
-                            programController.getUiController().drawHPBar(env, programController.getViewController());
+                            programController.getUIController().drawHPBar(env, programController.getViewController());
                         env.reduceHP(dt);
                         damaged = true;
                     }
@@ -150,7 +150,7 @@ public class EntityController {
             envObjs.next();
         }
         if (damaged)
-            programController.getUiController().updateHPBars(programController.getViewController());
+            programController.getUIController().updateHPBars(programController.getViewController());
     }
 
     /**

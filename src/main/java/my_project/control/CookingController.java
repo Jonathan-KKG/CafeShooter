@@ -37,7 +37,7 @@ public class CookingController {
             time += dt;
         if (time > 3) {
             time = 0;
-            programController.getUiController().deleteSkillCheckUI(programController.getViewController());
+            programController.getUIController().deleteSkillCheckUI(programController.getViewController());
             programController.getEntityController().getCook().setCooking(false);
         }
     }
@@ -53,7 +53,7 @@ public class CookingController {
             //if (checkForRightIngrediens(((CookingStation) objectInRange).getCookableObjs())) {
                 cook.setCooking(true);
                 time = 0;
-                programController.getUiController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), programController.getViewController());
+                programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), programController.getViewController());
 
             //}
         }
@@ -64,7 +64,7 @@ public class CookingController {
      */
     public void addClick() {
         if (programController.getEntityController().getCook().isCooking()) {
-            if (!programController.getUiController().progressSkillCheck(programController.getViewController())) {
+            if (!programController.getUIController().progressSkillCheck(programController.getViewController())) {
                 Cook cook = programController.getEntityController().getCook();
                 programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), "Coffee"));

@@ -19,12 +19,7 @@ public class DishUI extends UI {
     @Override
     public void draw(DrawTool drawTool) {
 
-        //UI Background
-        drawTool.setLineWidth(5);
-        setDrawToolColorToRGBABackgroundVal(drawTool);
-        drawTool.drawRectangle(startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 100);
-        setDrawToolColorToRGBABorderVal(drawTool);
-        drawTool.drawFilledRectangle(startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 80);
+        drawUsualBorder(drawTool, -1, startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 100);
 
         //UI Seperators
         drawTool.setLineWidth(3);

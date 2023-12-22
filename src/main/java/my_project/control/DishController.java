@@ -150,7 +150,7 @@ public class DishController {
      */
     public void nextBullet() {
         currentDishIndex = nextOccupiedIndex(currentDishIndex, currentDishIndex);
-        programController.getUiController().moveAmmoIndicator(currentDishIndex);
+        programController.getUIController().moveAmmoIndicator(currentDishIndex);
     }
 
     /**
@@ -162,7 +162,7 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.push(item);
         programController.getViewController().draw(heldItems.top());
-        programController.getUiController().updateHeldItemsAmmount(true);
+        programController.getUIController().updateHeldItemsAmmount(true);
     }
 
     public void removeFirstHeldItem() {

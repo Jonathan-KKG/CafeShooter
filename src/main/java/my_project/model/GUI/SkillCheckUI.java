@@ -38,9 +38,9 @@ public class SkillCheckUI extends UI {
         setDrawToolColorToRGBABackgroundVal(drawTool);
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
 
-        // vary for each Dishtype
+        // vary for each CookingStation
         switch (type) {
-            case "SpaghettiCarbonara":
+            case "Stove":
                 drawOvenSC(drawTool);
                 break;
             case "Coffee":
@@ -70,9 +70,5 @@ public class SkillCheckUI extends UI {
         progress += 0.1;
 
         return !(progress + 0.1 >= 1);
-    }
-
-    public String getType() {
-        return type;
     }
 }

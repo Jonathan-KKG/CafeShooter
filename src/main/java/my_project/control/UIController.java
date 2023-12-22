@@ -2,7 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import my_project.model.CollidableEnvironment;
+import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Enemy;
 import my_project.model.Cook;
 import my_project.model.GUI.*;
@@ -36,7 +36,7 @@ public class UIController {
      * updates the amount heldDishStack
      * @param increase boolean to calculate amount ofheldDishStack
      */
-    public void updateHeldStackAmmount(boolean increase) {
+    public void updateHeldItemsAmmount(boolean increase) {
         dishStackUI.setDishStackAmount(increase);
     }
 
@@ -80,15 +80,6 @@ public class UIController {
     }
 
     /**
-     * @return what Dish the skillCheckUI is producing
-     */
-    public String getCurrentSkillCheckType() {
-        if (skillCheckUI == null)
-            return null;
-        return skillCheckUI.getType();
-    }
-
-    /**
      * stops drawing the current skillCheckUI and deletes it
      *
      * @param viewController Required to stop the drawing
@@ -103,7 +94,7 @@ public class UIController {
      *
      * @param enemies Enemies of the current wave
      */
-    public void updateEnemyBubbles(Enemy[] enemies) {
+    public void updateEnemyBubblesOfWave(Enemy[] enemies) {
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null) {
                 enemyDishUIs[i].setX(enemies[i].getX());
@@ -111,7 +102,6 @@ public class UIController {
             }
         }
     }
-
 
     /**
      * moves dishStackUi with cook

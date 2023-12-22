@@ -4,8 +4,6 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dish;
 import my_project.model.Dishes.Coffee;
-import my_project.model.Dishes.Mikado;
-import my_project.model.Dishes.Muffin;
 import my_project.model.Dishes.SpaghettiCarbonara;
 import my_project.model.Item;
 
@@ -38,7 +36,7 @@ public class DishController {
         File[] dishFiles = new File("src/main/resources/graphic/Dishes").listFiles();
         dishTypes = new String[dishFiles.length];
         for (int i = 0; i < dishFiles.length; i++) {
-             dishTypes[i] = dishFiles[i].toString().replaceAll("src\\\\main\\\\resources\\\\graphic\\\\Dishes\\\\", "").replaceAll(".png", "");
+             dishTypes[i] = dishFiles[i].getName().replaceAll(".png", "");
         }
 
 
@@ -128,8 +126,6 @@ public class DishController {
             if(dishType.equals(dishTypes[i])) {
                 switch (dishType){
                     case "Coffee" -> dish = new Coffee(pX,pY);
-                    case "Mikado" -> dish = new Mikado(pX,pY);
-                    case "Muffin" -> dish = new Muffin(pX,pY);
                     case "SpaghettiCarbonara" -> dish = new SpaghettiCarbonara(pX,pY);
                 }
 
@@ -160,28 +156,23 @@ public class DishController {
     /**
      * adds dish to pendingDishes stack, draws it and increases heldDishStack
      *
-     * @param dish dish that gets added
+     * @param item dish that gets added
      */
-    public void addToHeldItemStack(Item dish) {
+    public void addToHeldItemStack(Item item) {
         programController.getViewController().removeDrawable(heldItems.top());
-        heldItems.push(dish);
+        heldItems.push(item);
         programController.getViewController().draw(heldItems.top());
-        programController.getUiController().updateHeldStackAmmount(true);
-    }
-
-
-    public int getCurrentDishIndex() {
-        return currentDishIndex;
-    }
-
-    public Item getFirstHeldItem() {
-        return heldItems.top();
+        programController.getUiController().updateHeldItemsAmmount(true);
     }
 
     public void removeFirstHeldItem() {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
+    }
+
+    public Item getFirstHeldItem() {
+        return heldItems.top();
     }
 
     public List<Dish> getFlyingDishes() {

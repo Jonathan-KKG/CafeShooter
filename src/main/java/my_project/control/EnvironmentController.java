@@ -2,7 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import my_project.model.*;
+import my_project.model.Environment.*;
 
 /**
  * Controls all Environment objects by creating, storing, drawing and, if required, enabling influence (through methods) on them.
@@ -12,7 +12,6 @@ public class EnvironmentController {
     private List<Environment> environmentObjects = new List<>();
     private List<CollidableEnvironment> collidableEnvironmentObjects = new List<>();
     private List<CollidableEnvironment> interactableEnvironmentObjects = new List<>();
-    private List<Table> tableObjects = new List<>();
 
     //Attribute
     private int[] kitchenOffset = {(int) (1080 * 0.85) - 480, (int) (1920 * 0.85) - 785};
@@ -54,11 +53,11 @@ public class EnvironmentController {
             for (int i = 0; i < 8 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] - i));
 
-            // stove
-            CollidableEnvironment stove = new CookingStation("stovetop", kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32, 1);
+            // Stove
+            CollidableEnvironment stove = new Stove(kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32);
             collidableEnvironmentObjects.append(stove);
             interactableEnvironmentObjects.append(stove);
-            stove = new CookingStation("stovetop", kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32, 2);
+            stove = new Stove(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
             collidableEnvironmentObjects.append(stove);
             interactableEnvironmentObjects.append(stove);
 
@@ -66,13 +65,11 @@ public class EnvironmentController {
             for (int i = 0; i < 6 * 64; i = i + 64) {
                 Table table = new Table("tabletop", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
                 collidableEnvironmentObjects.append(table);
-                tableObjects.append(table);
                 interactableEnvironmentObjects.append((table));
             }
             for (int i = 32; i < 6 * 64; i = i + 64) {
                 Table table = new Table("tabletop2", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
                 collidableEnvironmentObjects.append(table);
-                tableObjects.append(table);
                 interactableEnvironmentObjects.append((table));
             }
 

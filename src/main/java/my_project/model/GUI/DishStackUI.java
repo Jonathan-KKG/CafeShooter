@@ -16,7 +16,6 @@ public class DishStackUI extends UI {
      */
     public DishStackUI(double pX, double pY) {
         super(pX, pY);
-
     }
 
     /**
@@ -44,7 +43,5 @@ public class DishStackUI extends UI {
         drawTool.setCurrentColor(Color.green);
         drawTool.drawText(x +17.5 , y -4, String.valueOf(dishStackAmount));
     }
-
-
 
 }

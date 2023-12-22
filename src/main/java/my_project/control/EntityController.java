@@ -4,6 +4,7 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
+import my_project.model.Environment.CollidableEnvironment;
 
 
 /**
@@ -87,13 +88,13 @@ public class EntityController {
         Enemy[] enemies = programController.getWaveController().getWave();
 
         dishList.toFirst();
-        boolean removed = false;
         while (dishList.hasAccess()) {
+            boolean removed = false;
             // Check Dish-Enemy collision
             for (int i = 0; i < enemies.length; i++) {
                 Dish currentDish = dishList.getContent();
                 if (enemies[i] != null && currentDish.collidesWith(enemies[i])) {
-                    if (enemies[i].getRequiredDish().equals(currentDish.getType())) {
+                    if (enemies[i].getRequiredDish().equals(currentDish.getClass().getSimpleName())) {
                         programController.getUiController().deleteEnemyBubble(i, programController.getViewController());
                         programController.getViewController().removeDrawable(enemies[i]);
                         enemies[i] = null;

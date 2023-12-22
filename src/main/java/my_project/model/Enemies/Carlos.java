@@ -1,5 +1,6 @@
 package my_project.model.Enemies;
 
+import my_project.model.Dishes.ApplePie;
 import my_project.model.Enemy;
 
 /**
@@ -14,6 +15,6 @@ public class Carlos extends Enemy {
      */
     public Carlos(Double pX, Double pY) {
         super("callus", pX, pY);
-        requiredDish = "Mikado";
+        requiredDish = ApplePie.class.getSimpleName();
     }
 }

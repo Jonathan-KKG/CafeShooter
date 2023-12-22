@@ -1,5 +1,7 @@
 package my_project.model;
 
+import my_project.model.Environment.CollidableEnvironment;
+
 /**
  * Blueprint for both player instances
  */

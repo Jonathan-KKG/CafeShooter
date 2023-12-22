@@ -1,4 +1,4 @@
-package my_project.model;
+package my_project.model.Environment;
 
 /**
  * Environment object that can be collided with and hence can be damaged and has HP

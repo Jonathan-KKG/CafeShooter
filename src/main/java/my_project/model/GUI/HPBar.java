@@ -1,13 +1,13 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.CollidableEnvironment;
+import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.UI;
 
 public class HPBar extends UI {
 
     private double health;
-    CollidableEnvironment environment;
+    private CollidableEnvironment environment;
 
     /**
      * Initializes UI Model

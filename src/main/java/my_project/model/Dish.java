@@ -15,7 +15,7 @@ public abstract class Dish extends Item {
      * @param pY       y position at start
      */
     public Dish(String filename, double pX, double pY) {
-        super("Dishes/" + filename, pX, pY, filename);
+        super("Dishes/" + filename, pX, pY);
         speed = 500;
     }
 

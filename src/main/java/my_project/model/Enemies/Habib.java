@@ -1,5 +1,6 @@
 package my_project.model.Enemies;
 
+import my_project.model.Dishes.ChocolateCake;
 import my_project.model.Enemy;
 
 /**
@@ -14,6 +15,6 @@ public class Habib extends Enemy {
      */
     public Habib(Double pX, Double pY) {
         super("Habib", pX, pY);
-        requiredDish = "Muffin";
+        requiredDish = ChocolateCake.class.getSimpleName();
     }
 }

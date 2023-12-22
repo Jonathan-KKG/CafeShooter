@@ -26,7 +26,7 @@ public class WaveController {
         File[] enemyFiles = new File("src/main/java/my_project/model/Enemies").listFiles();
         enemyTypes = new String[enemyFiles.length];
         for (int i = 0; i < enemyFiles.length; i++) {
-            enemyTypes[i] = enemyFiles[i].toString().replaceAll("src\\\\main\\\\java\\\\my_project\\\\model\\\\Enemies\\\\", "").replaceAll(".java", "");
+            enemyTypes[i] = enemyFiles[i].getName().replaceAll(".java", "");
         }
 
         enemyWaves = new Queue<>();

@@ -59,7 +59,7 @@ public class ProgramController {
         entityController.dishCollisionUpdate();
         waveController.checkForNewWave(this);
         cookingController.updateCooking(dt);
-        uiController.updateEnemyBubbles(waveController.getWave());
+        uiController.updateEnemyBubblesOfWave(waveController.getWave());
 
 
     }

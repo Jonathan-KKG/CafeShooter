@@ -1,5 +1,6 @@
 package my_project.model.Enemies;
 
+import my_project.model.Dishes.Coffee;
 import my_project.model.Enemy;
 
 /**
@@ -14,6 +15,6 @@ public class Max extends Enemy {
      */
     public Max(Double pX, Double pY) {
         super("Max", pX, pY);
-        requiredDish = "Coffee";
+        requiredDish = Coffee.class.getSimpleName();
     }
 }

@@ -25,10 +25,13 @@ public class CollidableEnvironment extends Environment {
         hp -= dt;
         if (hp <= 0) {
             isColliderActive = false;
-            setNewImage("src/main/resources/graphic/Environment/window.png");
+            myImage = null;
         }
     }
 
+    /**
+     * Increases HP of this and updates the sprite if collider was inactive
+     */
     public void increaseHP() {
         if (!isColliderActive) {
             isColliderActive = true;

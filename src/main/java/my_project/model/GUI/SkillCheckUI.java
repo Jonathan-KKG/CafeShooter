@@ -33,7 +33,7 @@ public class SkillCheckUI extends UI {
         drawTool.setLineWidth(2);
 
         // Standard UI Template
-        drawUsualBorder(drawTool, -1, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
+        drawUsualBorder(drawTool, 3, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
 
         // vary for each CookingStation
         switch (type) {

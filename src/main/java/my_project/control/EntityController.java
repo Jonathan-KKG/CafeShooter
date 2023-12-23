@@ -140,7 +140,7 @@ public class EntityController {
                 CollidableEnvironment env = envObjs.getContent();
                 if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
                     if (entity instanceof Enemy) {
-                        if (env.getHp() == 100)
+                        if (env.getHp() >= 100)
                             programController.getUIController().drawHPBar(env, programController.getViewController());
                         env.reduceHP(dt);
                         damaged = true;
@@ -164,7 +164,6 @@ public class EntityController {
 
         interactables.toFirst();
         while (interactables.hasAccess()) {
-            if (interactables.getContent().isColliderActive()) {
                 CollidableEnvironment currentObject = interactables.getContent();
                 if (currentObject.getDistanceTo(player) < lowestDistance && (playerMiddleX < currentObject.getX() + currentObject.getWidth() + 20 || playerMiddleX > currentObject.getX() + currentObject.getWidth() - 20
                         || playerMiddleY < currentObject.getHeight() + 20 || playerMiddleY > currentObject.getHeight() - 20)) {
@@ -172,7 +171,7 @@ public class EntityController {
                         if (currentObject.getDistanceTo(player) < closestObj.getDistanceTo(player))
                             closestObj = currentObject;
                     } else closestObj = currentObject;
-                }
+
             }
             interactables.next();
         }

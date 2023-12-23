@@ -30,6 +30,9 @@ public class CollidableEnvironment extends Environment {
         }
     }
 
+    /**
+     * Increases HP of this and updates the sprite if collider was inactive
+     */
     public void increaseHP() {
         if (!isColliderActive && hp>=100) {
             isColliderActive = true;

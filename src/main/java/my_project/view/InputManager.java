@@ -112,7 +112,7 @@ public class InputManager extends InteractiveGraphicalObject {
         if (key == KeyEvent.VK_Q)
             programController.getCookingController().cook();
         if (key == KeyEvent.VK_O)
-            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getClosestObjectInRange(), programController.getUIController(), programController.getViewController());
+            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getObjectsInRange(), programController.getUIController(), programController.getViewController());
     }
 
 }

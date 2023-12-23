@@ -9,7 +9,7 @@ import my_project.model.Environment.CollidableEnvironment;
 public class Shooter extends Player {
 
     private boolean isRepairing; // inputs (w/ exception of repair-related inputs) will stop getting detected until isRepairing = false
-    private List<CollidableEnvironment> closestObjectsInRange;
+    private List<CollidableEnvironment> objectsInRange;
 
     /**
      * @param filename Sprite the Player should apply
@@ -27,5 +27,13 @@ public class Shooter extends Player {
 
     public void setRepairing(boolean repairing) {
         isRepairing = repairing;
+    }
+
+    public List<CollidableEnvironment> getObjectsInRange() {
+        return objectsInRange;
+    }
+
+    public void setObjectsInRange(List<CollidableEnvironment> pObjectsInRange) {
+        objectsInRange = pObjectsInRange;
     }
 }

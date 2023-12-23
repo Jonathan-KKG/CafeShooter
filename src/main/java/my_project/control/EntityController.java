@@ -72,10 +72,11 @@ public class EntityController {
         }
 
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
-        updateClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook);
+        cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
 
         checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
-        updateClosestObjectInRange(programController.getEnvironmentController().getCollidableEnvironmentObjects(), shooter);
+        shooter.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
+        shooter.setObjectsInRange(getObjectsInRange(programController.getEnvironmentController().getCollidableEnvironmentObjects(), shooter));
     }
 
     /**
@@ -154,29 +155,44 @@ public class EntityController {
     }
 
     /**
-     * sets the nearest interactable Environment in a set range (+-lowestDistance) of a player
+     * sets the nearest interactable Environment in a set range
+     * @param interactables list of all objects that shall be checkened
+     * @param player player that shall be checkened😎
+     * @return list of all objects in range
      */
-    private void updateClosestObjectInRange(List<CollidableEnvironment> interactables, Player player) {
-        CollidableEnvironment closestObj = null;
-        double lowestDistance = 70;
-        double playerMiddleX = player.getX() + player.getWidth() / 2;
-        double playerMiddleY = player.getY() + player.getHeight() / 2;
+    private CollidableEnvironment getClosestObjectInRange(List<CollidableEnvironment> interactables, Player player) {
+        CollidableEnvironment closestObj;
+        List<CollidableEnvironment> objectsInRange = getObjectsInRange(interactables, player);
+        objectsInRange.toFirst();
+        closestObj = objectsInRange.getContent();
+        while(objectsInRange.hasAccess()) {
+            if(objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
+                closestObj = objectsInRange.getContent();
+            }
+            objectsInRange.next();
+        }
+
+        return closestObj;
+    }
+
+    /**
+     *  finds all objects in range
+     * @param interactables list of all objects that shall be checkened
+     * @param player player that shall be checkened😎
+     * @return list of all objects in range
+     */
+    private List<CollidableEnvironment> getObjectsInRange(List<CollidableEnvironment> interactables, Player player) {
+        List<CollidableEnvironment> objectsInRange = new List<>();
 
         interactables.toFirst();
         while (interactables.hasAccess()) {
-            if (interactables.getContent().isColliderActive()) {
                 CollidableEnvironment currentObject = interactables.getContent();
-                if (currentObject.getDistanceTo(player) < lowestDistance && (playerMiddleX < currentObject.getX() + currentObject.getWidth() + 20 || playerMiddleX > currentObject.getX() + currentObject.getWidth() - 20
-                        || playerMiddleY < currentObject.getHeight() + 20 || playerMiddleY > currentObject.getHeight() - 20)) {
-                    if (closestObj != null) {
-                        if (currentObject.getDistanceTo(player) < closestObj.getDistanceTo(player))
-                            closestObj = currentObject;
-                    } else closestObj = currentObject;
+                if (player.getDistanceTo(currentObject)<70) {
+                    objectsInRange.append(currentObject);
                 }
-            }
             interactables.next();
         }
-        player.setClosestObjectInRange(closestObj);
+        return objectsInRange;
     }
 
     /**

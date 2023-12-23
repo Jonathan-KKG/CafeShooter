@@ -91,15 +91,17 @@ public class EnvironmentController {
 
     /**
      * Calls necessary methods to repair an object
-     * @param envObj the object to be repaired
+     * @param objectsInRange the objects to be repaired
      * @param uiController Required to update UI
      * @param viewController Required to update UI
      */
-    public void repair(CollidableEnvironment envObj, UIController uiController, ViewController viewController){
-        if(envObj != null) {
-            envObj.increaseHP();
-            uiController.updateHPBars(viewController);
-        }
+    public void repair(List <CollidableEnvironment> objectsInRange , UIController uiController, ViewController viewController){
+        objectsInRange.toFirst();
+        while(objectsInRange.hasAccess()){
+                objectsInRange.getContent().increaseHP();
+                objectsInRange.next();
+            }
+        uiController.updateHPBars(viewController);
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {

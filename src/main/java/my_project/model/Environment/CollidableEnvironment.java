@@ -5,6 +5,7 @@ package my_project.model.Environment;
  */
 public class CollidableEnvironment extends Environment {
     private boolean isColliderActive;
+    private boolean isColliderReallyActive;
     private int hp;
     private String legacyFilename;
 
@@ -25,18 +26,19 @@ public class CollidableEnvironment extends Environment {
         hp -= dt;
         if (hp <= 0) {
             isColliderActive = false;
-            setNewImage("src/main/resources/graphic/Environment/window.png");
+            myImage = null;
         }
     }
 
     public void increaseHP() {
-        if (!isColliderActive) {
+        if (!isColliderActive && hp>=100) {
             isColliderActive = true;
             setNewImage("src/main/resources/graphic/Environment/" + legacyFilename + ".png");
         }
 
         if (hp < 100)
             hp += 5;
+
     }
 
     public int getHp() {

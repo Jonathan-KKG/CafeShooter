@@ -38,7 +38,7 @@ public class ProgramController {
         cookingController = new CookingController(this);
         inputManager = new InputManager(this);
         uiController = new UIController(viewController);
-        waveController = new WaveController(this);
+        waveController = new WaveController(viewController, uiController);
         dishController = new DishController(this);
         isRunning = true;
 
@@ -57,7 +57,7 @@ public class ProgramController {
         inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
         entityController.dishCollisionUpdate();
-        waveController.checkForNewWave(this);
+        waveController.checkForNewWave(viewController, uiController);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);

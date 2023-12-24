@@ -97,7 +97,7 @@ public class UIController {
      */
     public void updateEnemyBubblesOfWave(Enemy[] enemies) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] != null) {
+            if (enemies[i] != null && enemies[i].isActive()) {
                 enemyDishUIs[i].setX(enemies[i].getX());
                 enemyDishUIs[i].setY(enemies[i].getY());
             }

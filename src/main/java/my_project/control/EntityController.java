@@ -40,7 +40,7 @@ public class EntityController {
      */
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] != null) {
+            if (enemies[i] != null && enemies[i].isActive()) {
                 double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth() / 2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight() / 2};
                 double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
                 dir[0] /= distance;

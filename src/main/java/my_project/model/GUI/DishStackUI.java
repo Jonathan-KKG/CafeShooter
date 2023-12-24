@@ -5,6 +5,9 @@ import my_project.model.UI;
 
 import java.awt.*;
 
+/**
+ * Displays the amount of held Items of th e cook
+ */
 public class DishStackUI extends UI {
     private int dishStackAmount;
 

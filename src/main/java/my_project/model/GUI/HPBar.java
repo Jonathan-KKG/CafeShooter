@@ -4,6 +4,9 @@ import KAGO_framework.view.DrawTool;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.UI;
 
+/**
+ * Displays the HP of an attached CollidableEnvironment object
+ */
 public class HPBar extends UI {
 
     private int health;

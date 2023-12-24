@@ -136,24 +136,38 @@ public class EntityController {
 
         envObjs.toFirst();
         while (envObjs.hasAccess()) {
-            if (envObjs.getContent().isColliderActive()) {
-                CollidableEnvironment env = envObjs.getContent();
-                if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
-                    if (entity instanceof Enemy) {
-                        if (env.getHp() == 100)
-                            programController.getUIController().drawHPBar(env, programController.getViewController());
-                        programController.getEnvironmentController().damage(env, dt, programController.getViewController(), programController.getUIController());
-                    }
-                }
+            if (!envObjs.getContent().isColliderActive())
+                nextToNextActiveCollider(envObjs);
+            if (!envObjs.hasAccess())
+                break;
+
+            CollidableEnvironment env = envObjs.getContent();
+            if (keepOutOfBounds(env, entity, entityPos, entityDir) && entity instanceof Enemy) {
+                if (env.getHp() == 100)
+                    programController.getUIController().drawHPBar(env, programController.getViewController());
+                programController.getEnvironmentController().damage(env, dt, programController.getViewController(), programController.getUIController());
             }
+
             envObjs.next();
         }
     }
 
     /**
+     * Recursively nexts to next active collider in a given list
+     * @param envObjs list that should be nexted through
+     */
+    private void nextToNextActiveCollider(List<CollidableEnvironment> envObjs) {
+        if (!envObjs.hasAccess() || envObjs.getContent().isColliderActive())
+            return;
+        envObjs.next();
+        nextToNextActiveCollider(envObjs);
+    }
+
+    /**
      * sets the nearest interactable Environment in a set range
+     *
      * @param interactables list of all objects that shall be checkened
-     * @param player player that shall be checkened😎
+     * @param player        player that shall be checkened😎
      * @return list of all objects in range
      */
     private CollidableEnvironment getClosestObjectInRange(List<CollidableEnvironment> interactables, Player player) {
@@ -161,8 +175,8 @@ public class EntityController {
         List<CollidableEnvironment> objectsInRange = getObjectsInRange(interactables, player);
         objectsInRange.toFirst();
         closestObj = objectsInRange.getContent();
-        while(objectsInRange.hasAccess()) {
-            if(objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
+        while (objectsInRange.hasAccess()) {
+            if (objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
                 closestObj = objectsInRange.getContent();
             }
             objectsInRange.next();
@@ -172,9 +186,10 @@ public class EntityController {
     }
 
     /**
-     *  finds all objects in range
+     * finds all objects in range
+     *
      * @param interactables list of all objects that shall be checkened
-     * @param player player that shall be checkened😎
+     * @param player        player that shall be checkened😎
      * @return list of all objects in range
      */
     private List<CollidableEnvironment> getObjectsInRange(List<CollidableEnvironment> interactables, Player player) {
@@ -182,10 +197,10 @@ public class EntityController {
 
         interactables.toFirst();
         while (interactables.hasAccess()) {
-                CollidableEnvironment currentObject = interactables.getContent();
-                if (player.getDistanceTo(currentObject)<70) {
-                    objectsInRange.append(currentObject);
-                }
+            CollidableEnvironment currentObject = interactables.getContent();
+            if (player.getDistanceTo(currentObject) < 70) {
+                objectsInRange.append(currentObject);
+            }
             interactables.next();
         }
         return objectsInRange;

@@ -59,7 +59,7 @@ public class EnvironmentController {
     }
 
     /**
-     * creates all Environment objects and adds them to environmentObjects list
+     * creates all Environment objects, adds them to their respective lists and draws them
      *
      * @param viewController Required to draw Objects
      */

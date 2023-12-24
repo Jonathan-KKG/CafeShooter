@@ -8,7 +8,6 @@ import my_project.model.Enemies.Jonathan;
 import my_project.model.Enemies.Max;
 import my_project.model.Enemy;
 
-import javax.swing.text.View;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -117,7 +116,7 @@ public class WaveController {
      */
     private void scheduleWaveDrawing(ViewController viewController) {
         for (int i = 0; i < enemyWaves.front().length; i++) {
-            long randomDelay = (long) (Math.random() * 5000 / (enemyWaves.front().length * 0.25));
+            long randomDelay = (long) (Math.random() * 1000 * enemyWaves.front().length + i * 500L);
             spawnTimer.schedule(addElementToDraw(enemyWaves.front()[i], viewController), randomDelay);
         }
     }

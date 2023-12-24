@@ -1,6 +1,6 @@
 package my_project.model.GUI.SkillChecks;
 
-import my_project.model.UI;
+import my_project.model.GUI.UI;
 
 /**
  * UI element that is created on cooking: "testing ('skill-checking') the player"  if you will

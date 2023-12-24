@@ -4,6 +4,8 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
+import my_project.model.Dishes.Dish;
+import my_project.model.Enemies.Enemy;
 import my_project.model.Environment.CollidableEnvironment;
 
 

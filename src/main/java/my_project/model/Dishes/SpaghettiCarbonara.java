@@ -1,7 +1,5 @@
 package my_project.model.Dishes;
 
-import my_project.model.Dish;
-
 /**
  * The SpaghettiCarbonara Dish.
  */

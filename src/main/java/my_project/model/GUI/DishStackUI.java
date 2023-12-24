@@ -1,7 +1,6 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.UI;
 
 import java.awt.*;
 

@@ -2,7 +2,7 @@ package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
-import my_project.model.Dish;
+import my_project.model.Dishes.Dish;
 import my_project.model.Dishes.Coffee;
 import my_project.model.Dishes.SpaghettiCarbonara;
 import my_project.model.Item;

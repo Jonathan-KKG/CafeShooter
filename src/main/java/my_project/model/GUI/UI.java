@@ -1,4 +1,4 @@
-package my_project.model;
+package my_project.model.GUI;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;

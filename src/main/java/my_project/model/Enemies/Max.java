@@ -1,7 +1,6 @@
 package my_project.model.Enemies;
 
 import my_project.model.Dishes.Coffee;
-import my_project.model.Enemy;
 
 /**
  * The Max Enemy.

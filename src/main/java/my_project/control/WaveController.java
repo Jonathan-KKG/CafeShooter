@@ -6,7 +6,7 @@ import my_project.model.Enemies.Carlos;
 import my_project.model.Enemies.Habib;
 import my_project.model.Enemies.Jonathan;
 import my_project.model.Enemies.Max;
-import my_project.model.Enemy;
+import my_project.model.Enemies.Enemy;
 
 import java.io.File;
 import java.util.Timer;

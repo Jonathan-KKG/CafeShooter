@@ -1,4 +1,6 @@
-package my_project.model;
+package my_project.model.Enemies;
+
+import my_project.model.Entity;
 
 /**
  * An enemy entity that is able to damage environment, follow the player and are able to lead to game over

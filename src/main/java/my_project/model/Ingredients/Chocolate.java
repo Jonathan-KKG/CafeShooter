@@ -1,7 +1,5 @@
 package my_project.model.Ingredients;
 
-import my_project.model.Ingredient;
-
 /**
  * The Chocolate Ingredient
  */

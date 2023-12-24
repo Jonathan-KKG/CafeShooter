@@ -1,6 +1,6 @@
 package my_project.model.Environment;
 
-import my_project.model.Dish;
+import my_project.model.Dishes.Dish;
 
 /**
  * A collidableEnvironment that is able to create Dishes.

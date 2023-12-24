@@ -133,7 +133,6 @@ public class EntityController {
     private void checkForScreenAndEnvironCollisions(double dt, Entity entity, double[] entityDir) {
         double[] entityPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
-        boolean damaged = false;
 
         envObjs.toFirst();
         while (envObjs.hasAccess()) {
@@ -143,15 +142,12 @@ public class EntityController {
                     if (entity instanceof Enemy) {
                         if (env.getHp() == 100)
                             programController.getUIController().drawHPBar(env, programController.getViewController());
-                        env.reduceHP(dt);
-                        damaged = true;
+                        programController.getEnvironmentController().damage(env, dt, programController.getViewController(), programController.getUIController());
                     }
                 }
             }
             envObjs.next();
         }
-        if (damaged)
-            programController.getUIController().updateHPBars(programController.getViewController());
     }
 
     /**

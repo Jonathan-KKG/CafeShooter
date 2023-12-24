@@ -6,7 +6,7 @@ import my_project.model.UI;
 
 public class HPBar extends UI {
 
-    private double health;
+    private int health;
     private CollidableEnvironment environment;
 
     /**

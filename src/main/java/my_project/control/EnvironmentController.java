@@ -34,7 +34,7 @@ public class EnvironmentController {
      * @param viewController Required to update UI
      */
     public void updateEnvironments(Shooter shooter, double dt, ViewController viewController, UIController uiController) {
-        if(!shooter.isRepairing())
+        if(!shooter.isBusy())
             return;
         boolean allObjsRepaired = true;
         List<CollidableEnvironment> objsInRange = shooter.getObjectsInRange();
@@ -54,7 +54,7 @@ public class EnvironmentController {
             objsInRange.next();
         }
         if(allObjsRepaired)
-            shooter.setRepairing(false);
+            shooter.setBusy(false);
         uiController.updateHPBars(viewController);
     }
 

@@ -62,11 +62,11 @@ public class EntityController {
      * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : { Cook{x,y}, Shooter{x,y} }
      */
     public void updatePlayers(double dt, double[][] playerDir) {
-        if (cook.isCooking()) {
+        if (cook.isBusy()) {
             playerDir[0][0] = 0;
             playerDir[0][1] = 0;
         }
-        if (shooter.isRepairing()) {
+        if (shooter.isBusy()) {
             playerDir[1][0] = 0;
             playerDir[1][1] = 0;
         }

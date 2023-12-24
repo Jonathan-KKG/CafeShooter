@@ -77,7 +77,7 @@ public class InputManager extends InteractiveGraphicalObject {
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
         // Move heldDishes and the UI along with cook position
-        if (!programController.getEntityController().getCook().isCooking()) {
+        if (!programController.getEntityController().getCook().isBusy()) {
             programController.getDishController().moveHeldItems();
             programController.getUIController().updateDishStackUI(programController.getEntityController().getCook());
         }
@@ -96,7 +96,7 @@ public class InputManager extends InteractiveGraphicalObject {
             return;
         }
 
-        if (programController.getEntityController().getShooter().isRepairing())
+        if (programController.getEntityController().getShooter().isBusy())
             return;
 
         if (e.getButton() == 1)
@@ -118,7 +118,7 @@ public class InputManager extends InteractiveGraphicalObject {
         if (key == KeyEvent.VK_Q)
             programController.getCookingController().cook();
         if (key == KeyEvent.VK_O)
-            programController.getEntityController().getShooter().setRepairing(true);
+            programController.getEntityController().getShooter().setBusy(true);
     }
 
 }

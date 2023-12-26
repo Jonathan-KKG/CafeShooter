@@ -49,7 +49,7 @@ public class CookingController {
     public void cook() {
         Cook cook = programController.getEntityController().getCook();
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
-        if (objectInRange instanceof CookingStation && !cook.isBusy()) {
+        if (objectInRange instanceof CookingStation && objectInRange.isColliderActive() && !cook.isBusy()) {
             //if (checkForRightIngrediens(((CookingStation) objectInRange).getCookableObjs())) {
                 cook.setBusy(true);
                 time = 0;

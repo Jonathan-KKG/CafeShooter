@@ -14,7 +14,6 @@ public class Table extends CollidableEnvironment {
         super(filename, pX, pY);
     }
 
-
     public void putDownReal() {
 
     }

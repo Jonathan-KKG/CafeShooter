@@ -3,8 +3,9 @@ package my_project.view;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
-
-
+import my_project.model.Environment.CollidableEnvironment;
+import my_project.model.Environment.CookingStation;
+import my_project.model.Environment.Table;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -30,25 +31,25 @@ public class InputManager extends InteractiveGraphicalObject {
     /**
      * Is called every frame
      *
-     * @param dt               Time passed since last frame
+     * @param dt Time passed since last frame
      */
     public void inputUpdate(double dt) {
         exePlayerMovement(dt);
         updateSkillCheckInputs();
     }
 
-    private void updateSkillCheckInputs(){
-        if(ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed){
+    private void updateSkillCheckInputs() {
+        if (ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed) {
             isSkillCheckButtonPressed = true;
             programController.getCookingController().addClick();
         }
-        if(!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
+        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
     }
 
     /**
      * Checks in which direction each player is moving and calls updatePlayer method accordingly
      *
-     * @param dt               Time passed since last frame
+     * @param dt Time passed since last frame
      */
     private void exePlayerMovement(double dt) {
         int xDirCook = 0;
@@ -115,8 +116,14 @@ public class InputManager extends InteractiveGraphicalObject {
         if (!programController.isRunning())
             return;
 
-        if (key == KeyEvent.VK_Q)
-            programController.getCookingController().cook();
+        if (key == KeyEvent.VK_Q) {
+            CollidableEnvironment closestObj = programController.getEntityController().getCook().getClosestObjectInRange();
+            closestObj = programController.getEntityController().getCook().getClosestObjectInRange();
+            if(closestObj instanceof Table)
+                ; // add to table here
+            else if (closestObj instanceof CookingStation)
+                programController.getCookingController().cook();
+        }
         if (key == KeyEvent.VK_O)
             programController.getEntityController().getShooter().setBusy(true);
     }

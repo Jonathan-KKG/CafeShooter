@@ -72,7 +72,7 @@ public class EntityController {
         }
 
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
-        cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
+            cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
 
         checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
         shooter.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));

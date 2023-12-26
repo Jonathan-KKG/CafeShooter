@@ -2,12 +2,17 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
+import my_project.control.DishController;
 import my_project.control.ProgramController;
+import my_project.model.Dishes.Dish;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Environment.CookingStation;
 import my_project.model.Environment.Table;
+import my_project.model.Item;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Queue;
 
 /**
  * Realisiert ein Objekt, dass alle Eingaben empfängt und dann danach passende Methoden
@@ -118,14 +123,19 @@ public class InputManager extends InteractiveGraphicalObject {
 
         if (key == KeyEvent.VK_Q) {
             CollidableEnvironment closestObj = programController.getEntityController().getCook().getClosestObjectInRange();
-            closestObj = programController.getEntityController().getCook().getClosestObjectInRange();
-            if(closestObj instanceof Table)
-                ; // add to table here
-            else if (closestObj instanceof CookingStation)
+            Item tempDish = programController.getDishController().getFirstHeldItem();
+            if(closestObj instanceof Table && tempDish instanceof Dish) {
+                programController.getEnvironmentController().addToTable((Dish) programController.getDishController().getFirstHeldItem(), (Table) closestObj);
+                tempDish.setX(closestObj.getX());
+                tempDish.setY(closestObj.getY());
+                programController.getDishController().removeFirstHeldItem();
+            } else if (closestObj instanceof CookingStation)
                 programController.getCookingController().cook();
         }
-        if (key == KeyEvent.VK_O)
+        if (key == KeyEvent.VK_U)
             programController.getEntityController().getShooter().setBusy(true);
-    }
 
+        if(key == KeyEvent.VK_O && programController.getEntityController().getShooter().getClosestObjectInRange() instanceof Table)
+            programController.getDishController().moveToStoredDishes(((Table) programController.getEntityController().getShooter().getClosestObjectInRange()).getFirstDish());
+    }
 }

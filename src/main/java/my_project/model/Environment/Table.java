@@ -12,9 +12,13 @@ public class Table extends CollidableEnvironment {
 
     public Table(String filename, double pX, double pY) {
         super(filename, pX, pY);
+        tableDishes = new Queue<>();
     }
 
-    public void putDownReal() {
-
+    public void putDownReal(Dish newDish) {
+        tableDishes.enqueue(newDish);
+    }
+    public Queue<Dish> getFirstDish() {
+        return tableDishes;
     }
 }

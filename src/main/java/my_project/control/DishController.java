@@ -1,6 +1,7 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dishes.Dish;
 import my_project.model.Dishes.Coffee;
@@ -166,9 +167,18 @@ public class DishController {
     }
 
     public void removeFirstHeldItem() {
-        programController.getViewController().removeDrawable(heldItems.top());
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
+    }
+
+    public void moveToStoredDishes(Queue<Dish> dishes){
+        if(dishes.front() == null)
+            return;
+        Dish tempDish = dishes.front();
+        dishes.dequeue();
+        int tempInt = nextOccupiedIndex(currentDishIndex, currentDishIndex);
+        if(tempInt != -1)
+            storedDishes[tempInt] = tempDish;
     }
 
     public Item getFirstHeldItem() {

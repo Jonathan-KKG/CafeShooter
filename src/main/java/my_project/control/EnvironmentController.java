@@ -2,6 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import my_project.model.Dishes.Dish;
 import my_project.model.Environment.*;
 import my_project.model.Shooter;
 
@@ -125,7 +126,7 @@ public class EnvironmentController {
     /**
      * reduces hp of an CollidableEnvironment object and deactivates it if hp is zero or lower
      *
-     * @param env            The Objec that should be damaged
+     * @param env            The Object that should be damaged
      * @param dt             Time between this and last frame to reduce hp equally across all frames
      * @param viewController Required to stop drawing the object if and when it deactivates
      */
@@ -136,6 +137,10 @@ public class EnvironmentController {
             viewController.removeDrawable(env);
         }
         uiController.updateHPBars(viewController);
+    }
+
+    public void addToTable(Dish newDish, Table table){
+        table.putDownReal(newDish);
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {

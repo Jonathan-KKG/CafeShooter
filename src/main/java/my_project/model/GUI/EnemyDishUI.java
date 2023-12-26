@@ -1,8 +1,11 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.UI;
 
+/**
+ * The Enemy "Wants-Bubble"
+ * Displays what Dish the Enemy needs to be defeated
+ */
 public class EnemyDishUI extends UI {
 
     private int[] bubbleRadius = new int[]{70,40};
@@ -10,8 +13,6 @@ public class EnemyDishUI extends UI {
     private int[] entitySize = new int[]{32,32};
 
     /**
-     * The Enemy "Wants-Bubble"
-     * Displays what Dish the Enemy needs to be defeated
      * @param pX Starting location of the Model
      * @param pY Starting location of the Model
      * @param filename The filename of the dish that the Enemy this UI belongs to requires

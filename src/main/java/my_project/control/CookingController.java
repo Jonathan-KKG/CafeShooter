@@ -33,12 +33,12 @@ public class CookingController {
      * @param dt Time passed between this and last frame
      */
     public void updateCooking(double dt) {
-        if (programController.getEntityController().getCook().isCooking())
+        if (programController.getEntityController().getCook().isBusy())
             time += dt;
         if (time > 3) {
             time = 0;
             programController.getUIController().deleteSkillCheckUI(programController.getViewController());
-            programController.getEntityController().getCook().setCooking(false);
+            programController.getEntityController().getCook().setBusy(false);
         }
     }
 
@@ -49,9 +49,9 @@ public class CookingController {
     public void cook() {
         Cook cook = programController.getEntityController().getCook();
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
-        if (objectInRange instanceof CookingStation && !cook.isCooking() &&  objectInRange.isColliderActive()) {
+        if (objectInRange instanceof CookingStation && !cook.isBusy()) {
             //if (checkForRightIngrediens(((CookingStation) objectInRange).getCookableObjs())) {
-                cook.setCooking(true);
+                cook.setBusy(true);
                 time = 0;
                 programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), programController.getViewController());
 
@@ -63,12 +63,12 @@ public class CookingController {
      * if there is an active check addes an click
      */
     public void addClick() {
-        if (programController.getEntityController().getCook().isCooking()) {
+        if (programController.getEntityController().getCook().isBusy()) {
             if (!programController.getUIController().progressSkillCheck(programController.getViewController())) {
                 Cook cook = programController.getEntityController().getCook();
                 programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), "Coffee"));
-                programController.getEntityController().getCook().setCooking(false);
+                programController.getEntityController().getCook().setBusy(false);
             }
         }
     }

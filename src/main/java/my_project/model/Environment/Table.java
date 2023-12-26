@@ -1,7 +1,7 @@
 package my_project.model.Environment;
 
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
-import my_project.model.Dish;
+import my_project.model.Dishes.Dish;
 
 /**
  * Table object that can store Dishes

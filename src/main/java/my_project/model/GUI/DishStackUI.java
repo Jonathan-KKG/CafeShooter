@@ -1,10 +1,12 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.UI;
 
 import java.awt.*;
 
+/**
+ * Displays the amount of held Items of th e cook
+ */
 public class DishStackUI extends UI {
     private int dishStackAmount;
 

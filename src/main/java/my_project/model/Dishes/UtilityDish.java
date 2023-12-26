@@ -1,4 +1,4 @@
-package my_project.model;
+package my_project.model.Dishes;
 
 /**
  * Special Dishes that have additionall effects

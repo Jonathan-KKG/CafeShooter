@@ -3,6 +3,7 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Environment.*;
+import my_project.model.Shooter;
 
 /**
  * Controls all Environment objects by creating, storing, drawing and, if required, enabling influence (through methods) on them.
@@ -26,7 +27,39 @@ public class EnvironmentController {
     }
 
     /**
-     * creates all Environment objects and adds them to environmentObjects list
+     * Calls necessary methods to repair an object
+     *
+     * @param shooter    Required to get the objects that should be repaired & set busy state
+     * @param uiController   Required to update UI
+     * @param viewController Required to update UI
+     */
+    public void updateEnvironments(Shooter shooter, double dt, ViewController viewController, UIController uiController) {
+        if(!shooter.isBusy())
+            return;
+        boolean allObjsRepaired = true;
+        List<CollidableEnvironment> objsInRange = shooter.getObjectsInRange();
+
+        objsInRange.toFirst();
+        while (objsInRange.hasAccess()) {
+            CollidableEnvironment env = objsInRange.getContent();
+
+            if (env.getHp() < 100) {
+                env.increaseHP(dt * 100);
+                allObjsRepaired = false;
+            }
+            if (!env.isColliderActive() && env.getHp() >= 100) {
+                env.setColliderActive(true);
+                viewController.draw(env);
+            }
+            objsInRange.next();
+        }
+        if(allObjsRepaired)
+            shooter.setBusy(false);
+        uiController.updateHPBars(viewController);
+    }
+
+    /**
+     * creates all Environment objects, adds them to their respective lists and draws them
      *
      * @param viewController Required to draw Objects
      */
@@ -90,17 +123,18 @@ public class EnvironmentController {
     }
 
     /**
-     * Calls necessary methods to repair an object
-     * @param objectsInRange the objects to be repaired
-     * @param uiController Required to update UI
-     * @param viewController Required to update UI
+     * reduces hp of an CollidableEnvironment object and deactivates it if hp is zero or lower
+     *
+     * @param env            The Objec that should be damaged
+     * @param dt             Time between this and last frame to reduce hp equally across all frames
+     * @param viewController Required to stop drawing the object if and when it deactivates
      */
-    public void repair(List <CollidableEnvironment> objectsInRange , UIController uiController, ViewController viewController){
-        objectsInRange.toFirst();
-        while(objectsInRange.hasAccess()){
-                objectsInRange.getContent().increaseHP();
-                objectsInRange.next();
-            }
+    public void damage(CollidableEnvironment env, double dt, ViewController viewController, UIController uiController) {
+        env.increaseHP(-dt * 100);
+        if (env.getHp() <= 0) {
+            env.setColliderActive(false);
+            viewController.removeDrawable(env);
+        }
         uiController.updateHPBars(viewController);
     }
 

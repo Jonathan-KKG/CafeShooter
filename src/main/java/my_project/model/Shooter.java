@@ -8,7 +8,6 @@ import my_project.model.Environment.CollidableEnvironment;
  */
 public class Shooter extends Player {
 
-    private boolean isRepairing; // inputs (w/ exception of repair-related inputs) will stop getting detected until isRepairing = false
     private List<CollidableEnvironment> objectsInRange;
 
     /**
@@ -18,15 +17,6 @@ public class Shooter extends Player {
      */
     public Shooter(String filename, double pX, double pY) {
         super(filename, pX, pY);
-        isRepairing = false;
-    }
-
-    public boolean isRepairing() {
-        return isRepairing;
-    }
-
-    public void setRepairing(boolean repairing) {
-        isRepairing = repairing;
     }
 
     public List<CollidableEnvironment> getObjectsInRange() {

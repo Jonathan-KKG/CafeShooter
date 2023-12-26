@@ -3,9 +3,10 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Environment.CollidableEnvironment;
-import my_project.model.Enemy;
+import my_project.model.Enemies.Enemy;
 import my_project.model.Cook;
 import my_project.model.GUI.*;
+import my_project.model.GUI.SkillChecks.*;
 
 /**
  * Responsible for drawing and managing every GUI on the screen
@@ -59,7 +60,14 @@ public class UIController {
      * @param viewController Required to draww the new Object
      */
     public void createSkillCheck(double[] pos, String type, ViewController viewController) {
-        skillCheckUI = new SkillCheckUI(pos[0], pos[1], type);
+        switch (type){
+            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1]);
+            case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1]);
+            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1]);
+            case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
+            default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
+        }
+        System.out.println(skillCheckUI.getWidth());
         viewController.draw(skillCheckUI);
     }
 
@@ -97,7 +105,7 @@ public class UIController {
      */
     public void updateEnemyBubblesOfWave(Enemy[] enemies) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] != null) {
+            if (enemies[i] != null && enemies[i].isActive()) {
                 enemyDishUIs[i].setX(enemies[i].getX());
                 enemyDishUIs[i].setY(enemies[i].getY());
             }
@@ -149,8 +157,7 @@ public class UIController {
         viewController.draw(newHPBar);
     }
 
-    /** TODO: Check if removing an HPBar works
-     *  TODO: Check if "resurrecting" an HPBar works
+    /**
      * updates all HPBars for CollidableEnvironments
      * @param viewController Required to deleted the HPBar in case it's not required anymore
      */
@@ -161,8 +168,7 @@ public class UIController {
             if(hpBars.getContent().getHealth() >= 100) {
                 viewController.removeDrawable(hpBars.getContent());
                 hpBars.remove();
-            }
-            else
+            } else
                 hpBars.next();
         }
     }

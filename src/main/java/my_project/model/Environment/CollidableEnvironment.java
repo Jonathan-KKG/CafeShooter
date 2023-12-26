@@ -5,43 +5,22 @@ package my_project.model.Environment;
  */
 public class CollidableEnvironment extends Environment {
     private boolean isColliderActive;
-    private boolean isColliderReallyActive;
     private int hp;
-    private String legacyFilename;
 
     /**
      * Additionally activates the collider
      */
     public CollidableEnvironment(String filename, double pX, double pY) {
         super(filename, pX, pY);
-        legacyFilename = filename;
         isColliderActive = true;
         hp = 100;
     }
 
     /**
-     * reduces hp of the Barriers. If hp is <=0 it stops colliding & switches img
+     * Increases HP of this
      */
-    public void reduceHP(double dt) {
-        hp -= dt;
-        if (hp <= 0) {
-            isColliderActive = false;
-            myImage = null;
-        }
-    }
-
-    /**
-     * Increases HP of this and updates the sprite if collider was inactive
-     */
-    public void increaseHP() {
-        if (!isColliderActive && hp>=100) {
-            isColliderActive = true;
-            setNewImage("src/main/resources/graphic/Environment/" + legacyFilename + ".png");
-        }
-
-        if (hp < 100)
-            hp += 5;
-
+    public void increaseHP(double amount) {
+        hp += amount;
     }
 
     public int getHp() {
@@ -51,4 +30,9 @@ public class CollidableEnvironment extends Environment {
     public boolean isColliderActive() {
         return isColliderActive;
     }
+
+    public void setColliderActive(boolean colliderActive) {
+        isColliderActive = colliderActive;
+    }
+
 }

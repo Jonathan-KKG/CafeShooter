@@ -1,9 +1,10 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.UI;
 
-
+/**
+ * Displays the ammo count in the bottom right and the current element
+ */
 public class DishUI extends UI {
 
     /**

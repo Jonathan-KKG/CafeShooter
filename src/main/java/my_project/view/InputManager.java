@@ -2,7 +2,6 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
-import my_project.control.EntityController;
 import my_project.control.ProgramController;
 
 
@@ -16,6 +15,7 @@ import java.awt.event.MouseEvent;
 public class InputManager extends InteractiveGraphicalObject {
 
     private ProgramController programController;
+    private boolean isSkillCheckButtonPressed;
 
     /**
      * Initializes inputManager
@@ -24,25 +24,33 @@ public class InputManager extends InteractiveGraphicalObject {
      */
     public InputManager(ProgramController pProgramController) {
         programController = pProgramController;
+        isSkillCheckButtonPressed = false;
     }
 
     /**
      * Is called every frame
      *
      * @param dt               Time passed since last frame
-     * @param entityController Required to forward movement inputs
      */
-    public void inputUpdate(double dt, EntityController entityController) {
-        exePlayerMovement(dt, entityController);
+    public void inputUpdate(double dt) {
+        exePlayerMovement(dt);
+        updateSkillCheckInputs();
+    }
+
+    private void updateSkillCheckInputs(){
+        if(ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed){
+            isSkillCheckButtonPressed = true;
+            programController.getCookingController().addClick();
+        }
+        if(!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
     }
 
     /**
      * Checks in which direction each player is moving and calls updatePlayer method accordingly
      *
      * @param dt               Time passed since last frame
-     * @param entityController Required to forward movement inputs
      */
-    private void exePlayerMovement(double dt, EntityController entityController) {
+    private void exePlayerMovement(double dt) {
         int xDirCook = 0;
         int yDirCook = 0;
         int xDirShooter = 0;
@@ -65,11 +73,11 @@ public class InputManager extends InteractiveGraphicalObject {
         if (ViewController.isKeyDown(KeyEvent.VK_K))
             yDirShooter = 1;
 
-        entityController.updatePlayers(dt,
+        programController.getEntityController().updatePlayers(dt,
                 new double[][]{{xDirCook, yDirCook}, {xDirShooter, yDirShooter}});
 
         // Move heldDishes and the UI along with cook position
-        if (!programController.getEntityController().getCook().isCooking()) {
+        if (!programController.getEntityController().getCook().isBusy()) {
             programController.getDishController().moveHeldItems();
             programController.getUIController().updateDishStackUI(programController.getEntityController().getCook());
         }
@@ -88,7 +96,7 @@ public class InputManager extends InteractiveGraphicalObject {
             return;
         }
 
-        if (programController.getEntityController().getShooter().isRepairing())
+        if (programController.getEntityController().getShooter().isBusy())
             return;
 
         if (e.getButton() == 1)
@@ -107,12 +115,10 @@ public class InputManager extends InteractiveGraphicalObject {
         if (!programController.isRunning())
             return;
 
-        if (key == KeyEvent.VK_SPACE)
-            programController.getCookingController().addClick();
         if (key == KeyEvent.VK_Q)
             programController.getCookingController().cook();
         if (key == KeyEvent.VK_O)
-            programController.getEnvironmentController().repair(programController.getEntityController().getShooter().getObjectsInRange(), programController.getUIController(), programController.getViewController());
+            programController.getEntityController().getShooter().setBusy(true);
     }
 
 }

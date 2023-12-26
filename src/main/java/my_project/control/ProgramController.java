@@ -38,7 +38,7 @@ public class ProgramController {
         cookingController = new CookingController(this);
         inputManager = new InputManager(this);
         uiController = new UIController(viewController);
-        waveController = new WaveController(this);
+        waveController = new WaveController(viewController, uiController);
         dishController = new DishController(this);
         isRunning = true;
 
@@ -51,22 +51,22 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt) {
-        if(!isRunning) return;
+        if (!isRunning) return;
 
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
-        inputManager.inputUpdate(dt, entityController);
+        inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
         entityController.dishCollisionUpdate();
-        waveController.checkForNewWave(this);
+        waveController.checkForNewWave(viewController, uiController);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
-
+        environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);
     }
 
     /**
      * prevents updateProgram from executing & draws the finishing frame
      */
-    public void endGame(){
+    public void endGame() {
         isRunning = false;
         uiController.drawEndGameScreen(viewController);
         entityController.endGame();
@@ -75,7 +75,7 @@ public class ProgramController {
     /**
      * Resets the ViewController and restarts the program
      */
-    public void restartGame(){
+    public void restartGame() {
         viewController.reset();
         startProgram();
     }
@@ -108,5 +108,7 @@ public class ProgramController {
         return entityController;
     }
 
-    public WaveController getWaveController(){return waveController;}
+    public WaveController getWaveController() {
+        return waveController;
+    }
 }

@@ -1,10 +1,13 @@
-package my_project.model;
+package my_project.model.Enemies;
+
+import my_project.model.Entity;
 
 /**
  * An enemy entity that is able to damage environment, follow the player and are able to lead to game over
  */
 public abstract class Enemy extends Entity {
     protected String requiredDish;
+    private boolean isActive;
 
     /**
      * Creates Enemy object of a specific type
@@ -15,9 +18,18 @@ public abstract class Enemy extends Entity {
     public Enemy(String filename, Double pX, Double pY) {
         super(filename, pX, pY);
         speed = 50;
+        isActive = false;
     }
 
     public String getRequiredDish() {
         return requiredDish;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void activate() {
+        isActive = true;
     }
 }

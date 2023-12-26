@@ -1,7 +1,6 @@
 package my_project.model.Enemies;
 
 import my_project.model.Dishes.SpaghettiCarbonara;
-import my_project.model.Enemy;
 
 /**
  * The Jonathan Enemy.

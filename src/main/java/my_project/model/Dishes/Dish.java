@@ -1,4 +1,6 @@
-package my_project.model;
+package my_project.model.Dishes;
+
+import my_project.model.Item;
 
 /**
  * a Dish Item that is able to satisfy enemies

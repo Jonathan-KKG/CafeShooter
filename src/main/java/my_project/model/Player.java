@@ -7,6 +7,7 @@ import my_project.model.Environment.CollidableEnvironment;
  */
 public abstract class Player extends Entity {
 
+    private boolean isBusy;
     private CollidableEnvironment closestObjectInRange;
 
     /**
@@ -16,10 +17,19 @@ public abstract class Player extends Entity {
      */
     public Player(String filename, double pX, double pY) {
         super(filename, pX, pY);
+        isBusy = false;
     }
 
     public void setClosestObjectInRange(CollidableEnvironment pClosestObjectInRange) {
         this.closestObjectInRange = pClosestObjectInRange;
+    }
+
+    public boolean isBusy() {
+        return isBusy;
+    }
+
+    public void setBusy(boolean busy) {
+        isBusy = busy;
     }
 
     public CollidableEnvironment getClosestObjectInRange() {

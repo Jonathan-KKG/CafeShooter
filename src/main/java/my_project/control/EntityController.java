@@ -4,6 +4,8 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.*;
+import my_project.model.Dishes.Dish;
+import my_project.model.Enemies.Enemy;
 import my_project.model.Environment.CollidableEnvironment;
 
 
@@ -40,7 +42,7 @@ public class EntityController {
      */
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] != null) {
+            if (enemies[i] != null && enemies[i].isActive()) {
                 double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth() / 2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight() / 2};
                 double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
                 dir[0] /= distance;
@@ -62,11 +64,11 @@ public class EntityController {
      * @param playerDir bentöigt, um Richtung der Bewegungsänderung weiterzugeben : { Cook{x,y}, Shooter{x,y} }
      */
     public void updatePlayers(double dt, double[][] playerDir) {
-        if (cook.isCooking()) {
+        if (cook.isBusy()) {
             playerDir[0][0] = 0;
             playerDir[0][1] = 0;
         }
-        if (shooter.isRepairing()) {
+        if (shooter.isBusy()) {
             playerDir[1][0] = 0;
             playerDir[1][1] = 0;
         }
@@ -133,31 +135,41 @@ public class EntityController {
     private void checkForScreenAndEnvironCollisions(double dt, Entity entity, double[] entityDir) {
         double[] entityPos = {entity.getX() + entity.getSpeed() * dt * entityDir[0], entity.getY() + entity.getSpeed() * dt * entityDir[1]};
         List<CollidableEnvironment> envObjs = programController.getEnvironmentController().getCollidableEnvironmentObjects();
-        boolean damaged = false;
 
         envObjs.toFirst();
         while (envObjs.hasAccess()) {
-            if (envObjs.getContent().isColliderActive()) {
-                CollidableEnvironment env = envObjs.getContent();
-                if (keepOutOfBounds(env, entity, entityPos, entityDir)) {
-                    if (entity instanceof Enemy) {
-                        if (env.getHp() == 100)
-                            programController.getUIController().drawHPBar(env, programController.getViewController());
-                        env.reduceHP(dt);
-                        damaged = true;
-                    }
-                }
+            if (!envObjs.getContent().isColliderActive())
+                nextToNextActiveCollider(envObjs);
+            if (!envObjs.hasAccess())
+                break;
+
+            CollidableEnvironment env = envObjs.getContent();
+            if (keepOutOfBounds(env, entity, entityPos, entityDir) && entity instanceof Enemy) {
+                if (env.getHp() == 100)
+                    programController.getUIController().drawHPBar(env, programController.getViewController());
+                programController.getEnvironmentController().damage(env, dt, programController.getViewController(), programController.getUIController());
             }
+
             envObjs.next();
         }
-        if (damaged)
-            programController.getUIController().updateHPBars(programController.getViewController());
+    }
+
+    /**
+     * Recursively nexts to next active collider in a given list
+     * @param envObjs list that should be nexted through
+     */
+    private void nextToNextActiveCollider(List<CollidableEnvironment> envObjs) {
+        if (!envObjs.hasAccess() || envObjs.getContent().isColliderActive())
+            return;
+        envObjs.next();
+        nextToNextActiveCollider(envObjs);
     }
 
     /**
      * sets the nearest interactable Environment in a set range
+     *
      * @param interactables list of all objects that shall be checkened
-     * @param player player that shall be checkened😎
+     * @param player        player that shall be checkened😎
      * @return list of all objects in range
      */
     private CollidableEnvironment getClosestObjectInRange(List<CollidableEnvironment> interactables, Player player) {
@@ -165,8 +177,8 @@ public class EntityController {
         List<CollidableEnvironment> objectsInRange = getObjectsInRange(interactables, player);
         objectsInRange.toFirst();
         closestObj = objectsInRange.getContent();
-        while(objectsInRange.hasAccess()) {
-            if(objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
+        while (objectsInRange.hasAccess()) {
+            if (objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
                 closestObj = objectsInRange.getContent();
             }
             objectsInRange.next();
@@ -176,9 +188,10 @@ public class EntityController {
     }
 
     /**
-     *  finds all objects in range
+     * finds all objects in range
+     *
      * @param interactables list of all objects that shall be checkened
-     * @param player player that shall be checkened😎
+     * @param player        player that shall be checkened😎
      * @return list of all objects in range
      */
     private List<CollidableEnvironment> getObjectsInRange(List<CollidableEnvironment> interactables, Player player) {
@@ -186,10 +199,10 @@ public class EntityController {
 
         interactables.toFirst();
         while (interactables.hasAccess()) {
-                CollidableEnvironment currentObject = interactables.getContent();
-                if (player.getDistanceTo(currentObject)<70) {
-                    objectsInRange.append(currentObject);
-                }
+            CollidableEnvironment currentObject = interactables.getContent();
+            if (player.getDistanceTo(currentObject) < 70) {
+                objectsInRange.append(currentObject);
+            }
             interactables.next();
         }
         return objectsInRange;

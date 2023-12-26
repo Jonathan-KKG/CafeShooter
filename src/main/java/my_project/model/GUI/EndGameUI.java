@@ -1,10 +1,12 @@
 package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.UI;
 
 import java.awt.*;
 
+/**
+ * Last frame of the game: The end screen
+ */
 public class EndGameUI extends UI {
 
     private double[][] restartButtonPosAndSize;

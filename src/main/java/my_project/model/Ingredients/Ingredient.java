@@ -1,4 +1,6 @@
-package my_project.model;
+package my_project.model.Ingredients;
+
+import my_project.model.Item;
 
 /**
  * Ingredients that are required to create a Dish

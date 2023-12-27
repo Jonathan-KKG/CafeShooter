@@ -11,6 +11,7 @@ public class CookingController {
     private double time;
     private ProgramController programController;
     private String[][][] recipes;
+    private CookingStation currentStation;
 
     /**
      * creates an cookingController object.
@@ -33,11 +34,16 @@ public class CookingController {
      * @param dt Time passed between this and last frame
      */
     public void updateCooking(double dt) {
+        if(currentStation == null)
+            return;
+
         if (programController.getEntityController().getCook().isBusy())
             time += dt;
-        if (time > 3) {
+
+        if (time > 3 || !currentStation.isColliderActive()) {
             time = 0;
             programController.getUIController().deleteSkillCheckUI(programController.getViewController());
+            currentStation = null;
             programController.getEntityController().getCook().setBusy(false);
         }
     }
@@ -50,10 +56,11 @@ public class CookingController {
         Cook cook = programController.getEntityController().getCook();
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
         if (objectInRange instanceof CookingStation && objectInRange.isColliderActive() && !cook.isBusy()) {
-            //if (checkForRightIngrediens(((CookingStation) objectInRange).getCookableObjs())) {
+            //if (checkForRightIngredients(((CookingStation) objectInRange).getCookableObjs())) {
                 cook.setBusy(true);
                 time = 0;
                 programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), programController.getViewController());
+                currentStation = (CookingStation) objectInRange;
 
             //}
         }
@@ -69,6 +76,7 @@ public class CookingController {
                 programController.getDishController().addToHeldItemStack(
                         programController.getDishController().createDish(cook.getX(), cook.getY(), "Coffee"));
                 programController.getEntityController().getCook().setBusy(false);
+                currentStation = null;
             }
         }
     }
@@ -83,6 +91,7 @@ public class CookingController {
         for (int i = 0; i < recipes[dish].length; i++) {
             if (programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][i][0])) {
                 recipes[dish][i][1] = "true";
+                programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
                 programController.getDishController().removeFirstHeldItem();
             } else {
                 for (int j = 0; j < recipes[dish].length; j++) {

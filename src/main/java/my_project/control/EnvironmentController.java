@@ -30,12 +30,12 @@ public class EnvironmentController {
     /**
      * Calls necessary methods to repair an object
      *
-     * @param shooter    Required to get the objects that should be repaired & set busy state
+     * @param shooter        Required to get the objects that should be repaired & set busy state
      * @param uiController   Required to update UI
      * @param viewController Required to update UI
      */
     public void updateEnvironments(Shooter shooter, double dt, ViewController viewController, UIController uiController) {
-        if(!shooter.isBusy())
+        if (!shooter.isBusy())
             return;
         boolean allObjsRepaired = true;
         List<CollidableEnvironment> objsInRange = shooter.getObjectsInRange();
@@ -54,7 +54,7 @@ public class EnvironmentController {
             }
             objsInRange.next();
         }
-        if(allObjsRepaired)
+        if (allObjsRepaired)
             shooter.setBusy(false);
         uiController.updateHPBars(viewController);
     }
@@ -132,15 +132,26 @@ public class EnvironmentController {
      */
     public void damage(CollidableEnvironment env, double dt, ViewController viewController, UIController uiController) {
         env.increaseHP(-dt * 100);
-        if (env.getHp() <= 0) {
-            env.setColliderActive(false);
-            viewController.removeDrawable(env);
-        }
         uiController.updateHPBars(viewController);
+
+        if (env.getHp() > 0)
+            return;
+        env.setColliderActive(false);
+        viewController.removeDrawable(env);
+        if (env instanceof Table)
+            ((Table) env).emptyQueue(viewController);
     }
 
-    public void addToTable(Dish newDish, Table table){
-        table.putDownReal(newDish);
+    /**
+     * Enqueues a dish to a table and adjusts its position
+     *
+     * @param dish  The dish that should be added
+     * @param table the table that should be added to
+     */
+    public void addToTable(Dish dish, Table table) {
+        table.addToTable(dish);
+        dish.setX(table.getX());
+        dish.setY(table.getY());
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {

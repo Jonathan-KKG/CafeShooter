@@ -4,7 +4,7 @@ package my_project.model.Environment;
  * Environment object that can be collided with and hence can be damaged and has HP
  */
 public class CollidableEnvironment extends Environment {
-    private boolean isColliderActive;
+    protected boolean isColliderActive;
     private int hp;
 
     /**

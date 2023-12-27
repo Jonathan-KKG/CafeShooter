@@ -38,7 +38,7 @@ public class UIController {
      * updates the amount heldDishStack
      * @param increase boolean to calculate amount ofheldDishStack
      */
-    public void updateHeldItemsAmmount(boolean increase) {
+    public void updateHeldItemsAmount(boolean increase) {
         dishStackUI.setDishStackAmount(increase);
     }
 
@@ -67,7 +67,6 @@ public class UIController {
             case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
             default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
         }
-        System.out.println(skillCheckUI.getWidth());
         viewController.draw(skillCheckUI);
     }
 

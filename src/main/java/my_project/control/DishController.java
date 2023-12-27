@@ -1,11 +1,11 @@
 package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dishes.Dish;
 import my_project.model.Dishes.Coffee;
 import my_project.model.Dishes.SpaghettiCarbonara;
+import my_project.model.Environment.Table;
 import my_project.model.Item;
 
 import java.io.File;
@@ -89,27 +89,31 @@ public class DishController {
         }
     }
 
-
     /**
-     * finds next index in storedDishes array that is not null
+     * recursively finds next index in storedDishes array that is or is not null
      *
-     * @return next occupied index
+     * @param startingIndex the current index that is viewed
+     * @param modifiedIndex Required to recall the method; insert same as startingIndex for first iteration
+     * @param type whether to search for the next occupied or for the next unoccupied index (0 = occupied, 1 = unoccupied)
+     * @return next (un-)occupied index
      */
-    private int nextOccupiedIndex(int startingIndex, int modifiedIndex) {
+    private int findNextIndex(int startingIndex, int modifiedIndex, int type) {
         if(startingIndex == -1)
             startingIndex++;
         modifiedIndex++;
 
         if(modifiedIndex >= storedDishes.length)
-            return nextOccupiedIndex(startingIndex, -1);
+            return findNextIndex(startingIndex, -1, type);
 
-        if(storedDishes[modifiedIndex] != null)
+        if(type == 0 && storedDishes[modifiedIndex] != null)
+            return modifiedIndex;
+        else if (type == 1 && storedDishes[modifiedIndex] == null)
             return modifiedIndex;
 
         if(modifiedIndex == startingIndex)
             return -1;
 
-        return nextOccupiedIndex(startingIndex, modifiedIndex);
+        return findNextIndex(startingIndex, modifiedIndex, type);
     }
 
     /**
@@ -138,6 +142,9 @@ public class DishController {
         return dish;
     }
 
+    /**
+     * Moves the topmost item in the HeldDishes stack
+     */
     public void moveHeldItems(){
         if (heldItems.top() != null) {
             heldItems.top().setX(programController.getEntityController().getCook().getX());
@@ -150,7 +157,7 @@ public class DishController {
      * If current bullet is last element, it starts searching from the beginning
      */
     public void nextBullet() {
-        currentDishIndex = nextOccupiedIndex(currentDishIndex, currentDishIndex);
+        currentDishIndex = findNextIndex(currentDishIndex, currentDishIndex, 0);
         programController.getUIController().moveAmmoIndicator(currentDishIndex);
     }
 
@@ -163,22 +170,33 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.push(item);
         programController.getViewController().draw(heldItems.top());
-        programController.getUIController().updateHeldItemsAmmount(true);
+        programController.getUIController().updateHeldItemsAmount(true);
     }
 
+    /**
+     * Removes the first item of the HeldDishes stack, draws the new topmost element and updates UI
+     */
     public void removeFirstHeldItem() {
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
+        programController.getUIController().updateHeldItemsAmount(false);
     }
 
-    public void moveToStoredDishes(Queue<Dish> dishes){
-        if(dishes.front() == null)
+    /**
+     * Removes the first dish of a table and adds it to the storedDishes array
+     * @param table the table where the Dish should be taken from
+     */
+    public void moveToStoredDishes(Table table){
+        int tempInt = findNextIndex(currentDishIndex, currentDishIndex, 1);
+        if(table.getFirstDish() == null || tempInt == -1)
             return;
-        Dish tempDish = dishes.front();
-        dishes.dequeue();
-        int tempInt = nextOccupiedIndex(currentDishIndex, currentDishIndex);
-        if(tempInt != -1)
-            storedDishes[tempInt] = tempDish;
+
+        Dish dishToBeAdded = table.getFirstDish();
+        table.removeFirstDish();
+        storedDishes[tempInt] = dishToBeAdded;
+        programController.getUIController().moveAmmoIndicator(tempInt);
+        dishToBeAdded.setX(1300 + 45d / 2d + 45 * tempInt);
+        dishToBeAdded.setY(838);
     }
 
     public Item getFirstHeldItem() {

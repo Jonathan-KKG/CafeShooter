@@ -2,13 +2,14 @@ package my_project.view;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
-import my_project.control.DishController;
 import my_project.control.ProgramController;
+import my_project.model.Cook;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Environment.CookingStation;
 import my_project.model.Environment.Table;
 import my_project.model.Item;
+import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -43,6 +44,10 @@ public class InputManager extends InteractiveGraphicalObject {
         updateSkillCheckInputs();
     }
 
+    /**
+     * Updates skillcheck button input
+     * Won't forward an input if button is held
+     */
     private void updateSkillCheckInputs() {
         if (ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed) {
             isSkillCheckButtonPressed = true;
@@ -121,21 +126,26 @@ public class InputManager extends InteractiveGraphicalObject {
         if (!programController.isRunning())
             return;
 
+        Shooter shooter = programController.getEntityController().getShooter();
+        Cook cook = programController.getEntityController().getCook();
+
+        CollidableEnvironment closestObjShooter = shooter.getClosestObjectInRange();
+        CollidableEnvironment closestObjCook = cook.getClosestObjectInRange();
+
+        Item heldItem = programController.getDishController().getFirstHeldItem();
+
         if (key == KeyEvent.VK_Q) {
-            CollidableEnvironment closestObj = programController.getEntityController().getCook().getClosestObjectInRange();
-            Item tempDish = programController.getDishController().getFirstHeldItem();
-            if(closestObj instanceof Table && tempDish instanceof Dish) {
-                programController.getEnvironmentController().addToTable((Dish) programController.getDishController().getFirstHeldItem(), (Table) closestObj);
-                tempDish.setX(closestObj.getX());
-                tempDish.setY(closestObj.getY());
+            if(closestObjCook instanceof Table && heldItem instanceof Dish) {
+                programController.getEnvironmentController().addToTable((Dish) heldItem, (Table) closestObjCook);
                 programController.getDishController().removeFirstHeldItem();
-            } else if (closestObj instanceof CookingStation)
+            } else if (closestObjCook instanceof CookingStation)
                 programController.getCookingController().cook();
         }
-        if (key == KeyEvent.VK_U)
-            programController.getEntityController().getShooter().setBusy(true);
 
-        if(key == KeyEvent.VK_O && programController.getEntityController().getShooter().getClosestObjectInRange() instanceof Table)
-            programController.getDishController().moveToStoredDishes(((Table) programController.getEntityController().getShooter().getClosestObjectInRange()).getFirstDish());
+        if (key == KeyEvent.VK_U)
+            shooter.setBusy(true);
+
+        if(key == KeyEvent.VK_O && closestObjShooter instanceof Table)
+            programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
     }
 }

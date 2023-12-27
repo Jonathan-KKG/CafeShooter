@@ -25,5 +25,8 @@ public class CoffeeMachineSkillCheck extends SkillCheckUI{
     @Override
     public void draw(DrawTool drawTool) {
         // TODO SC0: CoffeeMachineSkillCheck implementation
+        /*
+        idea: hold space bar and release at a correct time? or just press spacebar at the correct time
+         */
     }
 }

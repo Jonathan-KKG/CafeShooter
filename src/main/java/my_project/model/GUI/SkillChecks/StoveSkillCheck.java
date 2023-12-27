@@ -16,6 +16,7 @@ public class StoveSkillCheck extends SkillCheckUI{
     public StoveSkillCheck(double pX, double pY) {
         super(pX, pY);
         y = startingPosition[1];
+        increment = 0.055;
     }
 
     /**

@@ -7,6 +7,7 @@ import my_project.model.GUI.UI;
  */
 public abstract class SkillCheckUI extends UI {
     protected double progress; // progress value between 0 and 1
+    protected double increment; // by how much the progress should be incremented each time
 
     /**
      * Initializes UI Model
@@ -27,8 +28,8 @@ public abstract class SkillCheckUI extends UI {
      * @return true if not finished (i.e. if progress was increased) and false otherwise
      */
     public boolean increaseProgress() {
-        progress += 0.1;
+        progress += increment;
 
-        return !(progress + 0.1 >= 1);
+        return !(progress + increment >= 1);
     }
 }

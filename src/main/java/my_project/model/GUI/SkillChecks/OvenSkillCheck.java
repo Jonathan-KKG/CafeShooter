@@ -24,5 +24,8 @@ public class OvenSkillCheck extends SkillCheckUI{
     @Override
     public void draw(DrawTool drawTool) {
         // TODO SC1: OvenSkillCheck implementation
+        /*
+        idea: press at a correct time, multiple times, while indicator moves faster?
+         */
     }
 }

@@ -24,6 +24,6 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
      */
     @Override
     public void draw(DrawTool drawTool) {
-        // TODO SC2: WaffleIronSkillCheck implementation
+        // TODO SC2: WaffleIronSkillCheck implementation ?????
     }
 }

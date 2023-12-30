@@ -17,6 +17,6 @@ public class Oven extends CookingStation{
      */
     public Oven(double pX, double pY) {
         super("Oven", pX, pY);
-        cookableDishes = new Class[]{ChocolateCake.class, CheeseCake.class, ChocolateCheeseCake.class, ApplePie.class};
     }
+
 }

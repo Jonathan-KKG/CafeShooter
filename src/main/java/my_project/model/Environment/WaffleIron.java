@@ -16,6 +16,5 @@ public class WaffleIron extends CookingStation {
      */
     public WaffleIron(double pX, double pY) {
         super("WaffleIron", pX, pY);
-        cookableDishes = new Class[]{Waffles.class, StrawberryWaffles.class, IceCreamWaffles.class};
     }
 }

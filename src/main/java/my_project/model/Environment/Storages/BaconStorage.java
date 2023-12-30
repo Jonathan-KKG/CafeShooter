@@ -1,4 +1,4 @@
-package my_project.model.Environment.Racks;
+package my_project.model.Environment.Storages;
 import my_project.model.Ingredients.Bacon;
 import my_project.model.Ingredients.Ingredient;
 

@@ -1,4 +1,4 @@
-package my_project.model.Environment.Racks;
+package my_project.model.Environment.Storages;
 
 import KAGO_framework.view.DrawTool;
 import my_project.model.Environment.CollidableEnvironment;

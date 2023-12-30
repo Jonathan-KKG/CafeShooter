@@ -4,7 +4,7 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.*;
-import my_project.model.Environment.Racks.*;
+import my_project.model.Environment.Storages.*;
 import my_project.model.Shooter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -94,7 +94,7 @@ public class EnvironmentController {
             CollidableEnvironment stove = new Stove(kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32);
             collidableEnvironmentObjects.append(stove);
             interactableEnvironmentObjects.append(stove);
-            stove = new Stove(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
+            stove = new WaffleIron(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
             collidableEnvironmentObjects.append(stove);
             interactableEnvironmentObjects.append(stove);
 
@@ -110,7 +110,7 @@ public class EnvironmentController {
                 interactableEnvironmentObjects.append((table));
             }
 
-            Class[] storageTypes = new Class[]{AppleStorage.class, BaconStorage.class, CheeseStorage.class, ChocolateStorage.class, CoffeePowderStorage.class, CookieStorage.class, EggStorage.class, FlourStorage.class, IceCreamStorage.class, SpaghettiStorage.class, StraberryStorage.class};
+            Class[] storageTypes = new Class[]{AppleStorage.class, BaconStorage.class, CheeseStorage.class, ChocolateStorage.class, CoffeePowderStorage.class, CookieStorage.class, CreamStorage.class, EggStorage.class, FlourStorage.class, IceCreamStorage.class, SpaghettiStorage.class, StraberryStorage.class};
 
             // Storages
             Storage storage;

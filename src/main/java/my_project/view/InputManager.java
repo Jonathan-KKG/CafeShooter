@@ -7,7 +7,7 @@ import my_project.model.Cook;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Environment.CookingStation;
-import my_project.model.Environment.Racks.Storage;
+import my_project.model.Environment.Storages.Storage;
 import my_project.model.Environment.Table;
 import my_project.model.Item;
 import my_project.model.Shooter;

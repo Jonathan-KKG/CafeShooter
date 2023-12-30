@@ -1,18 +1,18 @@
-package my_project.model.Environment.Racks;
-import my_project.model.Ingredients.Cheese;
+package my_project.model.Environment.Storages;
+import my_project.model.Ingredients.Chocolate;
 import my_project.model.Ingredients.Ingredient;
 
 /**
- * the cheese storage
+ * the chocolate storage
  */
-public class CheeseStorage extends Storage {
+public class ChocolateStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CheeseStorage(double pX, double pY) {
-        super(pX, pY,"Cheese");
+    public ChocolateStorage(double pX, double pY) {
+        super(pX, pY,"Chocolate");
     }
     /**
      * @return a new ingredient of the type that is created
@@ -20,6 +20,6 @@ public class CheeseStorage extends Storage {
 
     @Override
     public Ingredient getIngredient() {
-        return new Cheese(x, y);
+        return new Chocolate(x, y);
     }
 }

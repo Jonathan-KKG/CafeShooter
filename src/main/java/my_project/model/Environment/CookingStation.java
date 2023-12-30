@@ -7,8 +7,6 @@ import my_project.model.Dishes.Dish;
  */
 public abstract class CookingStation extends CollidableEnvironment {
 
-    protected Class<? extends Dish>[] cookableDishes;
-
     /**
      * Creates a new CookingStation
      * @param filename image name of the cooking station
@@ -17,9 +15,5 @@ public abstract class CookingStation extends CollidableEnvironment {
      */
     public CookingStation(String filename, double pX, double pY) {
         super(filename, pX, pY);
-    }
-
-    public Class<? extends Dish>[] getCookableObjs() {
-        return cookableDishes;
     }
 }

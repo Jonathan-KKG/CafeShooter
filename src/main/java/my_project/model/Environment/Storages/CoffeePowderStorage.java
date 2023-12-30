@@ -1,24 +1,25 @@
-package my_project.model.Environment.Racks;
-import my_project.model.Ingredients.Flour;
+package my_project.model.Environment.Storages;
+
+import my_project.model.Ingredients.CoffeePowder;
 import my_project.model.Ingredients.Ingredient;
 
 /**
- * the flour storage
+ * the cawfee powder storage
  */
-public class FlourStorage extends Storage {
+public class CoffeePowderStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public FlourStorage(double pX, double pY) {
-        super(pX, pY,"Flour");
+    public CoffeePowderStorage(double pX, double pY ) {
+        super(pX, pY,"CoffeePowder");
     }
     /**
      * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {
-        return new Flour(x, y);
+        return new CoffeePowder(x, y);
     }
 }

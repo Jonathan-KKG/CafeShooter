@@ -15,6 +15,6 @@ public class Stove extends CookingStation{
      */
     public Stove(double pX, double pY) {
         super("Stove", pX, pY);
-        cookableDishes = new Class[]{SpaghettiCarbonara.class};
+
     }
 }

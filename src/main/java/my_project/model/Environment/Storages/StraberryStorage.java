@@ -1,25 +1,23 @@
-package my_project.model.Environment.Racks;
-
-import my_project.model.Ingredients.CoffeePowder;
+package my_project.model.Environment.Storages;
 import my_project.model.Ingredients.Ingredient;
-
+import my_project.model.Ingredients.Strawberry;
 /**
- * the cawfee powder storage
+ * the straberry storage
  */
-public class CoffeePowderStorage extends Storage {
+public class StraberryStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CoffeePowderStorage(double pX, double pY ) {
-        super(pX, pY,"CoffeePowder");
+    public StraberryStorage(double pX, double pY) {
+        super(pX, pY,"Strawberry");
     }
     /**
      * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {
-        return new CoffeePowder(x, y);
+        return new Strawberry(x, y);
     }
 }

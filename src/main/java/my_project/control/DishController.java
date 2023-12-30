@@ -4,6 +4,7 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import my_project.model.Dishes.*;
 import my_project.model.Environment.Table;
+import my_project.model.Ingredients.*;
 import my_project.model.Item;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +19,7 @@ public class DishController {
     private ProgramController programController;
     private int currentDishIndex;
     private Class<? extends Dish>[] dishClasses;
+    private Class<? extends Ingredient>[] ingredientClasses;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -33,6 +35,7 @@ public class DishController {
         programController = pProgramController;
 
         dishClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class};
+        ingredientClasses = new Class[]{Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class, Cookie.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
             storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Waffles");
@@ -110,7 +113,7 @@ public class DishController {
     }
 
     /**
-     * creates a dish and draws it
+     * creates a dish
      *
      * @param pX       starting position
      * @param pY       starting position
@@ -133,6 +136,31 @@ public class DishController {
         if (dish == null) System.out.println("nu uh wrong dishtype");
 
         return dish;
+    }
+    /**
+     * creates a ingredient
+     *
+     * @param pX       starting position
+     * @param pY       starting position
+     * @param ingredientType neme of the requierd ingredient
+     * @return returns dish
+     */
+    public Ingredient createIngredient(double pX, double pY, String ingredientType) {
+        Ingredient ingredient = null;
+
+        for (int i = 0; i < ingredientClasses.length; i++) {
+            if(ingredientType.equals(ingredientClasses[i].getSimpleName())) {
+                try {
+                    ingredient = ingredientClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
+                }
+                i = ingredientClasses.length;
+            }
+        }
+        if (ingredient == null) System.out.println("nu uh wrong ingredientType");
+
+        return ingredient;
     }
 
     /**

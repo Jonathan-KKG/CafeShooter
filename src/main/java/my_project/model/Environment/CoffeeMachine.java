@@ -14,6 +14,5 @@ public class CoffeeMachine extends CookingStation{
      */
     public CoffeeMachine(double pX, double pY) {
         super("CoffeeMachine", pX, pY);
-        cookableDishes = new Class[]{Coffee.class};
     }
 }

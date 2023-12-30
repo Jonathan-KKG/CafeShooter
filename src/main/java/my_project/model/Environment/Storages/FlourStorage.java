@@ -1,23 +1,24 @@
-package my_project.model.Environment.Racks;
-import my_project.model.Ingredients.IceCream;
+package my_project.model.Environment.Storages;
+import my_project.model.Ingredients.Flour;
 import my_project.model.Ingredients.Ingredient;
+
 /**
- * the ice cream storage
+ * the flour storage
  */
-public class IceCreamStorage extends Storage {
+public class FlourStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public IceCreamStorage(double pX, double pY) {
-        super(pX, pY,"IceCream");
+    public FlourStorage(double pX, double pY) {
+        super(pX, pY,"Flour");
     }
     /**
      * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {
-        return new IceCream(x, y);
+        return new Flour(x, y);
     }
 }

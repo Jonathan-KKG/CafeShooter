@@ -7,13 +7,13 @@ import my_project.model.Cook;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Environment.CookingStation;
+import my_project.model.Environment.Racks.Storage;
 import my_project.model.Environment.Table;
 import my_project.model.Item;
 import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Queue;
 
 /**
  * Realisiert ein Objekt, dass alle Eingaben empfängt und dann danach passende Methoden
@@ -135,17 +135,20 @@ public class InputManager extends InteractiveGraphicalObject {
         Item heldItem = programController.getDishController().getFirstHeldItem();
 
         if (key == KeyEvent.VK_Q) {
-            if(closestObjCook instanceof Table && heldItem instanceof Dish) {
+            if (closestObjCook instanceof Table && heldItem instanceof Dish) {
                 programController.getEnvironmentController().addToTable((Dish) heldItem, (Table) closestObjCook);
                 programController.getDishController().removeFirstHeldItem();
             } else if (closestObjCook instanceof CookingStation)
                 programController.getCookingController().cook();
+            else if (closestObjCook instanceof Storage) {
+                programController.getDishController().addToHeldItemStack(((Storage) closestObjCook).getIngredient());
+            }
         }
 
         if (key == KeyEvent.VK_U)
             shooter.setBusy(true);
 
-        if(key == KeyEvent.VK_O && closestObjShooter instanceof Table)
+        if (key == KeyEvent.VK_O && closestObjShooter instanceof Table)
             programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
     }
 }

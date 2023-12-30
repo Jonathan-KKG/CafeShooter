@@ -4,6 +4,7 @@ import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.*;
+import my_project.model.Environment.Racks.*;
 import my_project.model.Shooter;
 
 /**
@@ -97,15 +98,51 @@ public class EnvironmentController {
 
             // tabletop
             for (int i = 0; i < 6 * 64; i = i + 64) {
-                Table table = new Table("tabletop", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
+                Table table = new Table("tabletop", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
                 collidableEnvironmentObjects.append(table);
                 interactableEnvironmentObjects.append((table));
             }
             for (int i = 32; i < 6 * 64; i = i + 64) {
-                Table table = new Table("tabletop2", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32);
+                Table table = new Table("tabletop2", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
                 collidableEnvironmentObjects.append(table);
                 interactableEnvironmentObjects.append((table));
             }
+
+            // Sorages
+            Storage storage = new AppleStorage("window", kitchenOffset[0]+32, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new BaconStorage("window", kitchenOffset[0]+64, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new CheeseStorage("window", kitchenOffset[0]+96, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new ChocolateStorage("window", kitchenOffset[0]+128, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new CoffeePowderStorage("window", kitchenOffset[0]+160, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new CookieStorage("window", kitchenOffset[0]+192, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new EggStorage("window", kitchenOffset[0]+224, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new FlourStorage("window", kitchenOffset[0]+256, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new IceCreamStorage("window", kitchenOffset[0]+288, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new SpaghettiStorage("window", kitchenOffset[0]+320, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+            storage = new StraberryStorage("window", kitchenOffset[0]+352, kitchenOffset[1]);
+            collidableEnvironmentObjects.append(storage);
+            interactableEnvironmentObjects.append((storage));
+
 
             // draws created objects
             environmentObjects.toFirst();
@@ -131,7 +168,7 @@ public class EnvironmentController {
      * @param viewController Required to stop drawing the object if and when it deactivates
      */
     public void damage(CollidableEnvironment env, double dt, ViewController viewController, UIController uiController) {
-        env.increaseHP(-dt * 100);
+        env.increaseHP(-dt * 1);
         uiController.updateHPBars(viewController);
 
         if (env.getHp() > 0)

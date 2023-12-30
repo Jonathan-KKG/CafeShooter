@@ -15,6 +15,6 @@ public abstract class Ingredient extends Item {
      * @param pY       y position at start
      */
     public Ingredient(String filename, double pX, double pY) {
-        super(filename, pX, pY);
+        super("Ingredients/"+ filename, pX, pY);
     }
 }

@@ -42,35 +42,29 @@ public class WaveController {
         int maximum = 10;
         // Create x Waves each contaning 2x + i enemies
         for (int i = increment; i < maximum; i += increment) {
+
             Enemy[] enemies = new Enemy[i];
 
-            // Create enemies to fill the waves
-            for (int j = 0; j < enemies.length; j++) {
-                int enemyType = (int) (Math.random() * 8 + 1);
+            // enemies[0] reserved for newest enemy type
+            double[] pos = getRandomEnemyPosition();
+            try {
+                enemies[0] = enemyTypes[i / increment - 1].getDeclaredConstructor(double.class, double.class).newInstance(pos[0], pos[1]);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                e.printStackTrace();
+            }
 
-                double x;
-                double y;
-                int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
-                // Following values contain off-by-one errors
-                if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
-                    x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
-                    y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
-                } else if (spawnTopLeftOrRight > 66) {                       // spawn right of screen
-                    x = (int) (Math.random() * 100 + 1920 * 0.85 + 50);       // between 1920 * 0.85 + 50 and 1920 * 0.85 + 150
-                    y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
-                } else {                                                    // spawn top of screen (including area over left and right out-of-screen)
-                    x = (int) (Math.random() * (1920 * 0.85 + 300) - 150);      // between -150 and 1920 * 0.85 + 150
-                    y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
-                }
+            // Create enemies to fill the waves
+            for (int j = 1; j < enemies.length; j++) {
+                pos = getRandomEnemyPosition();
 
                 try {
-                    int randomType = (int) (Math.random() * (i / increment)); // don't touch it it works
-                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(x,y);
+                    int randomType = (int) (Math.random() * (i / increment) - 1); // don't touch it it works
+                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(pos[0],pos[1]);
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
                     e.printStackTrace();
                 }
-
             }
+
             enemyWaves.enqueue(enemies);
         }
     }
@@ -89,6 +83,29 @@ public class WaveController {
         }
         if (isEmpty)
             nextWave(viewController, uiController);
+    }
+
+    /**
+     * Creates a random position over, left or right outside of the screen
+     * @return double[]{x,y}
+     */
+    private double[] getRandomEnemyPosition(){
+        double x;
+        double y;
+
+        int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
+        // Following values contain off-by-one errors
+        if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
+            x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
+            y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
+        } else if (spawnTopLeftOrRight > 66) {                       // spawn right of screen
+            x = (int) (Math.random() * 100 + 1920 * 0.85 + 50);       // between 1920 * 0.85 + 50 and 1920 * 0.85 + 150
+            y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
+        } else {                                                    // spawn top of screen (including area over left and right out-of-screen)
+            x = (int) (Math.random() * (1920 * 0.85 + 300) - 150);      // between -150 and 1920 * 0.85 + 150
+            y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
+        }
+        return new double[]{x,y};
     }
 
     /**

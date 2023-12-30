@@ -12,7 +12,7 @@ public class Carlos extends Enemy {
      * @param pX        the start x-Position
      * @param pY        the start y-Position
      */
-    public Carlos(Double pX, Double pY) {
+    public Carlos(double pX, double pY) {
         super("callus", pX, pY);
         requiredDish = ApplePie.class.getSimpleName();
     }

@@ -12,7 +12,7 @@ public class Habib extends Enemy {
      * @param pX        the start x-Position
      * @param pY        the start y-Position
      */
-    public Habib(Double pX, Double pY) {
+    public Habib(double pX, double pY) {
         super("Habib", pX, pY);
         requiredDish = ChocolateCake.class.getSimpleName();
     }

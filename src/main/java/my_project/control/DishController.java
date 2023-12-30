@@ -2,13 +2,11 @@ package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
-import my_project.model.Dishes.Dish;
-import my_project.model.Dishes.Coffee;
-import my_project.model.Dishes.SpaghettiCarbonara;
+import my_project.model.Dishes.*;
 import my_project.model.Environment.Table;
 import my_project.model.Item;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Controls every instance of Dish-class and ensures proper handling
@@ -19,7 +17,7 @@ public class DishController {
     private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
-    private String[] dishTypes;
+    private Class<? extends Dish>[] dishClasses;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -34,15 +32,10 @@ public class DishController {
         storedDishes = new Dish[5];
         programController = pProgramController;
 
-        File[] dishFiles = new File("src/main/resources/graphic/Dishes").listFiles();
-        dishTypes = new String[dishFiles.length];
-        for (int i = 0; i < dishFiles.length; i++) {
-             dishTypes[i] = dishFiles[i].getName().replaceAll(".png", "");
-        }
-
+        dishClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "SpaghettiCarbonara");
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Waffles");
             programController.getViewController().draw(storedDishes[i]);
         }
 
@@ -127,14 +120,14 @@ public class DishController {
     public Dish createDish(double pX, double pY, String dishType) {
         Dish dish = null;
 
-        for (int i = 0; i < dishTypes.length; i++) {
-            if(dishType.equals(dishTypes[i])) {
-                switch (dishType){
-                    case "Coffee" -> dish = new Coffee(pX,pY);
-                    case "SpaghettiCarbonara" -> dish = new SpaghettiCarbonara(pX,pY);
+        for (int i = 0; i < dishClasses.length; i++) {
+            if(dishType.equals(dishClasses[i].getSimpleName())) {
+                try {
+                    dish = dishClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
                 }
-
-                i = dishTypes.length;
+                i = dishClasses.length;
             }
         }
         if (dish == null) System.out.println("nu uh wrong dishtype");

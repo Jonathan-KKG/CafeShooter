@@ -15,8 +15,8 @@ public abstract class Enemy extends Entity {
      * @param pX the start x-Position
      * @param pY the start y-Position
      */
-    public Enemy(String filename, Double pX, Double pY) {
-        super(filename, pX, pY);
+    public Enemy(String filename, double pX, double pY) {
+        super("Enemies/" + filename, pX, pY);
         speed = 50;
         isActive = false;
     }

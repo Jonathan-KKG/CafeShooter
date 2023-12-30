@@ -2,13 +2,9 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
-import my_project.model.Enemies.Carlos;
-import my_project.model.Enemies.Habib;
-import my_project.model.Enemies.Jonathan;
-import my_project.model.Enemies.Max;
-import my_project.model.Enemies.Enemy;
+import my_project.model.Enemies.*;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +13,7 @@ import java.util.TimerTask;
  */
 public class WaveController {
     private Queue<Enemy[]> enemyWaves;
-    private String[] enemyTypes;
+    private Class<? extends Enemy>[] enemyTypes;
     private Timer spawnTimer;
 
     /**
@@ -27,30 +23,30 @@ public class WaveController {
      * @param uiController   Required to draw the first wave and its Wants-Bubbles
      */
     public WaveController(ViewController viewController, UIController uiController) {
-        File[] enemyFiles = new File("src/main/java/my_project/model/Enemies").listFiles();
-        enemyTypes = new String[enemyFiles.length];
-        for (int i = 0; i < enemyFiles.length; i++) {
-            enemyTypes[i] = enemyFiles[i].getName().replaceAll(".java", "");
-        }
-
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
+        enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
 
         createWaves();
-        nextWave(viewController, uiController);
+
+        // Ready First Wave
+        scheduleWaveDrawing(viewController);
+        uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
     }
 
     /**
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
      */
     private void createWaves() {
+        int increment = 2;
+        int maximum = 10;
         // Create x Waves each contaning 2x + i enemies
-        for (int i = 0; i < 10; i += 2) {
+        for (int i = increment; i < maximum; i += increment) {
             Enemy[] enemies = new Enemy[i];
 
             // Create enemies to fill the waves
             for (int j = 0; j < enemies.length; j++) {
-                int enemyType = (int) (Math.random() * 3 + 1);
+                int enemyType = (int) (Math.random() * 8 + 1);
 
                 double x;
                 double y;
@@ -67,11 +63,11 @@ public class WaveController {
                     y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
                 }
 
-                switch (enemyType) {
-                    case 1 -> enemies[j] = new Jonathan(x, y);
-                    case 2 -> enemies[j] = new Max(x, y);
-                    case 3 -> enemies[j] = new Carlos(x, y);
-                    case 4 -> enemies[j] = new Habib(x, y);
+                try {
+                    int randomType = (int) (Math.random() * (i / increment)); // don't touch it it works
+                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(x,y);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
                 }
 
             }

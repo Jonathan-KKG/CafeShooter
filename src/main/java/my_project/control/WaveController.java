@@ -25,6 +25,7 @@ public class WaveController {
     public WaveController(ViewController viewController, UIController uiController) {
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
+        // Order of enemyTypes[] is important for scaling difficulty
         enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
 
         createWaves();

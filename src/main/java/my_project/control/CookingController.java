@@ -30,7 +30,7 @@ public class CookingController {
                 {{"Flour", "false"}, {"Egg", "false"}, {"Chocolate", "false"}},
                 {{"Flour", "false"}, {"Egg", "false"}, {"Apple", "false"}},
 
-                {{"CawfeePowder", "false"}},
+                {{"CoffeePowder", "false"}},
 
                 {{"Spaghetti", "false"}, {"Cream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
         };
@@ -64,28 +64,28 @@ public class CookingController {
         Cook cook = programController.getEntityController().getCook();
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
         if (objectInRange instanceof CookingStation && objectInRange.isColliderActive() && !cook.isBusy()) {
-            int stard = -1;
+            int start = -1;
             int last = -1;
             switch (objectInRange.getClass().getSimpleName()) {
                 case "WaffleIron": {
-                    stard = 0;
+                    start = 0;
                     last = 3;
                     break;
                 }
                 case "Oven": {
-                    stard = 3;
+                    start = 3;
                     last = 7;
                 }
                 case "CoffeeMachine": {
-                    stard = 7;
+                    start = 7;
                     last = 8;
                 }
                 case "Stove": {
-                    stard = 8;
+                    start = 8;
                     last = 9;
                 }
             }
-            for (int i = stard; i < last; i++) {
+            for (int i = start; i < last; i++) {
                 if (checkForRightIngredients(i)) {
                     cook.setBusy(true);
                     time = 0;
@@ -113,9 +113,9 @@ public class CookingController {
     }
 
     /**
-     * checks weather every ingredient is there for an dish
-     * @param type the dish that is checked
-     * @return is every ingredient there
+     * checks whether every ingredient is there for a dish
+     * @param type the dish that should be checked
+     * @return whether the required ingredients are provided or not
      */
     private boolean checkForRightIngredients(int type) {
         int dish = type;

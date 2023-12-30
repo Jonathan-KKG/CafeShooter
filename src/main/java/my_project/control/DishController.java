@@ -112,6 +112,7 @@ public class DishController {
         return findNextIndex(startingIndex, modifiedIndex, type);
     }
 
+    // TODO: shorten the 2 following methods into one?
     /**
      * creates a dish
      *

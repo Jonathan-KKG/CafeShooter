@@ -140,9 +140,9 @@ public class InputManager extends InteractiveGraphicalObject {
                 programController.getDishController().removeFirstHeldItem();
             } else if (closestObjCook instanceof CookingStation)
                 programController.getCookingController().cook();
-            else if (closestObjCook instanceof Storage) {
+            else if (closestObjCook instanceof Storage)
                 programController.getDishController().addToHeldItemStack(((Storage) closestObjCook).getIngredient());
-            }
+
         }
 
         if (key == KeyEvent.VK_U)

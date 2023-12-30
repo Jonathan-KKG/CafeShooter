@@ -8,15 +8,14 @@ import my_project.model.Ingredients.Ingredient;
 public class CheeseStorage extends Storage {
     /**
      * creates an storage
-     * @param filename path of the sprite
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CheeseStorage(String filename, double pX, double pY) {
-        super(filename, pX, pY,"Cheese");
+    public CheeseStorage(double pX, double pY) {
+        super(pX, pY,"Cheese");
     }
     /**
-     * @return a new ingredeent of the type that is stored
+     * @return a new ingredient of the type that is created
      */
 
     @Override

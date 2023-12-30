@@ -6,17 +6,16 @@ import my_project.model.Ingredients.Ingredient;
  */
 public class AppleStorage extends Storage {
     /**
-     * creates an storage
-     * @param filename path of the sprite
+     * creates a storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public AppleStorage(String filename, double pX, double pY) {
-        super(filename, pX, pY,"Apple");
+    public AppleStorage(double pX, double pY) {
+        super(pX, pY,"Apple");
     }
 
     /**
-     * @return a new ingredeent of the type that is stored
+     * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {

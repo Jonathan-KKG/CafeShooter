@@ -9,15 +9,14 @@ import my_project.model.Ingredients.Ingredient;
 public class CoffeePowderStorage extends Storage {
     /**
      * creates an storage
-     * @param filename path of the sprite
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CoffeePowderStorage(String filename, double pX, double pY ) {
-        super(filename, pX, pY,"CoffeePowder");
+    public CoffeePowderStorage(double pX, double pY ) {
+        super(pX, pY,"CoffeePowder");
     }
     /**
-     * @return a new ingredeent of the type that is stored
+     * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {

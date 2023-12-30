@@ -13,19 +13,18 @@ import java.io.IOException;
  * an object of this creates ingredient on interaction.
  */
 public abstract class Storage extends CollidableEnvironment {
-    private BufferedImage ingredeent;
+    private BufferedImage ingredient;
 
     /**
      * creates an storage
-     * @param filename path of the sprite
      * @param pX start x-position
      * @param pY start y-position
      * @param type the ingredient the Storage Stores
      */
-    public Storage(String filename, double pX, double pY, String type) {
-        super(filename, pX, pY);
+    public Storage(double pX, double pY, String type) {
+        super("storage", pX, pY);
         try {
-            ingredeent = ImageIO.read(new File("src/main/resources/graphic/Ingredients/"+ type+".png"));
+            ingredient = ImageIO.read(new File("src/main/resources/graphic/Ingredients/"+ type+".png"));
         } catch (IOException e) {
             System.out.println("immage wrong");
         }
@@ -34,7 +33,7 @@ public abstract class Storage extends CollidableEnvironment {
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
-        drawTool.drawImage(ingredeent, x + myImage.getWidth() / 2d - ingredeent.getWidth() / 2d, y + myImage.getHeight() / 2d - ingredeent.getHeight() / 2d);
+        drawTool.drawImage(ingredient, x + myImage.getWidth() / 2d - ingredient.getWidth() / 2d, y + myImage.getHeight() / 2d - ingredient.getHeight() / 2d);
     }
 
     public abstract Ingredient getIngredient();

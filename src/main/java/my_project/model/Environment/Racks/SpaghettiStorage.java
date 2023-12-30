@@ -7,15 +7,14 @@ import my_project.model.Ingredients.Spaghetti;
 public class SpaghettiStorage extends Storage {
     /**
      * creates an storage
-     * @param filename path of the sprite
      * @param pX start x-position
      * @param pY start y-position
      */
-    public SpaghettiStorage(String filename, double pX, double pY) {
-        super(filename, pX, pY,"Spaghetti");
+    public SpaghettiStorage(double pX, double pY) {
+        super(pX, pY,"Spaghetti");
     }
     /**
-     * @return a new ingredeent of the type that is stored
+     * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {

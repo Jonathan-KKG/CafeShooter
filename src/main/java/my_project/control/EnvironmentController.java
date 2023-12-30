@@ -7,6 +7,8 @@ import my_project.model.Environment.*;
 import my_project.model.Environment.Racks.*;
 import my_project.model.Shooter;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Controls all Environment objects by creating, storing, drawing and, if required, enabling influence (through methods) on them.
  */
@@ -108,41 +110,19 @@ public class EnvironmentController {
                 interactableEnvironmentObjects.append((table));
             }
 
-            // Sorages
-            Storage storage = new AppleStorage("window", kitchenOffset[0]+32, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new BaconStorage("window", kitchenOffset[0]+64, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new CheeseStorage("window", kitchenOffset[0]+96, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new ChocolateStorage("window", kitchenOffset[0]+128, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new CoffeePowderStorage("window", kitchenOffset[0]+160, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new CookieStorage("window", kitchenOffset[0]+192, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new EggStorage("window", kitchenOffset[0]+224, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new FlourStorage("window", kitchenOffset[0]+256, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new IceCreamStorage("window", kitchenOffset[0]+288, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new SpaghettiStorage("window", kitchenOffset[0]+320, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
-            storage = new StraberryStorage("window", kitchenOffset[0]+352, kitchenOffset[1]);
-            collidableEnvironmentObjects.append(storage);
-            interactableEnvironmentObjects.append((storage));
+            Class[] storageTypes = new Class[]{AppleStorage.class, BaconStorage.class, CheeseStorage.class, ChocolateStorage.class, CoffeePowderStorage.class, CookieStorage.class, EggStorage.class, FlourStorage.class, IceCreamStorage.class, SpaghettiStorage.class, StraberryStorage.class};
 
+            // Storages
+            Storage storage;
+            for (int i = 0; i < storageTypes.length; i++) {
+                try {
+                    storage = (Storage) storageTypes[i].getDeclaredConstructor(double.class, double.class).newInstance(kitchenOffset[0] + 32 + 32 * i, kitchenOffset[1]);
+                    collidableEnvironmentObjects.append(storage);
+                    interactableEnvironmentObjects.append((storage));
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
+                }
+            }
 
             // draws created objects
             environmentObjects.toFirst();
@@ -156,7 +136,7 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.next();
             }
         } catch (Exception e) {
-            System.out.println("Creating Environment object went wrong!");
+            e.printStackTrace();
         }
     }
 

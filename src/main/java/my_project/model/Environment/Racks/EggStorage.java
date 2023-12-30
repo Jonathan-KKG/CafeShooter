@@ -8,15 +8,14 @@ import my_project.model.Ingredients.Ingredient;
 public class EggStorage extends Storage {
     /**
      * creates an storage
-     * @param filename path of the sprite
      * @param pX start x-position
      * @param pY start y-position
      */
-    public EggStorage(String filename, double pX, double pY) {
-        super(filename, pX, pY,"Egg");
+    public EggStorage(double pX, double pY) {
+        super(pX, pY,"Egg");
     }
     /**
-     * @return a new ingredeent of the type that is stored
+     * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {

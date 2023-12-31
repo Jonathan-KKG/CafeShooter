@@ -86,7 +86,10 @@ public class CookingController {
                 }
             }
             for (int i = start; i < last; i++) {
-                if (checkForRightIngredients(i)) {
+                boolean help = checkForRightIngredients(i);
+                System.out.println(help);
+                if (help) {
+                    System.out.println("cooking");
                     cook.setBusy(true);
                     time = 0;
                     programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), programController.getViewController());
@@ -118,21 +121,20 @@ public class CookingController {
      * @return whether the required ingredients are provided or not
      */
     private boolean checkForRightIngredients(int type) {
+        //System.out.println("\n\n\n\n\n\n\n\n\n");
         int dish = type;
         for (int i = 0; i < recipes[dish].length; i++) {
-            if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][i][0])) {
-                recipes[dish][i][1] = "true";
-                programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
-                programController.getDishController().removeFirstHeldItem();
-            } else {
-                for (int j = 0; j < recipes[dish].length; j++) {
-                    if (recipes[dish][j][1].equals("true")) {
-                        recipes[dish][j][1] = "false";
-                        Cook cook = programController.getEntityController().getCook();
-                        programController.getDishController().addToHeldItemStack(
-                                programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
-                        return false;
-                    }
+            //System.out.println(i);
+            for (int j = 0; j < recipes[dish].length; j++) {
+                //System.out.println(j);
+                //if (programController.getDishController().getFirstHeldItem() != null)
+                    //System.out.println(programController.getDishController().getFirstHeldItem().getClass().getSimpleName());
+                //System.out.println(recipes[dish][j][0]);
+                if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
+                    recipes[dish][j][1] = "true";
+                    //System.out.println(recipes[dish][j][1]);
+                    programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
+                    programController.getDishController().removeFirstHeldItem();
                 }
             }
         }
@@ -140,6 +142,7 @@ public class CookingController {
         for (int i = 0; i < recipes[dish].length; i++) {
             if (recipes[dish][i][1].equals("false"))
                 isEverythingThere = false;
+            System.out.println(isEverythingThere);
         }
         if (!isEverythingThere){
             for (int j = 0; j < recipes[dish].length; j++) {

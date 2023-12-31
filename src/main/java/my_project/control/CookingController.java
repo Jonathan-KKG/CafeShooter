@@ -69,6 +69,7 @@ public class CookingController {
         //selects cookable recipes
         int start = -1;
         int last = -1;
+        System.out.println(objectInRange.getClass().getSimpleName());
         switch (objectInRange.getClass().getSimpleName()) {
             case "WaffleIron": {
                 start = 0;
@@ -78,16 +79,20 @@ public class CookingController {
             case "Oven": {
                 start = 3;
                 last = 7;
+                break;
             }
             case "CoffeeMachine": {
                 start = 7;
                 last = 8;
+                break;
             }
             case "Stove": {
                 start = 8;
                 last = 9;
+                break;
             }
         }
+        System.out.println(start+""+last);
 
         //checks weather there are alle ingredients for one of the cookable recipes.
         //if than crating a skill-check for it
@@ -119,7 +124,7 @@ public class CookingController {
             programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
             abortCooking(cook);
         } else if (currentStation instanceof CoffeeMachine) {
-            for (double i = 1; i < currentStation.getCookingTime(); i++) {
+            for (double i = 0; i < currentStation.getCookingTime(); i++) {
                 if (time > 0.4 + i && time < 0.6 + i) {
                     if (!uiCtrl.progressSkillCheck(programController.getViewController()))
                         abortCooking(programController.getEntityController().getCook());
@@ -176,8 +181,13 @@ public class CookingController {
                             programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
-        } else
+        } else{
             currentCookingDish = recipes[dish][0][0];
+            for (int i = 1; i < recipes[dish].length; i++) {
+                recipes[dish][i][1] = "false";
+            }
+        }
+
         return isEverythingThere;
     }
 }

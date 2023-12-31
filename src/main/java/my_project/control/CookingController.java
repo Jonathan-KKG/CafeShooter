@@ -65,6 +65,7 @@ public class CookingController {
         Cook cook = programController.getEntityController().getCook();
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
         if (objectInRange instanceof CookingStation && objectInRange.isColliderActive() && !cook.isBusy()) {
+            //selects cookable recipes
             int start = -1;
             int last = -1;
             switch (objectInRange.getClass().getSimpleName()) {
@@ -86,6 +87,8 @@ public class CookingController {
                     last = 9;
                 }
             }
+            //checks weather there are alle ingredients for one of the cookable recipes.
+            //if than crating a skill-check for it
             for (int i = start; i < last; i++) {
                 boolean help = checkForRightIngredients(i);
                 System.out.println(help);
@@ -123,8 +126,10 @@ public class CookingController {
      */
     private boolean checkForRightIngredients(int type) {
         int dish = type;
+        //going through all ingredients required for this recipe for the amount of ingredients needed
         for (int i = 1; i < recipes[dish].length; i++) {
             for (int j = 1; j < recipes[dish].length; j++) {
+                // checks weather it is one of the needed ingredients
                 if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
                     recipes[dish][j][1] = "true";
                     programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
@@ -132,12 +137,15 @@ public class CookingController {
                 }
             }
         }
+        // checks weather all the needed ingredients are there
         boolean isEverythingThere = true;
         for (int i = 1; i < recipes[dish].length; i++) {
             if (recipes[dish][i][1].equals("false"))
                 isEverythingThere = false;
             System.out.println(isEverythingThere);
         }
+        // if there are not all needed ingredients gives the removed back
+        // else sets the cooking dish
         if (!isEverythingThere){
             for (int j = 1; j < recipes[dish].length; j++) {
                 if (recipes[dish][j][1].equals("true")) {

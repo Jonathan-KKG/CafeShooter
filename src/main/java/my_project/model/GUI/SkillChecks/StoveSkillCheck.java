@@ -26,16 +26,18 @@ public class StoveSkillCheck extends SkillCheckUI{
      */
     @Override
     public void draw(DrawTool drawTool) {
-        drawUsualBorder(drawTool, 2, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
-
-        // "Progress Bar"
-        drawTool.setCurrentColor(120, 117, 117, 255);
-        drawTool.drawRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4, startingPosition[1] - height * 0.8, width * 0.4, height * 0.8);
-        drawTool.setCurrentColor(120, 117, 117, 80);
-        drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4, startingPosition[1] - height * 0.8, width * 0.4, height * 0.8);
+        drawDefaultSCBorder(drawTool);
 
         // moveable part of the "Progress Bar"
         drawTool.setCurrentColor(255, 0, 0, 255);
-        drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4 + 2, y - height * 0.8 * progress + 2,width * 0.4 - 4, height * 0.8 * progress - 4);
+        drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4 + 1.5, startingPosition[1] - height * 0.8 * progress + 2,width * 0.4 - 3, height * 0.8 * progress - 4);
+    }
+
+    /** not required
+     * xd
+     */
+    @Override
+    public void updateSkillCheck(double time) {
+
     }
 }

@@ -1,10 +1,5 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.ApplePie;
-import my_project.model.Dishes.CheeseCake;
-import my_project.model.Dishes.ChocolateCake;
-import my_project.model.Dishes.ChocolateCheeseCake;
-
 /**
  * A cookingstation that is able to create Cakes and Pies
  */
@@ -17,6 +12,7 @@ public class Oven extends CookingStation{
      */
     public Oven(double pX, double pY) {
         super("Oven", pX, pY);
+        cookingTime = 3;
     }
 
 }

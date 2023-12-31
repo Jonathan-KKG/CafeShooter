@@ -1,9 +1,5 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.IceCreamWaffles;
-import my_project.model.Dishes.StrawberryWaffles;
-import my_project.model.Dishes.Waffles;
-
 /**
  * A cookingstation that is able to create Waffles
  */
@@ -16,5 +12,6 @@ public class WaffleIron extends CookingStation {
      */
     public WaffleIron(double pX, double pY) {
         super("WaffleIron", pX, pY);
+        cookingTime = 3;
     }
 }

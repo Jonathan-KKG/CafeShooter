@@ -69,7 +69,7 @@ public class EnvironmentController {
      */
     private void createObjects(ViewController viewController) {
         try {
-            // grasss
+            // grass
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                     environmentObjects.append(new Environment("grass", i * 500, j * 500));
@@ -78,27 +78,30 @@ public class EnvironmentController {
             for (int i = 0; i < 8 * 32; i = i + 32)
                 for (int j = 0; j < 20 * 32; j = j + 32)
                     environmentObjects.append(new Environment("floortile", kitchenOffset[0] + 32 + j, kitchenOffset[1] - i));
-            // Collideables:
+
+            // Walls and corners
             for (int i = 0; i < 8 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("leftwall", kitchenOffset[0] + 20, kitchenOffset[1] - i));
-
-            // Calculating coordinates [#####-50%-/////]
+            for (int i = 0; i < 8 * 32; i = i + 32)
+                collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] - i));
             for (int i = 0; i < 20 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn1", kitchenOffset[0] + 20, kitchenOffset[1] + 148 - 12 * 32));
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] + 148 - 12 * 32));
-            for (int i = 0; i < 8 * 32; i = i + 32)
-                collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] - i));
 
-            // Stove
-            CollidableEnvironment stove = new Stove(kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32);
-            collidableEnvironmentObjects.append(stove);
-            interactableEnvironmentObjects.append(stove);
-            stove = new WaffleIron(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
-            collidableEnvironmentObjects.append(stove);
-            interactableEnvironmentObjects.append(stove);
+            // CookingStations
+            CollidableEnvironment cookingStation = new Stove(kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32);
+            collidableEnvironmentObjects.append(cookingStation);
+            interactableEnvironmentObjects.append(cookingStation);
+            cookingStation = new WaffleIron(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
+            collidableEnvironmentObjects.append(cookingStation);
+            interactableEnvironmentObjects.append(cookingStation);
+            cookingStation = new CoffeeMachine(kitchenOffset[0] + 368, kitchenOffset[1] - 32 - 3 * 32);
+            collidableEnvironmentObjects.append(cookingStation);
+            interactableEnvironmentObjects.append(cookingStation);
 
-            // tabletop
+
+            // tabletops
             for (int i = 0; i < 6 * 64; i = i + 64) {
                 Table table = new Table("tabletop", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
                 collidableEnvironmentObjects.append(table);

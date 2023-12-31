@@ -59,11 +59,11 @@ public class UIController {
      * @param type           what type of Dish the cooking station outputs
      * @param viewController Required to draww the new Object
      */
-    public void createSkillCheck(double[] pos, String type, ViewController viewController) {
+    public void createSkillCheck(double[] pos, String type, double[] hitTimeWindow, ViewController viewController) {
         switch (type){
             case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1]);
             case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1]);
-            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1]);
+            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], hitTimeWindow);
             case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
             default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
         }
@@ -85,6 +85,17 @@ public class UIController {
             return false;
         }
         return true;
+    }
+
+    /**
+     * updates the current skillCheckUI if required, e.g. moves parts that have to be moved
+     * @param time time passed since creation of the skillcheck
+     */
+    public void updateSkillCheckUI(double time){
+        if(skillCheckUI == null)
+            return;
+
+        skillCheckUI.updateSkillCheck(time);
     }
 
     /**

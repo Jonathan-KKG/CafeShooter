@@ -1,7 +1,5 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.Coffee;
-
 /**
  * A cookingstation that is able to create Coffee
  */
@@ -14,5 +12,6 @@ public class CoffeeMachine extends CookingStation{
      */
     public CoffeeMachine(double pX, double pY) {
         super("CoffeeMachine", pX, pY);
+        cookingTime = 5;
     }
 }

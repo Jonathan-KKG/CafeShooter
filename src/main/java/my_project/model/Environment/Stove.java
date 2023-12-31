@@ -1,7 +1,5 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.SpaghettiCarbonara;
-
 /**
  * A cookingstation that is able to create Spaghetti
  */
@@ -15,6 +13,6 @@ public class Stove extends CookingStation{
      */
     public Stove(double pX, double pY) {
         super("Stove", pX, pY);
-
+        cookingTime = 3;
     }
 }

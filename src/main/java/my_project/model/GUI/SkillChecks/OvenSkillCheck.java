@@ -28,4 +28,15 @@ public class OvenSkillCheck extends SkillCheckUI{
         idea: press at a correct time, multiple times, while indicator moves faster?
          */
     }
+
+    /**
+     * Required for some skillchecks
+     * I.e. constantly moving parts
+     *
+     * @param time Time passed since creation of the skillcheck (in seconds)
+     */
+    @Override
+    public void updateSkillCheck(double time) {
+
+    }
 }

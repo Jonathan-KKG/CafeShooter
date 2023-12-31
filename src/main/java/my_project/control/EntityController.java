@@ -178,7 +178,7 @@ public class EntityController {
         objectsInRange.toFirst();
         closestObj = objectsInRange.getContent();
         while (objectsInRange.hasAccess()) {
-            if (objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
+            if (objectsInRange.getContent().isColliderActive() && objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
                 closestObj = objectsInRange.getContent();
             }
             objectsInRange.next();

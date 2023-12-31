@@ -1,11 +1,11 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.Dish;
-
 /**
  * A collidableEnvironment that is able to create Dishes.
  */
 public abstract class CookingStation extends CollidableEnvironment {
+
+    protected double cookingTime; // The maximum duration that its skillcheck could go on for
 
     /**
      * Creates a new CookingStation
@@ -15,5 +15,9 @@ public abstract class CookingStation extends CollidableEnvironment {
      */
     public CookingStation(String filename, double pX, double pY) {
         super(filename, pX, pY);
+    }
+
+    public double getCookingTime() {
+        return cookingTime;
     }
 }

@@ -119,9 +119,9 @@ public class CookingController {
             programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
             abortCooking(cook);
         } else if (currentStation instanceof CoffeeMachine) {
-            for (double i = 1; i < currentStation.getCookingTime(); i ++) {
+            for (double i = 1; i < currentStation.getCookingTime(); i++) {
                 if (time > 0.4 + i && time < 0.6 + i) {
-                    if(!uiCtrl.progressSkillCheck(programController.getViewController()))
+                    if (!uiCtrl.progressSkillCheck(programController.getViewController()))
                         abortCooking(programController.getEntityController().getCook());
                     programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
                     break;
@@ -132,9 +132,10 @@ public class CookingController {
 
     /**
      * Exits cooking state
+     *
      * @param cook Required to switch busy state
      */
-    private void abortCooking(Cook cook){
+    private void abortCooking(Cook cook) {
         cook.setBusy(false);
         currentStation = null;
     }
@@ -142,16 +143,15 @@ public class CookingController {
     /**
      * checks whether every ingredient is there for a dish
      *
-     *
      * @param type the dish that should be checked
      * @return whether the required ingredients are provided or not
      */
     private boolean checkForRightIngredients(int type) {
         int dish = type;
-        //going through all ingredients required for this recipe for the amount of ingredients needed
+        // going through all ingredients required for this recipe for the amount of ingredients needed
         for (int i = 1; i < recipes[dish].length; i++) {
             for (int j = 1; j < recipes[dish].length; j++) {
-                // checks weather it is one of the needed ingredients
+                // checks whether it is one of the needed ingredients
                 if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
                     recipes[dish][j][1] = "true";
                     programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
@@ -164,11 +164,10 @@ public class CookingController {
         for (int i = 1; i < recipes[dish].length; i++) {
             if (recipes[dish][i][1].equals("false"))
                 isEverythingThere = false;
-            System.out.println(isEverythingThere);
         }
         // if there are not all needed ingredients gives the removed back
         // else sets the cooking dish
-        if (!isEverythingThere){
+        if (!isEverythingThere) {
             for (int j = 1; j < recipes[dish].length; j++) {
                 if (recipes[dish][j][1].equals("true")) {
                     recipes[dish][j][1] = "false";
@@ -177,7 +176,7 @@ public class CookingController {
                             programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
-        }else
+        } else
             currentCookingDish = recipes[dish][0][0];
         return isEverythingThere;
     }

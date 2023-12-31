@@ -11,6 +11,7 @@ public class CookingController {
     private ProgramController programController;
     private String[][][] recipes;
     private CookingStation currentStation;
+    private String currentCookingDish;
 
     /**
      * creates an cookingController object.
@@ -20,18 +21,18 @@ public class CookingController {
     public CookingController(ProgramController pProgramController) {
         programController = pProgramController;
         recipes = new String[][][]{
-                {{"Flour", "false"}, {"Egg", "false"}, {"Strawberry", "false"}},
-                {{"Flour", "false"}, {"Egg", "false"}, {"IceCream", "false"}},
-                {{"Flour", "false"}, {"Egg", "false"}},
+                {{"StrawberryWaffles"}, {"Flour", "false"}, {"Egg", "false"}, {"Strawberry", "false"}},
+                {{"IceCreamWaffles"}, {"Flour", "false"}, {"Egg", "false"}, {"IceCream", "false"}},
+                {{"Waffles"}, {"Flour", "false"}, {"Egg", "false"}},
 
-                {{"Flour", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Chocolate", "false"}},
-                {{"Flour", "false"}, {"Egg", "false"}, {"Cheese", "false"}},
-                {{"Flour", "false"}, {"Egg", "false"}, {"Chocolate", "false"}},
-                {{"Flour", "false"}, {"Egg", "false"}, {"Apple", "false"}},
+                {{"ChocolateCheeseCake"}, {"Flour", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Chocolate", "false"}},
+                {{"CheeseCake"}, {"Flour", "false"}, {"Egg", "false"}, {"Cheese", "false"}},
+                {{"ChocolateCake"}, {"Flour", "false"}, {"Egg", "false"}, {"Chocolate", "false"}},
+                {{"ApplePie"}, {"Flour", "false"}, {"Egg", "false"}, {"Apple", "false"}},
 
-                {{"CoffeePowder", "false"}},
+                {{"Coffee"}, {"CoffeePowder", "false"}},
 
-                {{"Spaghetti", "false"}, {"Cream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
+                {{"SpaghettiCarbonara"}, {"Spaghetti", "false"}, {"Cream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
         };
     }
 
@@ -65,7 +66,7 @@ public class CookingController {
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
         if (!(objectInRange instanceof CookingStation) || !objectInRange.isColliderActive() || cook.isBusy())
             return;
-
+        //selects cookable recipes
         int start = -1;
         int last = -1;
         switch (objectInRange.getClass().getSimpleName()) {
@@ -87,17 +88,20 @@ public class CookingController {
                 last = 9;
             }
         }
-        //for (int i = start; i < last; i++) {
-        //    if (checkForRightIngredients(i)) {
-        cook.setBusy(true);
-        time = 0;
-        double midTime = Math.random() * 0.2 + 0.4;
-        double[] hitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
-        programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), hitTimeWindow, programController.getViewController());
-        currentStation = (CookingStation) objectInRange;
-        //        i = last;
-        //    }
-        //}
+
+        //checks weather there are alle ingredients for one of the cookable recipes.
+        //if than crating a skill-check for it
+        for (int i = start; i < last; i++) {
+            if (checkForRightIngredients(i)) {
+                cook.setBusy(true);
+                time = 0;
+                double midTime = Math.random() * 0.2 + 0.4;
+                double[] hitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
+                programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), hitTimeWindow, programController.getViewController());
+                currentStation = (CookingStation) objectInRange;
+                i = last;
+            }
+        }
     }
 
     /**
@@ -112,14 +116,14 @@ public class CookingController {
         UIController uiCtrl = programController.getUIController();
 
         if (currentStation instanceof Stove && !uiCtrl.progressSkillCheck(programController.getViewController())) {
-            programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), "Coffee"));
+            programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
             abortCooking(cook);
         } else if (currentStation instanceof CoffeeMachine) {
             for (double i = 1; i < currentStation.getCookingTime(); i ++) {
                 if (time > 0.4 + i && time < 0.6 + i) {
                     if(!uiCtrl.progressSkillCheck(programController.getViewController()))
                         abortCooking(programController.getEntityController().getCook());
-                    programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), "Coffee"));
+                    programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
                     break;
                 }
             }
@@ -138,43 +142,43 @@ public class CookingController {
     /**
      * checks whether every ingredient is there for a dish
      *
+     *
      * @param type the dish that should be checked
      * @return whether the required ingredients are provided or not
      */
     private boolean checkForRightIngredients(int type) {
         int dish = type;
-        DishController dController = programController.getDishController();
-        for (int i = 0; i < recipes[dish].length; i++) {
-            if (dController.getFirstHeldItem() != null && dController.getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][i][0])) {
-                recipes[dish][i][1] = "true";
-                programController.getViewController().removeDrawable(dController.getFirstHeldItem());
-                dController.removeFirstHeldItem();
-            } else {
-                for (int j = 0; j < recipes[dish].length; j++) {
-                    if (recipes[dish][j][1].equals("true")) {
-                        recipes[dish][j][1] = "false";
-                        Cook cook = programController.getEntityController().getCook();
-                        dController.addToHeldItemStack(
-                                dController.createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
-                        return false;
-                    }
+        //going through all ingredients required for this recipe for the amount of ingredients needed
+        for (int i = 1; i < recipes[dish].length; i++) {
+            for (int j = 1; j < recipes[dish].length; j++) {
+                // checks weather it is one of the needed ingredients
+                if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
+                    recipes[dish][j][1] = "true";
+                    programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
+                    programController.getDishController().removeFirstHeldItem();
                 }
             }
         }
+        // checks weather all the needed ingredients are there
         boolean isEverythingThere = true;
-        for (int i = 0; i < recipes[dish].length; i++) {
+        for (int i = 1; i < recipes[dish].length; i++) {
             if (recipes[dish][i][1].equals("false"))
                 isEverythingThere = false;
+            System.out.println(isEverythingThere);
         }
-        if (!isEverythingThere) {
-            for (int j = 0; j < recipes[dish].length; j++) {
+        // if there are not all needed ingredients gives the removed back
+        // else sets the cooking dish
+        if (!isEverythingThere){
+            for (int j = 1; j < recipes[dish].length; j++) {
                 if (recipes[dish][j][1].equals("true")) {
                     recipes[dish][j][1] = "false";
                     Cook cook = programController.getEntityController().getCook();
-                    dController.addToHeldItemStack(dController.createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
+                    programController.getDishController().addToHeldItemStack(
+                            programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
-        }
+        }else
+            currentCookingDish = recipes[dish][0][0];
         return isEverythingThere;
     }
 }

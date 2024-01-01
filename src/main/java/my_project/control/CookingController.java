@@ -69,6 +69,7 @@ public class CookingController {
         //selects cookable recipes
         int start = -1;
         int last = -1;
+        System.out.println(objectInRange.getClass().getSimpleName());
         switch (objectInRange.getClass().getSimpleName()) {
             case "WaffleIron": {
                 start = 0;
@@ -91,6 +92,7 @@ public class CookingController {
                 break;
             }
         }
+        System.out.println(start+""+last);
 
         //checks weather there are alle ingredients for one of the cookable recipes.
         //if than crating a skill-check for it
@@ -179,8 +181,13 @@ public class CookingController {
                             programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
-        } else
+        } else{
             currentCookingDish = recipes[dish][0][0];
+            for (int i = 1; i < recipes[dish].length; i++) {
+                recipes[dish][i][1] = "false";
+            }
+        }
+
         return isEverythingThere;
     }
 }

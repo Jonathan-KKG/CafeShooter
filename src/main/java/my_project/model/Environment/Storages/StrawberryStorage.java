@@ -1,23 +1,23 @@
 package my_project.model.Environment.Storages;
-import my_project.model.Ingredients.Cookie;
 import my_project.model.Ingredients.Ingredient;
+import my_project.model.Ingredients.Strawberry;
 /**
- * the cookies storage
+ * the straberry storage
  */
-public class CookieStorage extends Storage {
+public class StrawberryStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CookieStorage(double pX, double pY) {
-        super(pX, pY,"Cookies");
+    public StrawberryStorage(double pX, double pY) {
+        super(pX, pY,"Strawberry");
     }
     /**
      * @return a new ingredient of the type that is created
      */
     @Override
     public Ingredient getIngredient() {
-        return new Cookie(x, y);
+        return new Strawberry(x, y);
     }
 }

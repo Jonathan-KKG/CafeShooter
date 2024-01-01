@@ -7,19 +7,24 @@ import my_project.model.Environment.*;
 import my_project.model.Environment.Storages.*;
 import my_project.model.Shooter;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * Controls all Environment objects by creating, storing, drawing and, if required, enabling influence (through methods) on them.
  */
 public class EnvironmentController {
     //Referenzen
-    private List<Environment> environmentObjects = new List<>();
-    private List<CollidableEnvironment> collidableEnvironmentObjects = new List<>();
-    private List<CollidableEnvironment> interactableEnvironmentObjects = new List<>();
+    private List<Environment> environmentObjects;
+    private List<CollidableEnvironment> collidableEnvironmentObjects;
+    private List<CollidableEnvironment> interactableEnvironmentObjects;
+    private CollidableEnvironment[][] unlockableSets;
 
     //Attribute
     private int[] kitchenOffset = {(int) (1080 * 0.85) - 480, (int) (1920 * 0.85) - 785};
+    private int[] bottomStorageOffset = {kitchenOffset[0] + 32 * 9, kitchenOffset[1] };          // Flour, Egg, strawberry and Icecream
+    private int[] leftStorageOffset = {kitchenOffset[0] + 32, kitchenOffset[1] - 32 * 3};                     // chocolate, cheese, apple
+    private int[] rightStorageOffset = {kitchenOffset[0] + 32 * 20, kitchenOffset[1] - 32 * 4};                    // CoffeePowder, cream, Bacon and spaghetti
+
+
+
 
     /**
      * Creates and draws all Environment objects
@@ -27,6 +32,11 @@ public class EnvironmentController {
      * @param viewController Required to draw EnvironmentObjects
      */
     public EnvironmentController(ViewController viewController) {
+        environmentObjects = new List<>();
+        collidableEnvironmentObjects = new List<>();
+        interactableEnvironmentObjects = new List<>();
+        unlockableSets = new CollidableEnvironment[7][];
+
         createObjects(viewController);
     }
 
@@ -89,16 +99,20 @@ public class EnvironmentController {
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn1", kitchenOffset[0] + 20, kitchenOffset[1] + 148 - 12 * 32));
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] + 148 - 12 * 32));
 
-            // CookingStations
-            CollidableEnvironment cookingStation = new Stove(kitchenOffset[0] + 32, kitchenOffset[1] - 32 - 3 * 32);
-            collidableEnvironmentObjects.append(cookingStation);
-            interactableEnvironmentObjects.append(cookingStation);
-            cookingStation = new WaffleIron(kitchenOffset[0] + 400, kitchenOffset[1] - 32 - 3 * 32);
-            collidableEnvironmentObjects.append(cookingStation);
-            interactableEnvironmentObjects.append(cookingStation);
-            cookingStation = new CoffeeMachine(kitchenOffset[0] + 368, kitchenOffset[1] - 32 - 3 * 32);
-            collidableEnvironmentObjects.append(cookingStation);
-            interactableEnvironmentObjects.append(cookingStation);
+            // CookingStations and storages
+            CollidableEnvironment createdObject = new WaffleIron(kitchenOffset[0] + 300, kitchenOffset[1] - 32 - 3 * 32);
+            collidableEnvironmentObjects.append(createdObject);
+            interactableEnvironmentObjects.append(createdObject);
+
+            createdObject = new FlourStorage(bottomStorageOffset[0] + 32 * 0, bottomStorageOffset[1]);
+            collidableEnvironmentObjects.append(createdObject);
+            interactableEnvironmentObjects.append(createdObject);
+
+            createdObject = new EggStorage(bottomStorageOffset[0] + 32 * 1, bottomStorageOffset[1]);
+            collidableEnvironmentObjects.append(createdObject);
+            interactableEnvironmentObjects.append(createdObject);
+
+            createUnlockables();
 
 
             // tabletops
@@ -111,20 +125,6 @@ public class EnvironmentController {
                 Table table = new Table("tabletop2", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
                 collidableEnvironmentObjects.append(table);
                 interactableEnvironmentObjects.append((table));
-            }
-
-            Class[] storageTypes = new Class[]{AppleStorage.class, BaconStorage.class, CheeseStorage.class, ChocolateStorage.class, CoffeePowderStorage.class, CookieStorage.class, CreamStorage.class, EggStorage.class, FlourStorage.class, IceCreamStorage.class, SpaghettiStorage.class, StraberryStorage.class};
-
-            // Storages
-            Storage storage;
-            for (int i = 0; i < storageTypes.length; i++) {
-                try {
-                    storage = (Storage) storageTypes[i].getDeclaredConstructor(double.class, double.class).newInstance(kitchenOffset[0] + 32 + 32 * i, kitchenOffset[1]);
-                    collidableEnvironmentObjects.append(storage);
-                    interactableEnvironmentObjects.append((storage));
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
-                    e.printStackTrace();
-                }
             }
 
             // draws created objects
@@ -141,6 +141,29 @@ public class EnvironmentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void createUnlockables(){
+        // First set
+        unlockableSets[0] = new CollidableEnvironment[]{new StrawberryStorage(bottomStorageOffset[0] + 32 * 2, bottomStorageOffset[1])};
+
+        // Second set
+        unlockableSets[1] = new CollidableEnvironment[]{new CoffeeMachine(kitchenOffset[0] + 300 + 32 * 2, kitchenOffset[1] - 32 - 32 * 3),
+                                                        new CoffeePowderStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 0)};
+
+        // etc..
+        unlockableSets[2] = new CollidableEnvironment[]{new IceCreamStorage(bottomStorageOffset[0] + 32 * 3, bottomStorageOffset[1])};
+
+        unlockableSets[3] = new CollidableEnvironment[]{new Oven(kitchenOffset[0] + 300 + 32, kitchenOffset[1] - 32 - 32 * 3),
+                                                        new AppleStorage(leftStorageOffset[0], leftStorageOffset[1])};
+
+        unlockableSets[4] = new CollidableEnvironment[]{new ChocolateStorage(leftStorageOffset[0], leftStorageOffset[1] + 32)};
+        unlockableSets[5] = new CollidableEnvironment[]{new CheeseStorage(leftStorageOffset[0], leftStorageOffset[1] + 32 * 2)};
+
+        unlockableSets[6] = new CollidableEnvironment[]{new Stove(kitchenOffset[0] + 300 - 32, kitchenOffset[1] - 32 - 3 * 32),
+                                                        new CreamStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 1),
+                                                        new BaconStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 2),
+                                                        new SpaghettiStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 3)};
     }
 
     /**
@@ -172,6 +195,21 @@ public class EnvironmentController {
         table.addToTable(dish);
         dish.setX(table.getX());
         dish.setY(table.getY());
+    }
+
+    public void activateNextSetOfCooking(ViewController viewController){
+        for (int i = 0; i < unlockableSets.length; i++) {
+            if(unlockableSets[i] == null)
+                continue;
+
+            for (int j = 0; j < unlockableSets[i].length; j++) {
+                collidableEnvironmentObjects.append(unlockableSets[i][j]);
+                interactableEnvironmentObjects.append(unlockableSets[i][j]);
+                viewController.draw(unlockableSets[i][j]);
+            }
+            unlockableSets[i] = null;
+            i = unlockableSets.length;
+        }
     }
 
     public List<CollidableEnvironment> getCollidableEnvironmentObjects() {

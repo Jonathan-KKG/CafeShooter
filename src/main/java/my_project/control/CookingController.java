@@ -53,7 +53,7 @@ public class CookingController {
         if (time > currentStation.getCookingTime() || !currentStation.isColliderActive()) {
             time = 0;
             programController.getUIController().deleteSkillCheckUI(programController.getViewController());
-            abortCooking(programController.getEntityController().getCook());
+            exitCooking(programController.getEntityController().getCook());
         }
     }
 
@@ -78,14 +78,17 @@ public class CookingController {
             case "Oven": {
                 start = 3;
                 last = 7;
+                break;
             }
             case "CoffeeMachine": {
                 start = 7;
                 last = 8;
+                break;
             }
             case "Stove": {
                 start = 8;
                 last = 9;
+                break;
             }
         }
 
@@ -117,12 +120,12 @@ public class CookingController {
 
         if (currentStation instanceof Stove && !uiCtrl.progressSkillCheck(programController.getViewController())) {
             programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
-            abortCooking(cook);
+            exitCooking(cook);
         } else if (currentStation instanceof CoffeeMachine) {
-            for (double i = 1; i < currentStation.getCookingTime(); i++) {
+            for (double i = 0; i < currentStation.getCookingTime(); i++) {
                 if (time > 0.4 + i && time < 0.6 + i) {
                     if (!uiCtrl.progressSkillCheck(programController.getViewController()))
-                        abortCooking(programController.getEntityController().getCook());
+                        exitCooking(programController.getEntityController().getCook());
                     programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
                     break;
                 }
@@ -135,7 +138,7 @@ public class CookingController {
      *
      * @param cook Required to switch busy state
      */
-    private void abortCooking(Cook cook) {
+    private void exitCooking(Cook cook) {
         cook.setBusy(false);
         currentStation = null;
     }
@@ -159,7 +162,7 @@ public class CookingController {
                 }
             }
         }
-        // checks weather all the needed ingredients are there
+        // checks whether all the needed ingredients are there
         boolean isEverythingThere = true;
         for (int i = 1; i < recipes[dish].length; i++) {
             if (recipes[dish][i][1].equals("false"))

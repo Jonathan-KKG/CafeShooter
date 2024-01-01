@@ -75,15 +75,16 @@ public class WaveController {
      *
      * @param viewController Required to draw the new wave and its Wants-Bubbles
      * @param uiController   Required to draw the new wave and its Wants-Bubbles
+     * @param envController Required to unlock new cooking environment objects
      */
-    public void checkForNewWave(ViewController viewController, UIController uiController) {
+    public void checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         boolean isEmpty = true;
         for (int i = 0; i < enemyWaves.front().length; i++) {
             if (enemyWaves.front()[i] != null)
                 isEmpty = false;
         }
         if (isEmpty)
-            nextWave(viewController, uiController);
+            nextWave(viewController, uiController, envController);
     }
 
     /**
@@ -141,10 +142,14 @@ public class WaveController {
      * @param viewController Required to draw the new Wave and its Wants-Bubbles
      * @param uiController   Required to draw the new Wave and its Wants-Bubbles
      */
-    private void nextWave(ViewController viewController, UIController uiController) {
+    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         enemyWaves.dequeue();
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
+
+        if(true) // TODO: nur aufrufen, wenn die neue wave tatsächlich neue ingredients miteinbringen soll
+            envController.activateNextSetOfCooking(viewController);
+
     }
 
     public Enemy[] getWave() {

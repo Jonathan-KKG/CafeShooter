@@ -57,7 +57,7 @@ public class ProgramController {
         inputManager.inputUpdate(dt);
         dishController.dishUpdate(dt);
         entityController.dishCollisionUpdate();
-        waveController.checkForNewWave(viewController, uiController);
+        waveController.checkForNewWave(viewController, uiController, environmentController);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);

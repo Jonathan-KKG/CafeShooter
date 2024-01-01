@@ -143,6 +143,9 @@ public class EnvironmentController {
         }
     }
 
+    /**
+     * fills the unlockableSets array by creating CookingStations and Storages
+     */
     private void createUnlockables(){
         // First set
         unlockableSets[0] = new CollidableEnvironment[]{new StrawberryStorage(bottomStorageOffset[0] + 32 * 2, bottomStorageOffset[1])};
@@ -197,6 +200,10 @@ public class EnvironmentController {
         dish.setY(table.getY());
     }
 
+    /**
+     * Draws and appends all objects of the next occupied index of unlockableSets[]
+     * @param viewController Required to draw
+     */
     public void activateNextSetOfCooking(ViewController viewController){
         for (int i = 0; i < unlockableSets.length; i++) {
             if(unlockableSets[i] == null)

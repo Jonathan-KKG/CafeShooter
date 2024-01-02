@@ -15,6 +15,7 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
      */
     public WaffleIronSkillCheck(double pX, double pY) {
         super(pX, pY);
+        increment = 0.2;
     }
 
     /**

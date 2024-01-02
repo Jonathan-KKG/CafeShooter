@@ -23,9 +23,6 @@ public class EnvironmentController {
     private int[] leftStorageOffset = {kitchenOffset[0] + 32, kitchenOffset[1] - 32 * 3};                     // chocolate, cheese, apple
     private int[] rightStorageOffset = {kitchenOffset[0] + 32 * 20, kitchenOffset[1] - 32 * 4};                    // CoffeePowder, cream, Bacon and spaghetti
 
-
-
-
     /**
      * Creates and draws all Environment objects
      *
@@ -94,8 +91,14 @@ public class EnvironmentController {
                 collidableEnvironmentObjects.append(new CollidableEnvironment("leftwall", kitchenOffset[0] + 20, kitchenOffset[1] - i));
             for (int i = 0; i < 8 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] - i));
-            for (int i = 0; i < 20 * 32; i = i + 32)
+
+            for (int i = 0; i < 4 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
+            for (int i = 5 * 32; i < 15 * 32; i = i + 32)
+                collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
+            for (int i = 16 * 32; i < 20 * 32; i = i + 32)
+                collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
+
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn1", kitchenOffset[0] + 20, kitchenOffset[1] + 148 - 12 * 32));
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] + 148 - 12 * 32));
 
@@ -116,16 +119,14 @@ public class EnvironmentController {
 
 
             // tabletops
-            for (int i = 0; i < 6 * 64; i = i + 64) {
-                Table table = new Table("tabletop", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
-                collidableEnvironmentObjects.append(table);
-                interactableEnvironmentObjects.append((table));
-            }
-            for (int i = 32; i < 6 * 64; i = i + 64) {
-                Table table = new Table("tabletop2", kitchenOffset[0] + 32 + i, kitchenOffset[1] - 5 * 32-64);
-                collidableEnvironmentObjects.append(table);
-                interactableEnvironmentObjects.append((table));
-            }
+            Table table = new Table("tabletop", kitchenOffset[0] + 32 * 5, kitchenOffset[1] - 7 * 32 - 12);
+            collidableEnvironmentObjects.append(table);
+            interactableEnvironmentObjects.append((table));
+
+            table = new Table("tabletop", kitchenOffset[0] + 32 * 16, kitchenOffset[1] - 7 * 32 - 12);
+            collidableEnvironmentObjects.append(table);
+            interactableEnvironmentObjects.append((table));
+
 
             // draws created objects
             environmentObjects.toFirst();

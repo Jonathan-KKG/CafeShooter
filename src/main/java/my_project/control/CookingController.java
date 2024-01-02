@@ -121,7 +121,7 @@ public class CookingController {
 
         Cook cook = programController.getEntityController().getCook();
         UIController uiCtrl = programController.getUIController();
-        DishController dCtrl = programController.getDishController();
+        ItemController dCtrl = programController.getDishController();
         ViewController vCtrl = programController.getViewController();
 
         if (currentStation.isClickValid(time, uiCtrl.isMovingDownwards(), currentHitTimeWindow)) {

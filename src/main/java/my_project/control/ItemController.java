@@ -2,6 +2,7 @@ package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
+import my_project.model.Cook;
 import my_project.model.Dishes.*;
 import my_project.model.Environment.Table;
 import my_project.model.Ingredients.*;
@@ -12,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Controls every instance of Dish-class and ensures proper handling
  */
-public class DishController {
+public class ItemController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
     private Stack<Item> heldItems;
@@ -27,7 +28,7 @@ public class DishController {
      *
      * @param pProgramController required to access other controllers
      */
-    public DishController(ProgramController pProgramController) {
+    public ItemController(ProgramController pProgramController) {
         currentDishIndex = 0;
         flyingDishes = new List<>();
         heldItems = new Stack<>();
@@ -143,8 +144,8 @@ public class DishController {
      *
      * @param pX       starting position
      * @param pY       starting position
-     * @param ingredientType neme of the requierd ingredient
-     * @return returns dish
+     * @param ingredientType name of the required ingredient
+     * @return returns created ingredient
      */
     public Ingredient createIngredient(double pX, double pY, String ingredientType) {
         Ingredient ingredient = null;
@@ -169,8 +170,9 @@ public class DishController {
      */
     public void moveHeldItems(){
         if (heldItems.top() != null) {
-            heldItems.top().setX(programController.getEntityController().getCook().getX());
-            heldItems.top().setY(programController.getEntityController().getCook().getY());
+            Cook cook = programController.getEntityController().getCook();
+            heldItems.top().setX(cook.getX() + cook.getWidth() / 5);
+            heldItems.top().setY(cook.getY() + cook.getHeight() / 3);
         }
     }
 
@@ -219,6 +221,7 @@ public class DishController {
         programController.getUIController().moveAmmoIndicator(tempInt);
         dishToBeAdded.setX(1300 + 45d / 2d + 45 * tempInt);
         dishToBeAdded.setY(838);
+        nextBullet();
     }
 
     public Item getFirstHeldItem() {

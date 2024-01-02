@@ -58,7 +58,7 @@ public abstract class UI extends GraphicalObject {
      * @param width width of the border & background
      * @param height height of the border & background
      */
-    protected void drawUsualBorder(DrawTool drawTool, int lineWidth, double pX, double pY, double width, double height){
+    protected void drawDefaultBorder(DrawTool drawTool, int lineWidth, double pX, double pY, double width, double height){
         if(lineWidth <= 0)
             drawTool.setLineWidth(5);
         else

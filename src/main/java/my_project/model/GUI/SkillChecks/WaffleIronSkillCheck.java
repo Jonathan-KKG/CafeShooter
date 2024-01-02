@@ -15,6 +15,7 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
      */
     public WaffleIronSkillCheck(double pX, double pY) {
         super(pX, pY);
+        increment = 0.2;
     }
 
     /**
@@ -24,6 +25,18 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
      */
     @Override
     public void draw(DrawTool drawTool) {
-        // TODO SC2: WaffleIronSkillCheck implementation
+        super.draw(drawTool);
+        // TODO SC2: WaffleIronSkillCheck implementation ?????
+    }
+
+    /**
+     * Required for some skillchecks
+     * I.e. constantly moving parts
+     *
+     * @param time Time passed since creation of the skillcheck (in seconds)
+     */
+    @Override
+    public void updateSkillCheck(double time) {
+
     }
 }

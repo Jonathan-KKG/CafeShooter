@@ -2,23 +2,25 @@ package my_project.control;
 
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
-import my_project.model.Dishes.Dish;
-import my_project.model.Dishes.Coffee;
-import my_project.model.Dishes.SpaghettiCarbonara;
+import my_project.model.Cook;
+import my_project.model.Dishes.*;
+import my_project.model.Environment.Table;
+import my_project.model.Ingredients.*;
 import my_project.model.Item;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Controls every instance of Dish-class and ensures proper handling
  */
-public class DishController {
+public class ItemController {
     private List<Dish> flyingDishes;
     private Dish[] storedDishes;
     private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
-    private String[] dishTypes;
+    private Class<? extends Dish>[] dishClasses;
+    private Class<? extends Ingredient>[] ingredientClasses;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -26,22 +28,18 @@ public class DishController {
      *
      * @param pProgramController required to access other controllers
      */
-    public DishController(ProgramController pProgramController) {
+    public ItemController(ProgramController pProgramController) {
         currentDishIndex = 0;
         flyingDishes = new List<>();
         heldItems = new Stack<>();
         storedDishes = new Dish[5];
         programController = pProgramController;
 
-        File[] dishFiles = new File("src/main/resources/graphic/Dishes").listFiles();
-        dishTypes = new String[dishFiles.length];
-        for (int i = 0; i < dishFiles.length; i++) {
-             dishTypes[i] = dishFiles[i].getName().replaceAll(".png", "");
-        }
-
+        dishClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class};
+        ingredientClasses = new Class[]{Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "SpaghettiCarbonara");
+            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Waffles");
             programController.getViewController().draw(storedDishes[i]);
         }
 
@@ -88,31 +86,36 @@ public class DishController {
         }
     }
 
-
     /**
-     * finds next index in storedDishes array that is not null
+     * recursively finds next index in storedDishes array that is or is not null
      *
-     * @return next occupied index
+     * @param startingIndex the current index that is viewed
+     * @param modifiedIndex Required to recall the method; insert same as startingIndex for first iteration
+     * @param type whether to search for the next occupied or for the next unoccupied index (0 = occupied, 1 = unoccupied)
+     * @return next (un-)occupied index
      */
-    private int nextOccupiedIndex(int startingIndex, int modifiedIndex) {
+    private int findNextIndex(int startingIndex, int modifiedIndex, int type) {
         if(startingIndex == -1)
             startingIndex++;
         modifiedIndex++;
 
         if(modifiedIndex >= storedDishes.length)
-            return nextOccupiedIndex(startingIndex, -1);
+            return findNextIndex(startingIndex, -1, type);
 
-        if(storedDishes[modifiedIndex] != null)
+        if(type == 0 && storedDishes[modifiedIndex] != null)
+            return modifiedIndex;
+        else if (type == 1 && storedDishes[modifiedIndex] == null)
             return modifiedIndex;
 
         if(modifiedIndex == startingIndex)
             return -1;
 
-        return nextOccupiedIndex(startingIndex, modifiedIndex);
+        return findNextIndex(startingIndex, modifiedIndex, type);
     }
 
+    // TODO: shorten the 2 following methods into one?
     /**
-     * creates a dish and draws it
+     * creates a dish
      *
      * @param pX       starting position
      * @param pY       starting position
@@ -122,25 +125,54 @@ public class DishController {
     public Dish createDish(double pX, double pY, String dishType) {
         Dish dish = null;
 
-        for (int i = 0; i < dishTypes.length; i++) {
-            if(dishType.equals(dishTypes[i])) {
-                switch (dishType){
-                    case "Coffee" -> dish = new Coffee(pX,pY);
-                    case "SpaghettiCarbonara" -> dish = new SpaghettiCarbonara(pX,pY);
+        for (int i = 0; i < dishClasses.length; i++) {
+            if(dishType.equals(dishClasses[i].getSimpleName())) {
+                try {
+                    dish = dishClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
                 }
-
-                i = dishTypes.length;
+                i = dishClasses.length;
             }
         }
         if (dish == null) System.out.println("nu uh wrong dishtype");
 
         return dish;
     }
+    /**
+     * creates a ingredient
+     *
+     * @param pX       starting position
+     * @param pY       starting position
+     * @param ingredientType name of the required ingredient
+     * @return returns created ingredient
+     */
+    public Ingredient createIngredient(double pX, double pY, String ingredientType) {
+        Ingredient ingredient = null;
 
+        for (int i = 0; i < ingredientClasses.length; i++) {
+            if(ingredientType.equals(ingredientClasses[i].getSimpleName())) {
+                try {
+                    ingredient = ingredientClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
+                }
+                i = ingredientClasses.length;
+            }
+        }
+        if (ingredient == null) System.out.println("nu uh wrong ingredientType");
+
+        return ingredient;
+    }
+
+    /**
+     * Moves the topmost item in the HeldDishes stack
+     */
     public void moveHeldItems(){
         if (heldItems.top() != null) {
-            heldItems.top().setX(programController.getEntityController().getCook().getX());
-            heldItems.top().setY(programController.getEntityController().getCook().getY());
+            Cook cook = programController.getEntityController().getCook();
+            heldItems.top().setX(cook.getX() + cook.getWidth() / 5);
+            heldItems.top().setY(cook.getY() + cook.getHeight() / 3);
         }
     }
 
@@ -149,7 +181,7 @@ public class DishController {
      * If current bullet is last element, it starts searching from the beginning
      */
     public void nextBullet() {
-        currentDishIndex = nextOccupiedIndex(currentDishIndex, currentDishIndex);
+        currentDishIndex = findNextIndex(currentDishIndex, currentDishIndex, 0);
         programController.getUIController().moveAmmoIndicator(currentDishIndex);
     }
 
@@ -162,13 +194,34 @@ public class DishController {
         programController.getViewController().removeDrawable(heldItems.top());
         heldItems.push(item);
         programController.getViewController().draw(heldItems.top());
-        programController.getUIController().updateHeldItemsAmmount(true);
+        programController.getUIController().updateHeldItemsAmount(true);
     }
 
+    /**
+     * Removes the first item of the HeldDishes stack, draws the new topmost element and updates UI
+     */
     public void removeFirstHeldItem() {
-        programController.getViewController().removeDrawable(heldItems.top());
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
+        programController.getUIController().updateHeldItemsAmount(false);
+    }
+
+    /**
+     * Removes the first dish of a table and adds it to the storedDishes array
+     * @param table the table where the Dish should be taken from
+     */
+    public void moveToStoredDishes(Table table){
+        int tempInt = findNextIndex(currentDishIndex, currentDishIndex, 1);
+        if(table.getFirstDish() == null || tempInt == -1)
+            return;
+
+        Dish dishToBeAdded = table.getFirstDish();
+        table.removeFirstDish();
+        storedDishes[tempInt] = dishToBeAdded;
+        programController.getUIController().moveAmmoIndicator(tempInt);
+        dishToBeAdded.setX(1300 + 45d / 2d + 45 * tempInt);
+        dishToBeAdded.setY(838);
+        nextBullet();
     }
 
     public Item getFirstHeldItem() {

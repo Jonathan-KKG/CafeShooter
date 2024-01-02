@@ -2,13 +2,9 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
-import my_project.model.Enemies.Carlos;
-import my_project.model.Enemies.Habib;
-import my_project.model.Enemies.Jonathan;
-import my_project.model.Enemies.Max;
-import my_project.model.Enemies.Enemy;
+import my_project.model.Enemies.*;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +13,7 @@ import java.util.TimerTask;
  */
 public class WaveController {
     private Queue<Enemy[]> enemyWaves;
-    private String[] enemyTypes;
+    private Class<? extends Enemy>[] enemyTypes;
     private Timer spawnTimer;
 
     /**
@@ -27,54 +23,49 @@ public class WaveController {
      * @param uiController   Required to draw the first wave and its Wants-Bubbles
      */
     public WaveController(ViewController viewController, UIController uiController) {
-        File[] enemyFiles = new File("src/main/java/my_project/model/Enemies").listFiles();
-        enemyTypes = new String[enemyFiles.length];
-        for (int i = 0; i < enemyFiles.length; i++) {
-            enemyTypes[i] = enemyFiles[i].getName().replaceAll(".java", "");
-        }
-
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
+        // Order of enemyTypes[] is important for scaling difficulty
+        enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
 
         createWaves();
-        nextWave(viewController, uiController);
+
+        // Ready First Wave
+        scheduleWaveDrawing(viewController);
+        uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
     }
 
     /**
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
      */
     private void createWaves() {
+        int increment = 2;
+        int maximum = 10;
         // Create x Waves each contaning 2x + i enemies
-        for (int i = 0; i < 10; i += 2) {
+        for (int i = increment; i < maximum; i += increment) {
+
             Enemy[] enemies = new Enemy[i];
 
-            // Create enemies to fill the waves
-            for (int j = 0; j < enemies.length; j++) {
-                int enemyType = (int) (Math.random() * 3 + 1);
-
-                double x;
-                double y;
-                int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
-                // Following values contain off-by-one errors
-                if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
-                    x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
-                    y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
-                } else if (spawnTopLeftOrRight > 66) {                       // spawn right of screen
-                    x = (int) (Math.random() * 100 + 1920 * 0.85 + 50);       // between 1920 * 0.85 + 50 and 1920 * 0.85 + 150
-                    y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
-                } else {                                                    // spawn top of screen (including area over left and right out-of-screen)
-                    x = (int) (Math.random() * (1920 * 0.85 + 300) - 150);      // between -150 and 1920 * 0.85 + 150
-                    y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
-                }
-
-                switch (enemyType) {
-                    case 1 -> enemies[j] = new Jonathan(x, y);
-                    case 2 -> enemies[j] = new Max(x, y);
-                    case 3 -> enemies[j] = new Carlos(x, y);
-                    case 4 -> enemies[j] = new Habib(x, y);
-                }
-
+            // enemies[0] reserved for newest enemy type
+            double[] pos = getRandomEnemyPosition();
+            try {
+                enemies[0] = enemyTypes[i / increment - 1].getDeclaredConstructor(double.class, double.class).newInstance(pos[0], pos[1]);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                e.printStackTrace();
             }
+
+            // Create enemies to fill the waves
+            for (int j = 1; j < enemies.length; j++) {
+                pos = getRandomEnemyPosition();
+
+                try {
+                    int randomType = (int) (Math.random() * (i / increment) - 1); // don't touch it it works
+                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(pos[0],pos[1]);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+                    e.printStackTrace();
+                }
+            }
+
             enemyWaves.enqueue(enemies);
         }
     }
@@ -84,15 +75,39 @@ public class WaveController {
      *
      * @param viewController Required to draw the new wave and its Wants-Bubbles
      * @param uiController   Required to draw the new wave and its Wants-Bubbles
+     * @param envController Required to unlock new cooking environment objects
      */
-    public void checkForNewWave(ViewController viewController, UIController uiController) {
+    public void checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         boolean isEmpty = true;
         for (int i = 0; i < enemyWaves.front().length; i++) {
             if (enemyWaves.front()[i] != null)
                 isEmpty = false;
         }
         if (isEmpty)
-            nextWave(viewController, uiController);
+            nextWave(viewController, uiController, envController);
+    }
+
+    /**
+     * Creates a random position over, left or right outside of the screen
+     * @return double[]{x,y}
+     */
+    private double[] getRandomEnemyPosition(){
+        double x;
+        double y;
+
+        int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
+        // Following values contain off-by-one errors
+        if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
+            x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
+            y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
+        } else if (spawnTopLeftOrRight > 66) {                       // spawn right of screen
+            x = (int) (Math.random() * 100 + 1920 * 0.85 + 50);       // between 1920 * 0.85 + 50 and 1920 * 0.85 + 150
+            y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
+        } else {                                                    // spawn top of screen (including area over left and right out-of-screen)
+            x = (int) (Math.random() * (1920 * 0.85 + 300) - 150);      // between -150 and 1920 * 0.85 + 150
+            y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
+        }
+        return new double[]{x,y};
     }
 
     /**
@@ -127,10 +142,14 @@ public class WaveController {
      * @param viewController Required to draw the new Wave and its Wants-Bubbles
      * @param uiController   Required to draw the new Wave and its Wants-Bubbles
      */
-    private void nextWave(ViewController viewController, UIController uiController) {
+    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         enemyWaves.dequeue();
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
+
+        if(true) // TODO: nur aufrufen, wenn die neue wave tatsächlich neue ingredients miteinbringen soll
+            envController.activateNextSetOfCooking(viewController);
+
     }
 
     public Enemy[] getWave() {

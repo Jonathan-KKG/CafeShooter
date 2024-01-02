@@ -11,12 +11,11 @@ public class Shooter extends Player {
     private List<CollidableEnvironment> objectsInRange;
 
     /**
-     * @param filename Sprite the Player should apply
      * @param pX the start x-Position
      * @param pY the stard y-Position
      */
-    public Shooter(String filename, double pX, double pY) {
-        super(filename, pX, pY);
+    public Shooter(double pX, double pY) {
+        super("roeckrath", pX, pY);
     }
 
     public List<CollidableEnvironment> getObjectsInRange() {

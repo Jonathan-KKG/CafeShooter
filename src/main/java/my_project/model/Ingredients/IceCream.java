@@ -7,11 +7,10 @@ public class IceCream extends Ingredient {
     /**
      * set starting position & sprite of Ingredient
      *
-     * @param filename filename of the sprite
      * @param pX       x position at start
      * @param pY       y position at start
      */
-    public IceCream(String filename, double pX, double pY) {
-        super(filename, pX, pY);
+    public IceCream(double pX, double pY) {
+        super("IceCream", pX, pY);
     }
 }

@@ -25,8 +25,8 @@ public class EntityController {
     public EntityController(ProgramController pProgramController, ViewController viewController) {
         programController = pProgramController;
 
-        shooter = new Shooter("img", 150, 150);
-        cook = new Cook("img", 800, 800);
+        shooter = new Shooter(150, 150);
+        cook = new Cook(800, 800);
 
         viewController.draw(shooter);
         viewController.draw(cook);
@@ -77,7 +77,7 @@ public class EntityController {
             cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
 
         checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
-        shooter.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
+        shooter.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), shooter));
         shooter.setObjectsInRange(getObjectsInRange(programController.getEnvironmentController().getCollidableEnvironmentObjects(), shooter));
     }
 
@@ -178,7 +178,7 @@ public class EntityController {
         objectsInRange.toFirst();
         closestObj = objectsInRange.getContent();
         while (objectsInRange.hasAccess()) {
-            if (objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
+            if (objectsInRange.getContent().isColliderActive() && objectsInRange.getContent().getDistanceTo(player) < closestObj.getDistanceTo(player)) {
                 closestObj = objectsInRange.getContent();
             }
             objectsInRange.next();

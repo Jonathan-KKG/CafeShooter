@@ -15,7 +15,7 @@ public class ProgramController {
     private ViewController viewController;
     private EnvironmentController environmentController;
     private InputManager inputManager;
-    private DishController dishController;
+    private ItemController itemController;
     private CookingController cookingController;
     private WaveController waveController;
     private UIController uiController;
@@ -39,7 +39,7 @@ public class ProgramController {
         inputManager = new InputManager(this);
         uiController = new UIController(viewController);
         waveController = new WaveController(viewController, uiController);
-        dishController = new DishController(this);
+        itemController = new ItemController(this);
         isRunning = true;
 
         viewController.register(inputManager);
@@ -55,9 +55,9 @@ public class ProgramController {
 
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt);
-        dishController.dishUpdate(dt);
+        itemController.dishUpdate(dt);
         entityController.dishCollisionUpdate();
-        waveController.checkForNewWave(viewController, uiController);
+        waveController.checkForNewWave(viewController, uiController, environmentController);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);
@@ -88,8 +88,8 @@ public class ProgramController {
         return cookingController;
     }
 
-    public DishController getDishController() {
-        return dishController;
+    public ItemController getDishController() {
+        return itemController;
     }
 
     public EnvironmentController getEnvironmentController() {

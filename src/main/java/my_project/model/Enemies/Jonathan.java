@@ -12,7 +12,7 @@ public class Jonathan extends Enemy {
      * @param pX        the start x-Position
      * @param pY        the start y-Position
      */
-    public Jonathan(Double pX, Double pY) {
+    public Jonathan(double pX, double pY) {
         super("Jonathan", pX, pY);
         requiredDish = SpaghettiCarbonara.class.getSimpleName();
     }

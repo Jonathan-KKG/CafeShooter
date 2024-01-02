@@ -3,7 +3,15 @@ package my_project.view;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
-
+import my_project.model.Cook;
+import my_project.model.Dishes.Dish;
+import my_project.model.Environment.Bin;
+import my_project.model.Environment.CollidableEnvironment;
+import my_project.model.Environment.CookingStation;
+import my_project.model.Environment.Storages.Storage;
+import my_project.model.Environment.Table;
+import my_project.model.Item;
+import my_project.model.Shooter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -30,25 +38,29 @@ public class InputManager extends InteractiveGraphicalObject {
     /**
      * Is called every frame
      *
-     * @param dt               Time passed since last frame
+     * @param dt Time passed since last frame
      */
     public void inputUpdate(double dt) {
         exePlayerMovement(dt);
         updateSkillCheckInputs();
     }
 
-    private void updateSkillCheckInputs(){
-        if(ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed){
+    /**
+     * Updates skillcheck button input
+     * Won't forward an input if button is held
+     */
+    private void updateSkillCheckInputs() {
+        if (ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed) {
             isSkillCheckButtonPressed = true;
             programController.getCookingController().addClick();
         }
-        if(!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
+        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
     }
 
     /**
      * Checks in which direction each player is moving and calls updatePlayer method accordingly
      *
-     * @param dt               Time passed since last frame
+     * @param dt Time passed since last frame
      */
     private void exePlayerMovement(double dt) {
         int xDirCook = 0;
@@ -115,10 +127,30 @@ public class InputManager extends InteractiveGraphicalObject {
         if (!programController.isRunning())
             return;
 
-        if (key == KeyEvent.VK_Q)
-            programController.getCookingController().cook();
-        if (key == KeyEvent.VK_O)
-            programController.getEntityController().getShooter().setBusy(true);
-    }
+        Shooter shooter = programController.getEntityController().getShooter();
+        Cook cook = programController.getEntityController().getCook();
 
+        CollidableEnvironment closestObjShooter = shooter.getClosestObjectInRange();
+        CollidableEnvironment closestObjCook = cook.getClosestObjectInRange();
+
+        Item heldItem = programController.getDishController().getFirstHeldItem();
+
+        if (key == KeyEvent.VK_Q) {
+            if (closestObjCook instanceof Table && heldItem instanceof Dish) {
+                programController.getEnvironmentController().addToTable((Dish) heldItem, (Table) closestObjCook);
+                programController.getDishController().removeFirstHeldItem();
+            } else if (closestObjCook instanceof CookingStation)
+                programController.getCookingController().cook();
+            else if (closestObjCook instanceof Storage)
+                programController.getDishController().addToHeldItemStack(((Storage) closestObjCook).getIngredient());
+            else if (closestObjCook instanceof Bin)
+                programController.getDishController().removeFirstHeldItem();
+        }
+
+        if (key == KeyEvent.VK_U)
+            shooter.setBusy(true);
+
+        if (key == KeyEvent.VK_O && closestObjShooter instanceof Table)
+            programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
+    }
 }

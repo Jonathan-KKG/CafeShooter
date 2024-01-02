@@ -38,7 +38,7 @@ public class UIController {
      * updates the amount heldDishStack
      * @param increase boolean to calculate amount ofheldDishStack
      */
-    public void updateHeldItemsAmmount(boolean increase) {
+    public void updateHeldItemsAmount(boolean increase) {
         dishStackUI.setDishStackAmount(increase);
     }
 
@@ -57,18 +57,28 @@ public class UIController {
      *
      * @param pos            Position of the cooking station
      * @param type           what type of Dish the cooking station outputs
-     * @param viewController Required to draww the new Object
+     * @param viewController Required to draw the new Object
      */
-    public void createSkillCheck(double[] pos, String type, ViewController viewController) {
+    public void createSkillCheck(double[] pos, String type, double[] hitTimeWindow, ViewController viewController) {
         switch (type){
-            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1]);
+            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1], hitTimeWindow);
             case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1]);
-            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1]);
+            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], hitTimeWindow);
             case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
             default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
         }
-        System.out.println(skillCheckUI.getWidth());
         viewController.draw(skillCheckUI);
+    }
+
+    /**
+     * changes the time interval in which the player has to interact to progress cooking
+     * @param hitTimeWindow the new time window in seconds {earliest, latest}
+     */
+    public void changeSkillCheckHitzone(double[] hitTimeWindow){
+        if(!(skillCheckUI instanceof timeableSkillCheck))
+            return;
+
+        ((timeableSkillCheck) skillCheckUI).setNewHitzone(hitTimeWindow);
     }
 
     /**
@@ -86,6 +96,17 @@ public class UIController {
             return false;
         }
         return true;
+    }
+
+    /**
+     * updates the current skillCheckUI if required, e.g. moves parts that have to be moved
+     * @param time time passed since creation of the skillcheck
+     */
+    public void updateSkillCheckUI(double time){
+        if(skillCheckUI == null)
+            return;
+
+        skillCheckUI.updateSkillCheck(time);
     }
 
     /**
@@ -192,4 +213,16 @@ public class UIController {
             programController.restartGame();
     }
 
+    public boolean isMovingDownwards(){
+        if(skillCheckUI instanceof timeableSkillCheck)
+            return ((timeableSkillCheck) skillCheckUI).isMovingDownwards();
+
+        return false;
+    }
+
+    public double getIndicatorSpeed() {
+        if(skillCheckUI instanceof timeableSkillCheck)
+            return ((timeableSkillCheck) skillCheckUI).getSpeed();
+        return 1;
+    }
 }

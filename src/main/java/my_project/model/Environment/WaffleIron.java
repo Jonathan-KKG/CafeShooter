@@ -1,9 +1,5 @@
 package my_project.model.Environment;
 
-import my_project.model.Dishes.IceCreamWaffles;
-import my_project.model.Dishes.StrawberryWaffles;
-import my_project.model.Dishes.Waffles;
-
 /**
  * A cookingstation that is able to create Waffles
  */
@@ -16,6 +12,19 @@ public class WaffleIron extends CookingStation {
      */
     public WaffleIron(double pX, double pY) {
         super("WaffleIron", pX, pY);
-        cookableDishes = new Class[]{Waffles.class, StrawberryWaffles.class, IceCreamWaffles.class};
+        cookingTime = 3;
+    }
+
+    /**
+     * checks whether the click is valid or not
+     *
+     * @param time                 time passed since initation of cooking in seconds
+     * @param isMovingDownwards    whether the UI indicator (if existing) is currently moving downwards
+     * @param currentHitTimeWindow the time window (if existing) in which the player has to click {earliest, latest}
+     * @return whether click was valid or not
+     */
+    @Override
+    public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
+        return true; // TODO
     }
 }

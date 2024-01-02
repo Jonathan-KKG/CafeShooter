@@ -12,7 +12,7 @@ public class Max extends Enemy {
      * @param pX        the start x-Position
      * @param pY        the start y-Position
      */
-    public Max(Double pX, Double pY) {
+    public Max(double pX, double pY) {
         super("Max", pX, pY);
         requiredDish = Coffee.class.getSimpleName();
     }

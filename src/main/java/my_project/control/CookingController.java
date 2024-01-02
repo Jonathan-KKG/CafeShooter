@@ -1,10 +1,11 @@
 package my_project.control;
 
+import KAGO_framework.control.ViewController;
 import my_project.model.Environment.*;
 import my_project.model.Cook;
 
 /**
- * Controls Cooking mechanic
+ * Controls Cooking mechanic, including as skillchecks
  */
 public class CookingController {
     private double time;
@@ -12,6 +13,7 @@ public class CookingController {
     private String[][][] recipes;
     private CookingStation currentStation;
     private String currentCookingDish;
+    private double[] currentHitTimeWindow;
 
     /**
      * creates an cookingController object.
@@ -34,6 +36,7 @@ public class CookingController {
 
                 {{"SpaghettiCarbonara"}, {"Spaghetti", "false"}, {"Cream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
         };
+        currentHitTimeWindow = null;
     }
 
     /**
@@ -66,10 +69,10 @@ public class CookingController {
         CollidableEnvironment objectInRange = cook.getClosestObjectInRange();
         if (!(objectInRange instanceof CookingStation) || !objectInRange.isColliderActive() || cook.isBusy())
             return;
+
         //selects cookable recipes
         int start = -1;
         int last = -1;
-        System.out.println(objectInRange.getClass().getSimpleName());
         switch (objectInRange.getClass().getSimpleName()) {
             case "WaffleIron": {
                 start = 0;
@@ -92,20 +95,19 @@ public class CookingController {
                 break;
             }
         }
-        System.out.println(start+""+last);
 
-        //checks weather there are alle ingredients for one of the cookable recipes.
+        //checks whether there are all ingredients for one of the cookable recipes.
         //if than crating a skill-check for it
         for (int i = start; i < last; i++) {
-            if (checkForRightIngredients(i)) {
-                cook.setBusy(true);
-                time = 0;
-                double midTime = Math.random() * 0.2 + 0.4;
-                double[] hitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
-                programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), hitTimeWindow, programController.getViewController());
-                currentStation = (CookingStation) objectInRange;
-                i = last;
-            }
+            if (!checkForRightIngredients(i))
+                continue;
+
+            cook.setBusy(true);
+            time = 0;
+            newHitTimeWindow();
+            programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), currentHitTimeWindow, programController.getViewController());
+            currentStation = (CookingStation) objectInRange;
+            i = last;
         }
     }
 
@@ -119,20 +121,31 @@ public class CookingController {
 
         Cook cook = programController.getEntityController().getCook();
         UIController uiCtrl = programController.getUIController();
+        DishController dCtrl = programController.getDishController();
+        ViewController vCtrl = programController.getViewController();
 
-        if (currentStation instanceof Stove && !uiCtrl.progressSkillCheck(programController.getViewController())) {
-            programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
-            exitCooking(cook);
-        } else if (currentStation instanceof CoffeeMachine) {
-            for (double i = 0; i < currentStation.getCookingTime(); i++) {
-                if (time > 0.4 + i && time < 0.6 + i) {
-                    if (!uiCtrl.progressSkillCheck(programController.getViewController()))
-                        exitCooking(programController.getEntityController().getCook());
-                    programController.getDishController().addToHeldItemStack(programController.getDishController().createDish(cook.getX(), cook.getY(), currentCookingDish));
-                    break;
-                }
+        if (currentStation.isClickValid(time, uiCtrl.isMovingDownwards(), currentHitTimeWindow)) {
+            if (uiCtrl.progressSkillCheck(vCtrl)) {
+                newHitTimeWindow();
+                uiCtrl.changeSkillCheckHitzone(currentHitTimeWindow);
+                return;
             }
+
+            dCtrl.addToHeldItemStack(dCtrl.createDish(cook.getX(), cook.getY(), currentCookingDish));
+            exitCooking(cook);
+        } else {
+            exitCooking(cook);
+            uiCtrl.deleteSkillCheckUI(vCtrl);
         }
+
+    }
+
+    /**
+     * Changes the HitTimeWindow to a value between 0.2 and 0.7
+     */
+    private void newHitTimeWindow() {
+        double midTime = Math.random() * 0.3 + 0.3;
+        currentHitTimeWindow = new double[]{midTime - 0.05, midTime + 0.05};
     }
 
     /**
@@ -148,11 +161,10 @@ public class CookingController {
     /**
      * checks whether every ingredient is there for a dish
      *
-     * @param type the dish that should be checked
+     * @param dish the index of the dish's recipe in the recipes array that should be checked
      * @return whether the required ingredients are provided or not
      */
-    private boolean checkForRightIngredients(int type) {
-        int dish = type;
+    private boolean checkForRightIngredients(int dish) {
         // going through all ingredients required for this recipe for the amount of ingredients needed
         for (int i = 1; i < recipes[dish].length; i++) {
             for (int j = 1; j < recipes[dish].length; j++) {
@@ -181,7 +193,7 @@ public class CookingController {
                             programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
-        } else{
+        } else {
             currentCookingDish = recipes[dish][0][0];
             for (int i = 1; i < recipes[dish].length; i++) {
                 recipes[dish][i][1] = "false";

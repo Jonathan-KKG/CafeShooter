@@ -20,4 +20,14 @@ public abstract class CookingStation extends CollidableEnvironment {
     public double getCookingTime() {
         return cookingTime;
     }
+
+    /**
+     * checks whether the click is valid or not
+     * @param time time passed since initation of cooking in seconds
+     * @param isMovingDownwards whether the UI indicator (if existing) is currently moving downwards
+     * @param currentHitTimeWindow the time window (if existing) in which the player has to click {earliest, latest}
+     * @return whether click was valid or not
+     */
+    public abstract boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow);
+
 }

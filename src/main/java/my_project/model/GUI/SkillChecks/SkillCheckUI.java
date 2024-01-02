@@ -24,6 +24,15 @@ public abstract class SkillCheckUI extends UI {
     }
 
     /**
+     * Graphical implementation of the UI
+     *
+     * @param drawTool Required to draw the object
+     */
+    public void draw(DrawTool drawTool){
+        drawDefaultSCBorder(drawTool);
+    }
+
+    /**
      * This method should be used for drawing the border of all SkillChecks
      * @param drawTool DrawTool that should be drawn with
      */

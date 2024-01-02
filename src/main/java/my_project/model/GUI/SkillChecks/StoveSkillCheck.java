@@ -26,7 +26,7 @@ public class StoveSkillCheck extends SkillCheckUI{
      */
     @Override
     public void draw(DrawTool drawTool) {
-        drawDefaultSCBorder(drawTool);
+        super.draw(drawTool);
 
         // moveable part of the "Progress Bar"
         drawTool.setCurrentColor(255, 0, 0, 255);

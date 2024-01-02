@@ -49,7 +49,7 @@ public class UIController {
      */
     public void moveAmmoIndicator(int element) {
         if (element > -1)
-            dishUI.setX(1317 + 45 * element);
+            dishUI.setX(1317 + 55 * element);
     }
 
     /**

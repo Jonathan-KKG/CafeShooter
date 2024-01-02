@@ -19,18 +19,18 @@ public class DishUI extends UI {
 
     @Override
     public void draw(DrawTool drawTool) {
-        drawDefaultBorder(drawTool, -1, startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 100);
+        drawDefaultBorder(drawTool, -1, startingPosition[0] + 5, startingPosition[1], 5 * 55 + 30d / 2, 100);
 
         //UI Seperators
         drawTool.setLineWidth(3);
         drawTool.setCurrentColor(230, 50, 50, 255);
 
         for (int i = 1; i < 5; i++)
-            drawTool.drawLine(startingPosition[0] - 60 + 75 + 45 * i, startingPosition[1] - 30 + 45, startingPosition[0] - 60 + 75 + 45 * i, startingPosition[1] - 30 + 75);
+            drawTool.drawLine(startingPosition[0] - 60 + 70 + 55 * i, startingPosition[1] - 30 + 45, startingPosition[0] - 60 + 70 + 55 * i, startingPosition[1] - 30 + 75);
 
         //UI Index
         drawTool.setCurrentColor(20, 240, 20, 180);
-        drawTool.drawRectangle(x, y, 40, 40);
+        drawTool.drawRectangle(x+1, y, 40, 40);
 
         // Pacman
         // Remove comment to find Pacman

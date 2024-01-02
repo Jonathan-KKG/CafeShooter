@@ -39,7 +39,9 @@ public class ItemController {
         ingredientClasses = new Class[]{Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1300 + 45d / 2d + 45 * i, 838, "Waffles");
+            storedDishes[i] = createDish(1304 + 30d / 2d + 55 * i, 838, "Waffles");
+            storedDishes[i].setX(storedDishes[i].getX() + 20 - storedDishes[i].getWidth() / 2);
+            storedDishes[i].setY(storedDishes[i].getY() + 20 - storedDishes[i].getHeight() / 2 - 4);
             programController.getViewController().draw(storedDishes[i]);
         }
 
@@ -219,13 +221,15 @@ public class ItemController {
         if(table.getFirstDish() == null || tempInt == -1)
             return;
 
+        boolean arrWasEmpty = findNextIndex(currentDishIndex,currentDishIndex,0) == -1;
+
         Dish dishToBeAdded = table.getFirstDish();
         table.removeFirstDish();
         storedDishes[tempInt] = dishToBeAdded;
-        programController.getUIController().moveAmmoIndicator(tempInt);
-        dishToBeAdded.setX(1300 + 45d / 2d + 45 * tempInt);
-        dishToBeAdded.setY(838);
-        nextBullet();
+        storedDishes[tempInt].setX(1300 + 35d / 2d + 55 * tempInt + 20 - storedDishes[tempInt].getWidth() / 2);
+        storedDishes[tempInt].setY(838 + 20 - storedDishes[tempInt].getHeight() / 2 - 4);
+        if(arrWasEmpty)
+            nextBullet();
     }
 
     public Item getFirstHeldItem() {

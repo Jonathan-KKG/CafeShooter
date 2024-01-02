@@ -77,22 +77,18 @@ public class CookingController {
             case "WaffleIron" -> {
                 start = 0;
                 last = 3;
-                break;
             }
             case "Oven" -> {
                 start = 3;
                 last = 7;
-                break;
             }
             case "CoffeeMachine" -> {
                 start = 7;
                 last = 8;
-                break;
             }
             case "Stove" -> {
                 start = 8;
                 last = 9;
-                break;
             }
         }
 
@@ -145,7 +141,7 @@ public class CookingController {
      */
     private void newHitTimeWindow() {
         double midTime = Math.random() * 0.3 + 0.3;
-        currentHitTimeWindow = new double[]{midTime - 0.05, midTime + 0.05};
+        currentHitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
     }
 
     /**

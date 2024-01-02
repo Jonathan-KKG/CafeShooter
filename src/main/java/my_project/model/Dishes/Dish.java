@@ -1,5 +1,6 @@
 package my_project.model.Dishes;
 
+import KAGO_framework.view.DrawTool;
 import my_project.model.Item;
 
 /**
@@ -7,6 +8,7 @@ import my_project.model.Item;
  */
 public abstract class Dish extends Item {
     private double[] direction;
+    private double scale;
 
     /**
      * set starting position & sprite of Dish
@@ -18,6 +20,11 @@ public abstract class Dish extends Item {
     public Dish(String filename, double pX, double pY) {
         super("Dishes/" + filename, pX, pY);
         speed = 500;
+        scale = 1;
+    }
+
+    public void draw(DrawTool drawTool){
+        drawTool.drawTransformedImage(myImage, x, y, 0, scale);
     }
 
     public void setDirection(double[] dir) {
@@ -26,5 +33,13 @@ public abstract class Dish extends Item {
 
     public double[] getDirection() {
         return direction;
+    }
+
+    public void setScale(double pScale){
+        scale = pScale;
+    }
+
+    public double getScale() {
+        return scale;
     }
 }

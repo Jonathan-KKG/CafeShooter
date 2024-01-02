@@ -209,8 +209,6 @@ public class EnvironmentController {
         if(table.isTableEmpty())
             viewController.draw(dish);
         table.addToTable(dish);
-        dish.setX(table.getX());
-        dish.setY(table.getY());
     }
 
     /**

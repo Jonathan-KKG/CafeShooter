@@ -207,8 +207,6 @@ public class EnvironmentController {
      */
     public void addToTable(Dish dish, Table table) {
         table.addToTable(dish);
-        dish.setX(table.getX());
-        dish.setY(table.getY());
     }
 
     /**

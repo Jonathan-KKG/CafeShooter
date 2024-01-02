@@ -201,6 +201,10 @@ public class ItemController {
      * Removes the first item of the HeldDishes stack, draws the new topmost element and updates UI
      */
     public void removeFirstHeldItem() {
+        if(heldItems.isEmpty())
+            return;
+        
+        programController.getViewController().removeDrawable(heldItems.top());
         heldItems.pop();
         programController.getViewController().draw(heldItems.top());
         programController.getUIController().updateHeldItemsAmount(false);

@@ -74,22 +74,22 @@ public class CookingController {
         int start = -1;
         int last = -1;
         switch (objectInRange.getClass().getSimpleName()) {
-            case "WaffleIron": {
+            case "WaffleIron" -> {
                 start = 0;
                 last = 3;
                 break;
             }
-            case "Oven": {
+            case "Oven" -> {
                 start = 3;
                 last = 7;
                 break;
             }
-            case "CoffeeMachine": {
+            case "CoffeeMachine" -> {
                 start = 7;
                 last = 8;
                 break;
             }
-            case "Stove": {
+            case "Stove" -> {
                 start = 8;
                 last = 9;
                 break;
@@ -171,7 +171,6 @@ public class CookingController {
                 // checks whether it is one of the needed ingredients
                 if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
                     recipes[dish][j][1] = "true";
-                    programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
                     programController.getDishController().removeFirstHeldItem();
                 }
             }
@@ -179,8 +178,10 @@ public class CookingController {
         // checks whether all the needed ingredients are there
         boolean isEverythingThere = true;
         for (int i = 1; i < recipes[dish].length; i++) {
-            if (recipes[dish][i][1].equals("false"))
+            if (recipes[dish][i][1].equals("false")) {
                 isEverythingThere = false;
+                i = recipes[dish].length;
+            }
         }
         // if there are not all needed ingredients gives the removed back
         // else sets the cooking dish

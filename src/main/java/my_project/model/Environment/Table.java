@@ -26,6 +26,10 @@ public class Table extends CollidableEnvironment {
         }
     }
 
+    public boolean isTableEmpty(){
+        return tableDishes.isEmpty();
+    }
+
     public void addToTable(Dish newDish) {
         tableDishes.enqueue(newDish);
     }

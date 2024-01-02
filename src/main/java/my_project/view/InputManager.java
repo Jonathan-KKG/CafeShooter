@@ -137,7 +137,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
         if (key == KeyEvent.VK_Q) {
             if (closestObjCook instanceof Table && heldItem instanceof Dish) {
-                programController.getEnvironmentController().addToTable((Dish) heldItem, (Table) closestObjCook);
+                programController.getEnvironmentController().addToTable((Dish) heldItem, (Table) closestObjCook, programController.getViewController());
                 programController.getDishController().removeFirstHeldItem();
             } else if (closestObjCook instanceof CookingStation)
                 programController.getCookingController().cook();

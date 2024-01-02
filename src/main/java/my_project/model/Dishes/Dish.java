@@ -8,7 +8,6 @@ import my_project.model.Item;
 public abstract class Dish extends Item {
     private double[] direction;
 
-
     /**
      * set starting position & sprite of Dish
      *

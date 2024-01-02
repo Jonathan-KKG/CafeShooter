@@ -19,7 +19,6 @@ public class DishUI extends UI {
 
     @Override
     public void draw(DrawTool drawTool) {
-
         drawDefaultBorder(drawTool, -1, startingPosition[0] + 5, startingPosition[1], 5 * 45 + 45d / 2, 100);
 
         //UI Seperators

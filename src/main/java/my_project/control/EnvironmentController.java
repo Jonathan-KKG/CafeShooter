@@ -18,10 +18,10 @@ public class EnvironmentController {
     private CollidableEnvironment[][] unlockableSets;
 
     //Attribute
-    private int[] kitchenOffset = {(int) (1080 * 0.85) - 480, (int) (1920 * 0.85) - 785};
-    private int[] bottomStorageOffset = {kitchenOffset[0] + 32 * 9, kitchenOffset[1] };          // Flour, Egg, strawberry and Icecream
+    private int[] kitchenOffset = {(int) (1080 * 0.85) / 2, (int) (1920 * 0.85) - 785};
+    private int[] bottomStorageOffset = {kitchenOffset[0] + 32 * 8, kitchenOffset[1] };          // Flour, Egg, strawberry and Icecream
     private int[] leftStorageOffset = {kitchenOffset[0] + 32, kitchenOffset[1] - 32 * 3};                     // chocolate, cheese, apple
-    private int[] rightStorageOffset = {kitchenOffset[0] + 32 * 20, kitchenOffset[1] - 32 * 4};                    // CoffeePowder, cream, Bacon and spaghetti
+    private int[] rightStorageOffset = {kitchenOffset[0] + 32 * 18, kitchenOffset[1] - 32 * 4};                    // CoffeePowder, cream, Bacon and spaghetti
 
     /**
      * Creates and draws all Environment objects
@@ -35,6 +35,10 @@ public class EnvironmentController {
         unlockableSets = new CollidableEnvironment[7][];
 
         createObjects(viewController);
+
+        for (int i = 0; i < unlockableSets.length; i++) {
+            activateNextSetOfCooking(viewController);
+        }
     }
 
     /**
@@ -83,27 +87,27 @@ public class EnvironmentController {
 
             // cafe floor
             for (int i = 0; i < 8 * 32; i = i + 32)
-                for (int j = 0; j < 20 * 32; j = j + 32)
+                for (int j = 0; j < 18 * 32; j = j + 32)
                     environmentObjects.append(new Environment("floortile", kitchenOffset[0] + 32 + j, kitchenOffset[1] - i));
 
             // Walls and corners
             for (int i = 0; i < 8 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("leftwall", kitchenOffset[0] + 20, kitchenOffset[1] - i));
             for (int i = 0; i < 8 * 32; i = i + 32)
-                collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] - i));
+                collidableEnvironmentObjects.append(new CollidableEnvironment("rightwall", kitchenOffset[0] - 384 + 31 * 32, kitchenOffset[1] - i));
 
-            for (int i = 0; i < 4 * 32; i = i + 32)
+            for (int i = 0; i < 3 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
-            for (int i = 5 * 32; i < 15 * 32; i = i + 32)
+            for (int i = 4 * 32; i < 13 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
-            for (int i = 16 * 32; i < 20 * 32; i = i + 32)
+            for (int i = 14 * 32; i < 18 * 32; i = i + 32)
                 collidableEnvironmentObjects.append(new CollidableEnvironment("topwall", kitchenOffset[0] - 10 + 42 + i, kitchenOffset[1] + 148 - 12 * 32));
 
             collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn1", kitchenOffset[0] + 20, kitchenOffset[1] + 148 - 12 * 32));
-            collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2", kitchenOffset[0] - 384 + 33 * 32, kitchenOffset[1] + 148 - 12 * 32));
+            collidableEnvironmentObjects.append(new CollidableEnvironment("wallturn2", kitchenOffset[0] - 384 + 31 * 32, kitchenOffset[1] + 148 - 12 * 32));
 
-            // CookingStations and storages
-            CollidableEnvironment createdObject = new WaffleIron(kitchenOffset[0] + 300, kitchenOffset[1] - 32 - 3 * 32);
+            // Interactles (CookingStations, storages and bin)
+            CollidableEnvironment createdObject = new WaffleIron(kitchenOffset[0] + 32 * 9, kitchenOffset[1] - 32 - 3 * 32);
             collidableEnvironmentObjects.append(createdObject);
             interactableEnvironmentObjects.append(createdObject);
 
@@ -115,15 +119,20 @@ public class EnvironmentController {
             collidableEnvironmentObjects.append(createdObject);
             interactableEnvironmentObjects.append(createdObject);
 
+            createdObject = new Bin(rightStorageOffset[0], rightStorageOffset[1] - 32 * 2);
+            collidableEnvironmentObjects.append(createdObject);
+            interactableEnvironmentObjects.append(createdObject);
+
+
             createUnlockables();
 
 
             // tabletops
-            Table table = new Table("tabletop", kitchenOffset[0] + 32 * 5, kitchenOffset[1] - 7 * 32 - 12);
+            Table table = new Table("tabletop", kitchenOffset[0] + 32 * 4, kitchenOffset[1] - 7 * 32 - 12);
             collidableEnvironmentObjects.append(table);
             interactableEnvironmentObjects.append((table));
 
-            table = new Table("tabletop", kitchenOffset[0] + 32 * 16, kitchenOffset[1] - 7 * 32 - 12);
+            table = new Table("tabletop2", kitchenOffset[0] + 32 * 14, kitchenOffset[1] - 7 * 32 - 12);
             collidableEnvironmentObjects.append(table);
             interactableEnvironmentObjects.append((table));
 
@@ -134,6 +143,7 @@ public class EnvironmentController {
                 viewController.draw(environmentObjects.getContent());
                 environmentObjects.next();
             }
+
             collidableEnvironmentObjects.toFirst();
             while (collidableEnvironmentObjects.hasAccess()) {
                 viewController.draw(collidableEnvironmentObjects.getContent());
@@ -152,19 +162,19 @@ public class EnvironmentController {
         unlockableSets[0] = new CollidableEnvironment[]{new StrawberryStorage(bottomStorageOffset[0] + 32 * 2, bottomStorageOffset[1])};
 
         // Second set
-        unlockableSets[1] = new CollidableEnvironment[]{new CoffeeMachine(kitchenOffset[0] + 300 + 32 * 2, kitchenOffset[1] - 32 - 32 * 3),
+        unlockableSets[1] = new CollidableEnvironment[]{new CoffeeMachine(kitchenOffset[0] + 32 * 10, kitchenOffset[1] - 32 - 32 * 3),
                                                         new CoffeePowderStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 0)};
 
         // etc..
         unlockableSets[2] = new CollidableEnvironment[]{new IceCreamStorage(bottomStorageOffset[0] + 32 * 3, bottomStorageOffset[1])};
 
-        unlockableSets[3] = new CollidableEnvironment[]{new Oven(kitchenOffset[0] + 300 + 32, kitchenOffset[1] - 32 - 32 * 3),
+        unlockableSets[3] = new CollidableEnvironment[]{new Oven(kitchenOffset[0] + 32 * 11, kitchenOffset[1] - 32 - 32 * 3),
                                                         new AppleStorage(leftStorageOffset[0], leftStorageOffset[1])};
 
         unlockableSets[4] = new CollidableEnvironment[]{new ChocolateStorage(leftStorageOffset[0], leftStorageOffset[1] + 32)};
         unlockableSets[5] = new CollidableEnvironment[]{new CheeseStorage(leftStorageOffset[0], leftStorageOffset[1] + 32 * 2)};
 
-        unlockableSets[6] = new CollidableEnvironment[]{new Stove(kitchenOffset[0] + 300 - 32, kitchenOffset[1] - 32 - 3 * 32),
+        unlockableSets[6] = new CollidableEnvironment[]{new Stove(kitchenOffset[0] + 32 * 8, kitchenOffset[1] - 32 - 3 * 32),
                                                         new CreamStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 1),
                                                         new BaconStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 2),
                                                         new SpaghettiStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 3)};

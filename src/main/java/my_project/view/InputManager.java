@@ -5,6 +5,7 @@ import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
 import my_project.model.Cook;
 import my_project.model.Dishes.Dish;
+import my_project.model.Environment.Bin;
 import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Environment.CookingStation;
 import my_project.model.Environment.Storages.Storage;
@@ -142,7 +143,8 @@ public class InputManager extends InteractiveGraphicalObject {
                 programController.getCookingController().cook();
             else if (closestObjCook instanceof Storage)
                 programController.getDishController().addToHeldItemStack(((Storage) closestObjCook).getIngredient());
-
+            else if (closestObjCook instanceof Bin)
+                programController.getDishController().removeFirstHeldItem();
         }
 
         if (key == KeyEvent.VK_U)

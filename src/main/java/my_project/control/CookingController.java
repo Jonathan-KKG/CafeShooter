@@ -169,7 +169,7 @@ public class CookingController {
         for (int i = 1; i < recipes[dish].length; i++) {
             for (int j = 1; j < recipes[dish].length; j++) {
                 // checks whether it is one of the needed ingredients
-                if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0])) {
+                if (programController.getDishController().getFirstHeldItem() != null && programController.getDishController().getFirstHeldItem().getClass().getSimpleName().equals(recipes[dish][j][0]) && !recipes[dish][j][1].equals("true")) {
                     recipes[dish][j][1] = "true";
                     programController.getViewController().removeDrawable(programController.getDishController().getFirstHeldItem());
                     programController.getDishController().removeFirstHeldItem();
@@ -199,7 +199,7 @@ public class CookingController {
                 recipes[dish][i][1] = "false";
             }
         }
-
+        programController.getDishController().moveHeldItems();
         return isEverythingThere;
     }
 }

@@ -48,8 +48,13 @@ public class Table extends CollidableEnvironment {
         return tableDishes.isEmpty();
     }
 
-    public void removeFirstDish(){
+    /**
+     * Put the dish back into its original state and returns it
+     * @param viewController Required to draw the next element on the table
+     */
+    public void removeFirstDish(ViewController viewController){
         tableDishes.front().setScale(1);
         tableDishes.dequeue();
+        viewController.draw(tableDishes.front());
     }
 }

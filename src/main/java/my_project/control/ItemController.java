@@ -19,8 +19,7 @@ public class ItemController {
     private Stack<Item> heldItems;
     private ProgramController programController;
     private int currentDishIndex;
-    private Class<? extends Dish>[] dishClasses;
-    private Class<? extends Ingredient>[] ingredientClasses;
+    private Class<? extends Item>[] itemClasses;
 
     /**
      * creates an array with 5 indexes and fills it with random dishes
@@ -35,11 +34,11 @@ public class ItemController {
         storedDishes = new Dish[5];
         programController = pProgramController;
 
-        dishClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class};
-        ingredientClasses = new Class[]{Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
+        itemClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class,
+                                Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
-            storedDishes[i] = createDish(1304 + 30d / 2d + 55 * i, 838, "Waffles");
+            storedDishes[i] = (Dish) createItem(1304 + 30d / 2d + 55 * i, 838, "Waffles");
             storedDishes[i].setX(storedDishes[i].getX() + 20 - storedDishes[i].getWidth() / 2);
             storedDishes[i].setY(storedDishes[i].getY() + 20 - storedDishes[i].getHeight() / 2 - 4);
             programController.getViewController().draw(storedDishes[i]);
@@ -115,56 +114,30 @@ public class ItemController {
         return findNextIndex(startingIndex, modifiedIndex, type);
     }
 
-    // TODO: shorten the 2 following methods into one?
     /**
-     * creates a dish
+     * creates an iteem
      *
      * @param pX       starting position
      * @param pY       starting position
-     * @param dishType int between 1-4, each int is a set dishtype f.e. coffee
-     * @return returns drawn dish
+     * @param itemType simpleClassName of the item's class
+     * @return returns item
      */
-    public Dish createDish(double pX, double pY, String dishType) {
-        Dish dish = null;
+    public Item createItem(double pX, double pY, String itemType) {
+        Item item = null;
 
-        for (int i = 0; i < dishClasses.length; i++) {
-            if(dishType.equals(dishClasses[i].getSimpleName())) {
+        for (int i = 0; i < itemClasses.length; i++) {
+            if(itemType.equals(itemClasses[i].getSimpleName())) {
                 try {
-                    dish = dishClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
+                    item = itemClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
                     e.printStackTrace();
                 }
-                i = dishClasses.length;
+                i = itemClasses.length;
             }
         }
-        if (dish == null) System.out.println("nu uh wrong dishtype");
+        if (item == null) System.out.println("nu uh wrong itemtype");
 
-        return dish;
-    }
-    /**
-     * creates a ingredient
-     *
-     * @param pX       starting position
-     * @param pY       starting position
-     * @param ingredientType name of the required ingredient
-     * @return returns created ingredient
-     */
-    public Ingredient createIngredient(double pX, double pY, String ingredientType) {
-        Ingredient ingredient = null;
-
-        for (int i = 0; i < ingredientClasses.length; i++) {
-            if(ingredientType.equals(ingredientClasses[i].getSimpleName())) {
-                try {
-                    ingredient = ingredientClasses[i].getDeclaredConstructor(double.class, double.class).newInstance(pX, pY);
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
-                    e.printStackTrace();
-                }
-                i = ingredientClasses.length;
-            }
-        }
-        if (ingredient == null) System.out.println("nu uh wrong ingredientType");
-
-        return ingredient;
+        return item;
     }
 
     /**
@@ -200,7 +173,7 @@ public class ItemController {
     }
 
     /**
-     * Removes the first item of the HeldDishes stack, draws the new topmost element and updates UI
+     * Removes the first item of the HeldDishes stack, stops drawing it, draws the new topmost element and updates UI
      */
     public void removeFirstHeldItem() {
         if(heldItems.isEmpty())
@@ -224,7 +197,7 @@ public class ItemController {
         boolean arrWasEmpty = findNextIndex(currentDishIndex,currentDishIndex,0) == -1;
 
         Dish dishToBeAdded = table.getFirstDish();
-        table.removeFirstDish();
+        table.removeFirstDish(programController.getViewController());
         storedDishes[tempInt] = dishToBeAdded;
         storedDishes[tempInt].setX(1300 + 35d / 2d + 55 * tempInt + 20 - storedDishes[tempInt].getWidth() / 2);
         storedDishes[tempInt].setY(838 + 20 - storedDishes[tempInt].getHeight() / 2 - 4);

@@ -13,8 +13,8 @@ import java.util.TimerTask;
  */
 public class WaveController {
     private Queue<Enemy[]> enemyWaves;
-    private Class<? extends Enemy>[] enemyTypes;
     private Timer spawnTimer;
+    private String[] knownDishes;
 
     /**
      * Saves enemeytypes as strings, creates all waves and initiates the first one
@@ -26,9 +26,10 @@ public class WaveController {
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
         // Order of enemyTypes[] is important for scaling difficulty
-        enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
+        Class<? extends Enemy>[] enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
+        knownDishes = new String[enemyTypes.length];
 
-        createWaves();
+        createWaves(enemyTypes);
 
         // Ready First Wave
         scheduleWaveDrawing(viewController);
@@ -38,10 +39,10 @@ public class WaveController {
     /**
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
      */
-    private void createWaves() {
+    private void createWaves(Class<? extends Enemy>[] enemyTypes) {
         int increment = 2;
-        int maximum = 10;
-        // Create x Waves each contaning 2x + i enemies
+        int maximum = 18;
+
         for (int i = increment; i < maximum; i += increment) {
 
             Enemy[] enemies = new Enemy[i];
@@ -131,7 +132,7 @@ public class WaveController {
      */
     private void scheduleWaveDrawing(ViewController viewController) {
         for (int i = 0; i < enemyWaves.front().length; i++) {
-            long randomDelay = (long) (Math.random() * 1000 * enemyWaves.front().length + i * 500L);
+            long randomDelay = (long) (Math.random() * 1500 * enemyWaves.front().length + i * 3000L);
             spawnTimer.schedule(addElementToDraw(enemyWaves.front()[i], viewController), randomDelay);
         }
     }
@@ -147,9 +148,16 @@ public class WaveController {
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
 
-        if(true) // TODO: nur aufrufen, wenn die neue wave tatsächlich neue ingredients miteinbringen soll
-            envController.activateNextSetOfCooking(viewController);
+        for (int i = 0; i < knownDishes.length; i++) {
+            if(enemyWaves.front()[0].getRequiredDish().equals(knownDishes[i]))
+                break;
 
+            if(knownDishes[i] == null) {
+                knownDishes[i] = enemyWaves.front()[0].getRequiredDish();
+                envController.activateNextSetOfCooking(viewController);
+                i = knownDishes.length;
+            }
+        }
     }
 
     public Enemy[] getWave() {

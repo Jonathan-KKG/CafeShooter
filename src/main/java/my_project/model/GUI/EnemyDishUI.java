@@ -47,7 +47,7 @@ public class EnemyDishUI extends UI {
         drawTool.drawFilledEllipticArc(x+12-markerRadius[0] / 2f,y-6-markerRadius[0] / 2f, markerRadius[0], markerRadius[1],105,35,2);
 
         // Dish
-        drawTool.drawImage(myImage,x - 32 * 1.125, y - 32 * 1.125 - bubbleRadius[1] / 2f);
+        drawTool.drawImage(myImage,x - 32 * 0.6 - myImage.getWidth() / 2d, y - 32 * 0.6 - bubbleRadius[1] / 2f - myImage.getHeight() / 2d);
     }
 
 }

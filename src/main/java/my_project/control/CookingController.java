@@ -127,7 +127,7 @@ public class CookingController {
                 return;
             }
 
-            dCtrl.addToHeldItemStack(dCtrl.createDish(cook.getX(), cook.getY(), currentCookingDish));
+            dCtrl.addToHeldItemStack(dCtrl.createItem(cook.getX(), cook.getY(), currentCookingDish));
             exitCooking(cook);
         } else {
             exitCooking(cook);
@@ -140,8 +140,8 @@ public class CookingController {
      * Changes the HitTimeWindow to a value between 0.2 and 0.7
      */
     private void newHitTimeWindow() {
-        double midTime = Math.random() * 0.3 + 0.3;
-        currentHitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
+        double midTime = Math.random() * 0.3 + 0.35;
+        currentHitTimeWindow = new double[]{midTime - 0.07, midTime + 0.07};
     }
 
     /**
@@ -187,7 +187,7 @@ public class CookingController {
                     recipes[dish][j][1] = "false";
                     Cook cook = programController.getEntityController().getCook();
                     programController.getDishController().addToHeldItemStack(
-                            programController.getDishController().createIngredient(cook.getX(), cook.getY(), recipes[dish][j][0]));
+                            programController.getDishController().createItem(cook.getX(), cook.getY(), recipes[dish][j][0]));
                 }
             }
         } else {

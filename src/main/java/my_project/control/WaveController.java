@@ -2,6 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.abitur.datenstrukturen.Queue;
+import my_project.model.Dishes.ChocolateCheeseCake;
 import my_project.model.Enemies.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,7 +42,7 @@ public class WaveController {
      */
     private void createWaves(Class<? extends Enemy>[] enemyTypes) {
         int increment = 2;
-        int maximum = 18;
+        int maximum = 20;
 
         for (int i = increment; i < maximum; i += increment) {
 
@@ -78,8 +79,11 @@ public class WaveController {
      * @param uiController   Required to draw the new wave and its Wants-Bubbles
      * @param envController Required to unlock new cooking environment objects
      */
-    public void checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
+    public void checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
         boolean isEmpty = true;
+        if (enemyWaves.isEmpty())
+            programController.endGame(true);
+
         for (int i = 0; i < enemyWaves.front().length; i++) {
             if (enemyWaves.front()[i] != null)
                 isEmpty = false;
@@ -145,11 +149,12 @@ public class WaveController {
      */
     private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         enemyWaves.dequeue();
+
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
 
         for (int i = 0; i < knownDishes.length; i++) {
-            if(enemyWaves.front()[0].getRequiredDish().equals(knownDishes[i]))
+            if(enemyWaves.front()[0].getRequiredDish().equals(knownDishes[i]) || enemyWaves.front()[0].getRequiredDish().equals(ChocolateCheeseCake.class.getSimpleName()))
                 break;
 
             if(knownDishes[i] == null) {

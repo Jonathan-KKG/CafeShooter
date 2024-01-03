@@ -17,7 +17,7 @@ public abstract class Enemy extends Entity {
      */
     public Enemy(String filename, double pX, double pY) {
         super("Enemies/" + filename, pX, pY);
-        speed = 30;
+        speed = 25;
         isActive = false;
     }
 

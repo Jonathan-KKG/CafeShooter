@@ -51,22 +51,26 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt) {
-        if (!isRunning) return;
 
+
+        if (!isRunning) return;
+        waveController.checkForNewWave(viewController, uiController, environmentController,this);
+        if (!isRunning) return;
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt);
         itemController.dishUpdate(dt);
         entityController.dishCollisionUpdate();
-        waveController.checkForNewWave(viewController, uiController, environmentController);
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);
+
     }
 
     /**
      * prevents updateProgram from executing & draws the finishing frame
+     * @param won whether players won.
      */
-    public void endGame() {
+    public void endGame(boolean won) {
         isRunning = false;
         uiController.drawEndGameScreen(viewController);
         entityController.endGame();

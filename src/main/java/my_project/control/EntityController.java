@@ -52,7 +52,7 @@ public class EntityController {
                     checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
 
                 if (enemies[i].collidesWith(cook))
-                    programController.endGame();
+                    programController.endGame(false);
             }
         }
     }

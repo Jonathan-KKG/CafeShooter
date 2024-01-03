@@ -15,5 +15,6 @@ public class Max extends Enemy {
     public Max(double pX, double pY) {
         super("Max", pX, pY);
         requiredDish = Coffee.class.getSimpleName();
+        speed -= 4;
     }
 }

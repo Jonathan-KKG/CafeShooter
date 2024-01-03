@@ -16,5 +16,6 @@ public class Maksym extends Enemy {
     public Maksym(double pX, double pY) {
         super("Maksym", pX, pY);
         requiredDish = StrawberryWaffles.class.getSimpleName();
+        speed -= 3;
     }
 }

@@ -15,5 +15,6 @@ public class Jonathan extends Enemy {
     public Jonathan(double pX, double pY) {
         super("Jonathan", pX, pY);
         requiredDish = SpaghettiCarbonara.class.getSimpleName();
+        speed -= 2;
     }
 }

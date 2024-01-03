@@ -16,5 +16,6 @@ public class Haya extends Enemy {
     public Haya(double pX, double pY) {
         super("Haya", pX, pY);
         requiredDish = CheeseCake.class.getSimpleName();
+        speed += 4;
     }
 }

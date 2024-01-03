@@ -15,5 +15,6 @@ public class Carlos extends Enemy {
     public Carlos(double pX, double pY) {
         super("callus", pX, pY);
         requiredDish = ApplePie.class.getSimpleName();
+        speed += 2;
     }
 }

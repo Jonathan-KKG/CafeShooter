@@ -16,5 +16,6 @@ public class Ilias extends Enemy {
     public Ilias(double pX, double pY) {
         super("Ilias", pX, pY);
         requiredDish = ChocolateCheeseCake.class.getSimpleName();
+        speed -= 1;
     }
 }

@@ -15,5 +15,6 @@ public class Habib extends Enemy {
     public Habib(double pX, double pY) {
         super("Habib", pX, pY);
         requiredDish = ChocolateCake.class.getSimpleName();
+        speed += 3;
     }
 }

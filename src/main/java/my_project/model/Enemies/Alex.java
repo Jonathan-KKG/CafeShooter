@@ -16,5 +16,6 @@ public class Alex extends Enemy {
     public Alex(double pX, double pY) {
         super("Alex", pX, pY);
         requiredDish = IceCreamWaffles.class.getSimpleName();
+        speed += 1;
     }
 }

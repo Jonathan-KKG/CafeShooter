@@ -50,7 +50,6 @@ public abstract class timeableSkillCheck extends SkillCheckUI {
         // Valid Hitzone indicator
         drawTool.setCurrentColor(255, 0, 0, 160);
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4 + 1.5, hitzoneYPosition, width * 0.4 - 3, hitzoneHeight);
-
         // Current position indicator
         drawTool.setCurrentColor(255, 0, 0, 235);
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4 + 1.5, y, width * 0.4 - 3, 3);

@@ -23,7 +23,7 @@ public class WaveController {
      * @param viewController Required to draw the first wave and its Wants-Bubbles
      * @param uiController   Required to draw the first wave and its Wants-Bubbles
      */
-    public WaveController(ViewController viewController, UIController uiController) {
+    public WaveController(ViewController viewController, UIController uiController, EnvironmentController environmentController, ProgramController programController) {
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
         // Order of enemyTypes[] is important for scaling difficulty
@@ -35,6 +35,10 @@ public class WaveController {
         // Ready First Wave
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
+
+        for (int i = 0; i < 8; i++) {
+            nextWave(viewController,uiController, environmentController, programController);
+        }
     }
 
     /**
@@ -46,7 +50,7 @@ public class WaveController {
 
         for (int i = increment; i < maximum; i += increment) {
 
-            Enemy[] enemies = new Enemy[i];
+            Enemy[] enemies = new Enemy[2];
 
             // enemies[0] reserved for newest enemy type
             double[] pos = getRandomEnemyPosition();
@@ -89,7 +93,7 @@ public class WaveController {
                 isEmpty = false;
         }
         if (isEmpty)
-            nextWave(viewController, uiController, envController);
+            nextWave(viewController, uiController, envController, programController);
     }
 
     /**
@@ -147,8 +151,12 @@ public class WaveController {
      * @param viewController Required to draw the new Wave and its Wants-Bubbles
      * @param uiController   Required to draw the new Wave and its Wants-Bubbles
      */
-    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
+    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
         enemyWaves.dequeue();
+        if(enemyWaves.isEmpty()) {
+            programController.endGame(true);
+            return;
+        }
 
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);

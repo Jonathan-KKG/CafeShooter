@@ -6,6 +6,10 @@ import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Enemies.Enemy;
 import my_project.model.Cook;
 import my_project.model.GUI.*;
+import my_project.model.GUI.GameStates.GameStateUI;
+import my_project.model.GUI.GameStates.LostGameUI;
+import my_project.model.GUI.GameStates.StartScreenUI;
+import my_project.model.GUI.GameStates.WonGameUI;
 import my_project.model.GUI.SkillChecks.*;
 
 /**
@@ -18,7 +22,7 @@ public class UIController {
     private EnemyDishUI[] enemyDishUIs;
     private List<HPBar> hpBars;
     private DishStackUI dishStackUI;
-    private EndGameUI endGameUI;
+    private GameStateUI gameStateUI;
 
     /**
      * Creates all GUI elements
@@ -29,9 +33,11 @@ public class UIController {
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
         dishStackUI = new DishStackUI(816, 797);
+        gameStateUI = new StartScreenUI(0,0);
 
         viewController.draw(dishUI);
         viewController.draw(dishStackUI);
+        viewController.draw(gameStateUI);
     }
 
     /**
@@ -61,8 +67,8 @@ public class UIController {
      */
     public void createSkillCheck(double[] pos, String type, double[] hitTimeWindow, ViewController viewController) {
         switch (type){
-            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1], hitTimeWindow);
-            case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1]);
+            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1]);
+            case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1], hitTimeWindow);
             case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], hitTimeWindow);
             case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
             default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
@@ -196,10 +202,15 @@ public class UIController {
 
     /**
      * Draws the final frame after the player has failed
+     * @param viewController Required to draw
+     * @param won whether the players lost or won the game
      */
-    public void drawEndGameScreen(ViewController viewController) {
-        endGameUI = new EndGameUI(250, 1080* 0.85 / 4);
-        viewController.draw(endGameUI);
+    public void drawEndGameScreen(ViewController viewController, boolean won) {
+        if(won)
+            gameStateUI = new WonGameUI(0,0);
+        else
+            gameStateUI = new LostGameUI(250, 1080* 0.85 / 4);
+        viewController.draw(gameStateUI);
     }
 
     /**
@@ -209,7 +220,7 @@ public class UIController {
      * @param programController Required to restart the game if needed
      */
     public void restartGame(double pX, double pY, ProgramController programController){
-        if(endGameUI.isOnRestartButton(pX,pY))
+        if(((LostGameUI) gameStateUI).isOnRestartButton(pX,pY))
             programController.restartGame();
     }
 

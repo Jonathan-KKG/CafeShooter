@@ -26,12 +26,12 @@ public class CoffeeMachine extends CookingStation {
     public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
         for (double i = 0; i < cookingTime; i++) {
             if (
-                    isMovingDownwards &&
-                            time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]  && // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
-                            time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0] ||
-                            !isMovingDownwards &&
-                                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i &&
-                                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i
+                isMovingDownwards &&
+                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]  && // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
+                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0] ||
+                !isMovingDownwards &&
+                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i &&
+                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i
             )
             {
                 return true;

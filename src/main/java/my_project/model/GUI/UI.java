@@ -19,8 +19,8 @@ public abstract class UI extends GraphicalObject {
      * @param pY Starting location of the Model
      */
     public UI(double pX, double pY) {
-        rgbaBackgroundValues = new int[]{40, 40, 40, 160};
-        rgbaBorderValues = new int[]{40, 40, 40, 200};
+        rgbaBackgroundValues = new int[]{30, 30, 30, 200};
+        rgbaBorderValues = new int[]{30, 30, 30, 210};
         startingPosition = new double[]{pX, pY};
     }
 

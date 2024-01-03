@@ -14,6 +14,7 @@ public class CookingController {
     private CookingStation currentStation;
     private String currentCookingDish;
     private double[] currentHitTimeWindow;
+    private int mistakes;
 
     /**
      * creates an cookingController object.
@@ -98,6 +99,7 @@ public class CookingController {
             if (!checkForRightIngredients(i))
                 continue;
 
+            mistakes = 0;
             cook.setBusy(true);
             time = 0;
             newHitTimeWindow();
@@ -130,6 +132,9 @@ public class CookingController {
             dCtrl.addToHeldItemStack(dCtrl.createItem(cook.getX(), cook.getY(), currentCookingDish));
             exitCooking(cook);
         } else {
+            mistakes++;
+            if(mistakes <= currentStation.getAllowedMistakes())
+                return;
             exitCooking(cook);
             uiCtrl.deleteSkillCheckUI(vCtrl);
         }

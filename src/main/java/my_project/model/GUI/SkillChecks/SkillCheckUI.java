@@ -54,7 +54,7 @@ public abstract class SkillCheckUI extends UI {
      */
     public boolean increaseProgress() {
         progress += increment;
-        return !(progress + increment >= 1);
+        return !(progress >= 1);
     }
 
     /**

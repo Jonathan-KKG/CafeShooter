@@ -6,6 +6,7 @@ package my_project.model.Environment;
 public abstract class CookingStation extends CollidableEnvironment {
 
     protected double cookingTime; // The maximum duration that its skillcheck could go on for
+    protected int allowedMistakes;
 
     /**
      * Creates a new CookingStation
@@ -15,10 +16,7 @@ public abstract class CookingStation extends CollidableEnvironment {
      */
     public CookingStation(String filename, double pX, double pY) {
         super(filename, pX, pY);
-    }
-
-    public double getCookingTime() {
-        return cookingTime;
+        allowedMistakes = 0;
     }
 
     /**
@@ -30,4 +28,10 @@ public abstract class CookingStation extends CollidableEnvironment {
      */
     public abstract boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow);
 
+    public double getCookingTime() {
+        return cookingTime;
+    }
+    public int getAllowedMistakes() {
+        return allowedMistakes;
+    }
 }

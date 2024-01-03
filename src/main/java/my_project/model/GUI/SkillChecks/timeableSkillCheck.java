@@ -2,6 +2,9 @@ package my_project.model.GUI.SkillChecks;
 
 import KAGO_framework.view.DrawTool;
 
+/**
+ * A class for all skillchecks that require timing of the player
+ */
 public abstract class timeableSkillCheck extends SkillCheckUI {
 
     protected double hitzoneYPosition;

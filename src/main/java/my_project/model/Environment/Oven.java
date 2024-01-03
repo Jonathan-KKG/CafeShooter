@@ -30,8 +30,8 @@ public class Oven extends CookingStation{
                     time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]  && // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
                     time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0] ||
                 !isMovingDownwards &&
-                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i &&
-                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i
+                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i-(currentHitTimeWindow[1] - currentHitTimeWindow[0])/2 &&
+                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i-(currentHitTimeWindow[1] - currentHitTimeWindow[0])/2
             )
             {
                 return true;

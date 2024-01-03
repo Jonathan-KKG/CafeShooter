@@ -25,13 +25,17 @@ public class CoffeeMachine extends CookingStation {
     @Override
     public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
         for (double i = 0; i < cookingTime; i++) {
+            System.out.println(Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]+"uper downwards");
+            System.out.println(Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]+"bottom downwards");
+            System.out.println(Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i+"uper upwards");
+            System.out.println(Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + "bottom upwards");
             if (
                     isMovingDownwards &&
                             time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]  && // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
                             time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0] ||
                             !isMovingDownwards &&
-                                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i &&
-                                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i
+                                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i-(currentHitTimeWindow[1] - currentHitTimeWindow[0])/2 &&
+                                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i-(currentHitTimeWindow[1] - currentHitTimeWindow[0])/2
             )
             {
                 return true;

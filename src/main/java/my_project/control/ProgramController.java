@@ -38,7 +38,7 @@ public class ProgramController {
         cookingController = new CookingController(this);
         inputManager = new InputManager(this);
         uiController = new UIController(viewController);
-        waveController = new WaveController(viewController, uiController);
+        waveController = new WaveController(viewController, uiController,environmentController,this);
         itemController = new ItemController(this);
         isRunning = true;
 

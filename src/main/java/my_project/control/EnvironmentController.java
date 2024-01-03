@@ -124,9 +124,7 @@ public class EnvironmentController {
             collidableEnvironmentObjects.append(createdObject);
             interactableEnvironmentObjects.append(createdObject);
 
-
             createUnlockables();
-
 
             // tabletops
             Table table = new Table("tabletop", kitchenOffset[0] + 32 * 4, kitchenOffset[1] - 7 * 32 - 12);
@@ -136,7 +134,6 @@ public class EnvironmentController {
             table = new Table("tabletop2", kitchenOffset[0] + 32 * 14, kitchenOffset[1] - 7 * 32 - 12);
             collidableEnvironmentObjects.append(table);
             interactableEnvironmentObjects.append((table));
-
 
             // draws created objects
             environmentObjects.toFirst();

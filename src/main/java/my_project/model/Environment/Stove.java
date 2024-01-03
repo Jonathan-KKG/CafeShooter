@@ -27,13 +27,18 @@ public class Stove extends CookingStation{
     @Override
     public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
         for (double i = 0; i < cookingTime; i++) {
+            // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
+            double earliestTimeWindow = Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i;
+            double latestTimeWindow =   Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i;
+            double timeDifference = currentHitTimeWindow[1] - currentHitTimeWindow[0];
+
             if (
                     isMovingDownwards &&
-                            time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0]  && // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
-                            time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i + currentHitTimeWindow[1] - currentHitTimeWindow[0] ||
+                            time < earliestTimeWindow + (timeDifference)  &&
+                            time > latestTimeWindow + (timeDifference) ||
                             !isMovingDownwards &&
-                                    time > Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i &&
-                                    time < Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i
+                                    time > earliestTimeWindow - (timeDifference) / 2 &&
+                                    time < latestTimeWindow - (timeDifference) / 2
             )
             {
                 return true;

@@ -72,7 +72,7 @@ public class ProgramController {
      */
     public void endGame(boolean won) {
         isRunning = false;
-        uiController.drawEndGameScreen(viewController);
+        uiController.drawEndGameScreen(viewController, won);
         entityController.endGame();
     }
 

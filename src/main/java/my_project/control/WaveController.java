@@ -35,10 +35,6 @@ public class WaveController {
         // Ready First Wave
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
-
-        for (int i = 0; i < 8; i++) {
-            nextWave(viewController,uiController, environmentController, programController);
-        }
     }
 
     /**

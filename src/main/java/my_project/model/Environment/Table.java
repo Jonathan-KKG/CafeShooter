@@ -28,16 +28,23 @@ public class Table extends CollidableEnvironment {
         queueLength = 0;
     }
 
-        //TODO change "newDish.setY(y)"
-    public void addToTable(Dish newDish) {
+    /**
+     * Scales dish down and places it on a table,as long as there are less than three dishes on it already. Adds it to the tableDishes queue.
+     * @param newDish Dish that is added
+     * @param viewController used to draw dishes on table
+     */
+    public void addToTable(Dish newDish, ViewController viewController) {
         tableDishes.enqueue(newDish);
-        newDish.setScale(0.5);
+        newDish.setScale(0.65);
         queueLength++;
-        if(queueLength<3) {
-            newDish.setY(y + (newDish.getHeight() * newDish.getScale() - 5) * (queueLength - 1) - 10);
+        System.out.println(queueLength);
+        if(queueLength<=3) {
+            viewController.draw(newDish);
+            newDish.setY(y -12+ (newDish.getHeight() * newDish.getScale()-10.5)  * (queueLength - 1) );
+            System.out.println(y -11+ 16  * (queueLength - 1)   );
             newDish.setX(x);
         }
-        newDish.setY(y);
+
     }
 
     public Dish getFirstDish() {
@@ -55,6 +62,6 @@ public class Table extends CollidableEnvironment {
     public void removeFirstDish(ViewController viewController){
         tableDishes.front().setScale(1);
         tableDishes.dequeue();
-        viewController.draw(tableDishes.front());
+        queueLength--;
     }
 }

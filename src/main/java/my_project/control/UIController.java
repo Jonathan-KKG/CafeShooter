@@ -6,10 +6,7 @@ import my_project.model.Environment.CollidableEnvironment;
 import my_project.model.Enemies.Enemy;
 import my_project.model.Cook;
 import my_project.model.GUI.*;
-import my_project.model.GUI.GameStates.GameStateUI;
-import my_project.model.GUI.GameStates.LostGameUI;
-import my_project.model.GUI.GameStates.StartScreenUI;
-import my_project.model.GUI.GameStates.WonGameUI;
+import my_project.model.GUI.GameStates.*;
 import my_project.model.GUI.SkillChecks.*;
 
 /**
@@ -17,12 +14,15 @@ import my_project.model.GUI.SkillChecks.*;
  */
 public class UIController {
 
+    private RecipeTutorialUI recipeTutorialUI;
     private DishUI dishUI;
     private SkillCheckUI skillCheckUI;
     private EnemyDishUI[] enemyDishUIs;
     private List<HPBar> hpBars;
     private DishStackUI dishStackUI;
     private GameStateUI gameStateUI;
+
+    private boolean showRecepie;
 
     /**
      * Creates all GUI elements
@@ -31,6 +31,7 @@ public class UIController {
      * @param firstGame      !(whether the user restarted the game at least once already or not=
      */
     public UIController(ViewController viewController, boolean firstGame) {
+        recipeTutorialUI = new RecipeTutorialUI(1200, 300);
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
         dishStackUI = new DishStackUI(816, 797);
@@ -90,8 +91,7 @@ public class UIController {
             case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1], dishName, hitTimeWindow);
             case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], dishName, hitTimeWindow);
             case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1], dishName);
-            default ->
-                    System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
+            default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
         }
         viewController.draw(skillCheckUI);
     }
@@ -222,6 +222,21 @@ public class UIController {
                 hpBars.remove();
             } else
                 hpBars.next();
+        }
+    }
+
+    /**
+     * togels weather recipeUi is visibil
+     *
+     * @param viewController Required to deleted and draw the UI
+     */
+    public void updateRecipeUI(ViewController viewController) {
+        if (showRecepie) {
+            viewController.removeDrawable(recipeTutorialUI);
+            showRecepie = false;
+        } else {
+            viewController.draw(recipeTutorialUI);
+            showRecepie = true;
         }
     }
 

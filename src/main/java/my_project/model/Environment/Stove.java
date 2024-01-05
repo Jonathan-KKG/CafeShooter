@@ -34,11 +34,11 @@ public class Stove extends CookingStation{
 
             if (
                 isMovingDownwards &&
-                    time < earliestTimeWindow + (timeDifference)  &&
-                    time > latestTimeWindow + (timeDifference) ||
+                    time < earliestTimeWindow  + (timeDifference) * 0.25  &&
+                    time > latestTimeWindow    + (timeDifference) * 0.25  ||
                 !isMovingDownwards &&
-                    time > earliestTimeWindow - 0.17 &&
-                    time < latestTimeWindow - 0.19
+                    time > earliestTimeWindow &&
+                    time < latestTimeWindow
             )
             {
                 return true;

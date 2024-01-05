@@ -20,6 +20,8 @@ public class ProgramController {
     private WaveController waveController;
     private UIController uiController;
 
+    private boolean firstGame;
+    private boolean firstWave;
     private boolean isRunning;
 
     /**
@@ -27,6 +29,7 @@ public class ProgramController {
      */
     public ProgramController(ViewController viewController) {
         this.viewController = viewController;
+        firstGame = true;
     }
 
     /**
@@ -37,10 +40,11 @@ public class ProgramController {
         entityController = new EntityController(this, viewController);
         cookingController = new CookingController(this);
         inputManager = new InputManager(this);
-        uiController = new UIController(viewController);
+        uiController = new UIController(viewController, firstGame);
         waveController = new WaveController(viewController, uiController,environmentController,this);
         itemController = new ItemController(this);
         isRunning = true;
+        firstWave = true;
 
         viewController.register(inputManager);
     }
@@ -52,10 +56,13 @@ public class ProgramController {
      */
     public void updateProgram(double dt) {
 
+        boolean newWaveInitiated = waveController.checkForNewWave(viewController, uiController, environmentController,this);
+        if (!isRunning) return;
+        if(newWaveInitiated && firstWave) {
+            uiController.deleteStartScreenUI(viewController);
+            firstWave = false;
+        }
 
-        if (!isRunning) return;
-        waveController.checkForNewWave(viewController, uiController, environmentController,this);
-        if (!isRunning) return;
         entityController.updateEnemies(dt, waveController.getWave(), entityController.getCook());
         inputManager.inputUpdate(dt);
         itemController.dishUpdate(dt);
@@ -72,6 +79,7 @@ public class ProgramController {
      */
     public void endGame(boolean won) {
         isRunning = false;
+        firstGame = false;
         uiController.drawEndGameScreen(viewController, won);
         entityController.endGame();
     }

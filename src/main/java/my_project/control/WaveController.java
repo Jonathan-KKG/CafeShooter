@@ -78,18 +78,26 @@ public class WaveController {
      * @param viewController Required to draw the new wave and its Wants-Bubbles
      * @param uiController   Required to draw the new wave and its Wants-Bubbles
      * @param envController Required to unlock new cooking environment objects
+     * @return whether a new wave was initiated or not
      */
-    public void checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
-        boolean isEmpty = true;
-        if (enemyWaves.isEmpty())
+    public boolean checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
+        if (enemyWaves.isEmpty()) {
             programController.endGame(true);
+            return false;
+        }
 
-        for (int i = 0; i < enemyWaves.front().length; i++) {
+        boolean isEmpty = true;
+        for (int i = 0; i < enemyWaves.front().length; i++)
             if (enemyWaves.front()[i] != null)
                 isEmpty = false;
+
+
+        if (isEmpty) {
+            nextWave(viewController, uiController, envController);
+            return true;
         }
-        if (isEmpty)
-            nextWave(viewController, uiController, envController, programController);
+
+        return false;
     }
 
     /**
@@ -147,12 +155,8 @@ public class WaveController {
      * @param viewController Required to draw the new Wave and its Wants-Bubbles
      * @param uiController   Required to draw the new Wave and its Wants-Bubbles
      */
-    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
+    private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         enemyWaves.dequeue();
-        if(enemyWaves.isEmpty()) {
-            programController.endGame(true);
-            return;
-        }
 
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);

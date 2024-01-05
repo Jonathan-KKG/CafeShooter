@@ -28,16 +28,32 @@ public class UIController {
      * Creates all GUI elements
      *
      * @param viewController Required to draw GUI elements
+     * @param firstGame !(whether the user restarted the game at least once already or not=
      */
-    public UIController(ViewController viewController) {
+    public UIController(ViewController viewController, boolean firstGame) {
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
         dishStackUI = new DishStackUI(816, 797);
-        gameStateUI = new StartScreenUI(0,0);
 
         viewController.draw(dishUI);
         viewController.draw(dishStackUI);
-        viewController.draw(gameStateUI);
+
+        if(firstGame) {
+            gameStateUI = new StartScreenUI(0, 0);
+            viewController.draw(gameStateUI);
+        }
+    }
+
+    /**
+     * Deletes the startscreen UI
+     * @param viewController Required to stop drawing it
+     */
+    public void deleteStartScreenUI(ViewController viewController){
+        if(!(gameStateUI instanceof StartScreenUI))
+            return;
+
+        viewController.removeDrawable(gameStateUI);
+        gameStateUI = null;
     }
 
     /**

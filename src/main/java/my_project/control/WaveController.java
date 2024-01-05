@@ -46,7 +46,7 @@ public class WaveController {
 
         for (int i = increment; i < maximum; i += increment) {
 
-            Enemy[] enemies = new Enemy[2];
+            Enemy[] enemies = new Enemy[i];
 
             // enemies[0] reserved for newest enemy type
             double[] pos = getRandomEnemyPosition();
@@ -62,7 +62,7 @@ public class WaveController {
 
                 try {
                     int randomType = (int) (Math.random() * (i / increment) - 1); // don't touch it it works
-                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(pos[0],pos[1]);
+                    enemies[j] = enemyTypes[randomType].getDeclaredConstructor(double.class, double.class).newInstance(pos[0], pos[1]);
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
                     e.printStackTrace();
                 }
@@ -77,34 +77,33 @@ public class WaveController {
      *
      * @param viewController Required to draw the new wave and its Wants-Bubbles
      * @param uiController   Required to draw the new wave and its Wants-Bubbles
-     * @param envController Required to unlock new cooking environment objects
+     * @param envController  Required to unlock new cooking environment objects
      * @return whether a new wave was initiated or not
      */
     public boolean checkForNewWave(ViewController viewController, UIController uiController, EnvironmentController envController, ProgramController programController) {
-        if (enemyWaves.isEmpty()) {
-            programController.endGame(true);
-            return false;
-        }
+        if (enemyWaves.isEmpty()) return false;
 
-        boolean isEmpty = true;
+        boolean waveIsEmpty = true;
         for (int i = 0; i < enemyWaves.front().length; i++)
             if (enemyWaves.front()[i] != null)
-                isEmpty = false;
+                waveIsEmpty = false;
 
-
-        if (isEmpty) {
+        if (waveIsEmpty)
             nextWave(viewController, uiController, envController);
-            return true;
-        }
 
+        if (!enemyWaves.isEmpty())
+            return true;
+
+        programController.endGame(true);
         return false;
     }
 
     /**
      * Creates a random position over, left or right outside of the screen
+     *
      * @return double[]{x,y}
      */
-    private double[] getRandomEnemyPosition(){
+    private double[] getRandomEnemyPosition() {
         double x;
         double y;
 
@@ -120,12 +119,13 @@ public class WaveController {
             x = (int) (Math.random() * (1920 * 0.85 + 300) - 150);      // between -150 and 1920 * 0.85 + 150
             y = (int) -(Math.random() * 100 + 50);                      // between -150 and -50
         }
-        return new double[]{x,y};
+        return new double[]{x, y};
     }
 
     /**
      * schedules the drawing and activation of an enemy
-     * @param enemy the Enemy that should be scheduled
+     *
+     * @param enemy          the Enemy that should be scheduled
      * @param viewController Required to draw the Enemy
      */
     private TimerTask addElementToDraw(Enemy enemy, ViewController viewController) {
@@ -140,6 +140,7 @@ public class WaveController {
 
     /**
      * schedule the drawing and activation of every enemy of the current wave
+     *
      * @param viewController Required to draw the enemies
      */
     private void scheduleWaveDrawing(ViewController viewController) {
@@ -157,15 +158,17 @@ public class WaveController {
      */
     private void nextWave(ViewController viewController, UIController uiController, EnvironmentController envController) {
         enemyWaves.dequeue();
+        if (enemyWaves.isEmpty())
+            return;
 
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
 
         for (int i = 0; i < knownDishes.length; i++) {
-            if(enemyWaves.front()[0].getRequiredDish().equals(knownDishes[i]) || enemyWaves.front()[0].getRequiredDish().equals(ChocolateCheeseCake.class.getSimpleName()))
+            if (enemyWaves.front()[0].getRequiredDish().equals(knownDishes[i]) || enemyWaves.front()[0].getRequiredDish().equals(ChocolateCheeseCake.class.getSimpleName()))
                 break;
 
-            if(knownDishes[i] == null) {
+            if (knownDishes[i] == null) {
                 knownDishes[i] = enemyWaves.front()[0].getRequiredDish();
                 envController.activateNextSetOfCooking(viewController);
                 i = knownDishes.length;

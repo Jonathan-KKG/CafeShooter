@@ -55,9 +55,9 @@ public class ProgramController {
      * @param dt the Time passed betwen this and the last call of the method
      */
     public void updateProgram(double dt) {
-
         boolean newWaveInitiated = waveController.checkForNewWave(viewController, uiController, environmentController,this);
         if (!isRunning) return;
+
         if(newWaveInitiated && firstWave) {
             uiController.deleteStartScreenUI(viewController);
             firstWave = false;
@@ -81,7 +81,7 @@ public class ProgramController {
         isRunning = false;
         firstGame = false;
         uiController.drawEndGameScreen(viewController, won);
-        entityController.endGame();
+        entityController.endGame(won);
     }
 
     /**

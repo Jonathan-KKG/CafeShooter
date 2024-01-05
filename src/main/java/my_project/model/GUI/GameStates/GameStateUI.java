@@ -25,4 +25,10 @@ public abstract class GameStateUI extends UI {
      */
     @Override
     public abstract void draw(DrawTool drawTool);
+
+    /**
+     * For classes that utilize it, checks whether mouse is hovering over the restart button.
+     * @return Whether mouse is hovering over it or nah
+     */
+    public abstract boolean isOnRestartButton(double pX, double pY);
 }

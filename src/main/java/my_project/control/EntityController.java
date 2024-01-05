@@ -209,11 +209,17 @@ public class EntityController {
     }
 
     /**
-     * Changes player sprites to how did you do in pe today?
+     * Changes player sprites to how did you do in pe today? or XD
+     *
      */
-    public void endGame() {
-        cook.setNewImage("src/main/resources/graphic/playerDefeated.png");
-        shooter.setNewImage("src/main/resources/graphic/playerDefeated.png");
+    public void endGame(boolean won) {
+        if(!won) {
+            cook.setNewImage("src/main/resources/graphic/PlayerDefeated.png");
+            shooter.setNewImage("src/main/resources/graphic/PlayerDefeated.png");
+        } else {
+            cook.setNewImage("src/main/resources/graphic/PlayerAscended.png");
+            shooter.setNewImage("src/main/resources/graphic/PlayerAscended.png");
+        }
     }
 
     /**

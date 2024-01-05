@@ -223,7 +223,7 @@ public class UIController {
      */
     public void drawEndGameScreen(ViewController viewController, boolean won) {
         if(won)
-            gameStateUI = new WonGameUI(0,0);
+            gameStateUI = new WonGameUI(250, 1080* 0.85 / 4);
         else
             gameStateUI = new LostGameUI(250, 1080* 0.85 / 4);
         viewController.draw(gameStateUI);
@@ -236,7 +236,7 @@ public class UIController {
      * @param programController Required to restart the game if needed
      */
     public void restartGame(double pX, double pY, ProgramController programController){
-        if(((LostGameUI) gameStateUI).isOnRestartButton(pX,pY))
+        if((gameStateUI instanceof LostGameUI || gameStateUI instanceof WonGameUI) && gameStateUI.isOnRestartButton(pX,pY))
             programController.restartGame();
     }
 

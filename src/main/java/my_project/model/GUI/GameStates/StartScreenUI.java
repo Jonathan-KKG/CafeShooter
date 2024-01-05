@@ -27,4 +27,11 @@ public class StartScreenUI extends GameStateUI {
     public void draw(DrawTool drawTool) {
         drawTool.drawImage(myImage,x,y);
     }
+
+    /** redundant
+     */
+    @Override
+    public boolean isOnRestartButton(double pX, double pY) {
+        return false;
+    }
 }

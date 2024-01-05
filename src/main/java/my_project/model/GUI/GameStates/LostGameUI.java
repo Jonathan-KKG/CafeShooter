@@ -19,6 +19,10 @@ public class LostGameUI extends GameStateUI {
      */
     public LostGameUI(double pX, double pY) {
         super(pX, pY);
+        restartButtonPosAndSize = new double[][]{
+                new double[]{startingPosition[0] + 490, startingPosition[1] + 200},
+                new double[]{155, 45}
+        };
     }
 
     /**
@@ -36,10 +40,6 @@ public class LostGameUI extends GameStateUI {
         drawTool.drawText(startingPosition[0] + 0, startingPosition[1], "Eure mangelnden Bemühungen haben die Auslöschung der Menschheit und ");
         drawTool.drawText(startingPosition[0] + 270, startingPosition[1] + 35, " den Kollaps unseres Sonnensystems zur Folge.");
 
-        restartButtonPosAndSize = new double[][]{
-                new double[]{startingPosition[0] + 490, startingPosition[1] + 200},
-                new double[]{155, 45}
-        };
         drawDefaultBorder(drawTool, 6, restartButtonPosAndSize[0][0], restartButtonPosAndSize[0][1], restartButtonPosAndSize[1][0], restartButtonPosAndSize[1][1]);
         drawTool.setCurrentColor(255, 255, 255, 255);
         drawTool.drawText(restartButtonPosAndSize[0][0] + 8, restartButtonPosAndSize[0][1] + 30, "Try Again");

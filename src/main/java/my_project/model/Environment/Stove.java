@@ -33,12 +33,12 @@ public class Stove extends CookingStation{
             double timeDifference = currentHitTimeWindow[1] - currentHitTimeWindow[0];
 
             if (
-                    isMovingDownwards &&
-                            time < earliestTimeWindow + (timeDifference)  &&
-                            time > latestTimeWindow + (timeDifference) ||
-                            !isMovingDownwards &&
-                                    time > earliestTimeWindow - (timeDifference) / 2 &&
-                                    time < latestTimeWindow - (timeDifference) / 2
+                isMovingDownwards &&
+                    time < earliestTimeWindow + (timeDifference)  &&
+                    time > latestTimeWindow + (timeDifference) ||
+                !isMovingDownwards &&
+                    time > earliestTimeWindow - 0.17 &&
+                    time < latestTimeWindow - 0.19
             )
             {
                 return true;

@@ -29,14 +29,14 @@ public class CoffeeMachine extends CookingStation {
             double earliestTimeWindow = Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i;
             double latestTimeWindow =   Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i;
             double timeDifference = currentHitTimeWindow[1] - currentHitTimeWindow[0];
-            
+
             if (
                 isMovingDownwards &&
                     time < earliestTimeWindow + (timeDifference)  && 
                     time > latestTimeWindow + (timeDifference) ||
                 !isMovingDownwards &&
-                    time > earliestTimeWindow - (timeDifference) / 2 &&
-                    time < latestTimeWindow - (timeDifference) / 2
+                    time > earliestTimeWindow - 0.17 &&
+                    time < latestTimeWindow - 0.19
             )
             {
                 return true;

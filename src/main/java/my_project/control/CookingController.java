@@ -145,7 +145,7 @@ public class CookingController {
      * Changes the HitTimeWindow to a value between 0.2 and 0.7
      */
     private void newHitTimeWindow() {
-        double midTime = Math.random() * 0.3 + 0.35;
+        double midTime = Math.random() * 0.65 + 0.35;
         currentHitTimeWindow = new double[]{midTime - 0.1, midTime + 0.1};
     }
 

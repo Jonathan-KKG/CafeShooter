@@ -17,10 +17,11 @@ public abstract class timeableSkillCheck extends SkillCheckUI {
      *
      * @param pX                 Starting location of the Model
      * @param pY                 Starting location of the Model
+     * @param dish               SimpleClassName of what dish is being cooked
      * @param validHitTimeWindow the hit time window that is required of the player {earliest, latest}
      */
-    public timeableSkillCheck(double pX, double pY, double[] validHitTimeWindow) {
-        super(pX, pY);
+    public timeableSkillCheck(double pX, double pY, String dish, double[] validHitTimeWindow) {
+        super(pX, pY, dish);
         setNewHitzone(validHitTimeWindow);
         speed = 1;
     }

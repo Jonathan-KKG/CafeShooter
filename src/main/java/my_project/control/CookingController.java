@@ -103,7 +103,7 @@ public class CookingController {
             cook.setBusy(true);
             time = 0;
             newHitTimeWindow();
-            programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), currentHitTimeWindow, programController.getViewController());
+            programController.getUIController().createSkillCheck(new double[]{objectInRange.getX(), objectInRange.getY()}, objectInRange.getClass().getSimpleName(), currentHitTimeWindow, programController.getViewController(), currentCookingDish);
             currentStation = (CookingStation) objectInRange;
             i = last;
         }

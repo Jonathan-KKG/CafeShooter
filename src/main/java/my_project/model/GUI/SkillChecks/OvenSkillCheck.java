@@ -12,9 +12,10 @@ public class OvenSkillCheck extends SkillCheckUI{
      *
      * @param pX Starting location of the Model
      * @param pY Starting location of the Model
+     * @param dish SimpleClassName of what dish is being cooked
      */
-    public OvenSkillCheck(double pX, double pY) {
-        super(pX, pY);
+    public OvenSkillCheck(double pX, double pY, String dish) {
+        super(pX, pY, dish);
         y = startingPosition[1];
         increment = 0.075;
     }

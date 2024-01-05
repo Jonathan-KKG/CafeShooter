@@ -28,7 +28,7 @@ public class UIController {
      * Creates all GUI elements
      *
      * @param viewController Required to draw GUI elements
-     * @param firstGame !(whether the user restarted the game at least once already or not=
+     * @param firstGame      !(whether the user restarted the game at least once already or not=
      */
     public UIController(ViewController viewController, boolean firstGame) {
         dishUI = new DishUI(1300, 820);
@@ -38,7 +38,7 @@ public class UIController {
         viewController.draw(dishUI);
         viewController.draw(dishStackUI);
 
-        if(firstGame) {
+        if (firstGame) {
             gameStateUI = new StartScreenUI(0, 0);
             viewController.draw(gameStateUI);
         }
@@ -46,10 +46,11 @@ public class UIController {
 
     /**
      * Deletes the startscreen UI
+     *
      * @param viewController Required to stop drawing it
      */
-    public void deleteStartScreenUI(ViewController viewController){
-        if(!(gameStateUI instanceof StartScreenUI))
+    public void deleteStartScreenUI(ViewController viewController) {
+        if (!(gameStateUI instanceof StartScreenUI))
             return;
 
         viewController.removeDrawable(gameStateUI);
@@ -58,6 +59,7 @@ public class UIController {
 
     /**
      * updates the amount heldDishStack
+     *
      * @param increase boolean to calculate amount ofheldDishStack
      */
     public void updateHeldItemsAmount(boolean increase) {
@@ -80,24 +82,27 @@ public class UIController {
      * @param pos            Position of the cooking station
      * @param type           what type of Dish the cooking station outputs
      * @param viewController Required to draw the new Object
+     * @param dishName       SimpleClassName of what dish is being cooked
      */
-    public void createSkillCheck(double[] pos, String type, double[] hitTimeWindow, ViewController viewController) {
-        switch (type){
-            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1]);
-            case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1], hitTimeWindow);
-            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], hitTimeWindow);
-            case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1]);
-            default -> System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
+    public void createSkillCheck(double[] pos, String type, double[] hitTimeWindow, ViewController viewController, String dishName) {
+        switch (type) {
+            case "Oven" -> skillCheckUI = new OvenSkillCheck(pos[0], pos[1], dishName);
+            case "Stove" -> skillCheckUI = new StoveSkillCheck(pos[0], pos[1], dishName, hitTimeWindow);
+            case "CoffeeMachine" -> skillCheckUI = new CoffeeMachineSkillCheck(pos[0], pos[1], dishName, hitTimeWindow);
+            case "WaffleIron" -> skillCheckUI = new WaffleIronSkillCheck(pos[0], pos[1], dishName);
+            default ->
+                    System.out.println("Wrong SkillCheckType was provided on call of 'UIController.createSkillCheck(...)'!");
         }
         viewController.draw(skillCheckUI);
     }
 
     /**
      * changes the time interval in which the player has to interact to progress cooking
+     *
      * @param hitTimeWindow the new time window in seconds {earliest, latest}
      */
-    public void changeSkillCheckHitzone(double[] hitTimeWindow){
-        if(!(skillCheckUI instanceof timeableSkillCheck))
+    public void changeSkillCheckHitzone(double[] hitTimeWindow) {
+        if (!(skillCheckUI instanceof timeableSkillCheck))
             return;
 
         ((timeableSkillCheck) skillCheckUI).setNewHitzone(hitTimeWindow);
@@ -122,10 +127,11 @@ public class UIController {
 
     /**
      * updates the current skillCheckUI if required, e.g. moves parts that have to be moved
+     *
      * @param time time passed since creation of the skillcheck
      */
-    public void updateSkillCheckUI(double time){
-        if(skillCheckUI == null)
+    public void updateSkillCheckUI(double time) {
+        if (skillCheckUI == null)
             return;
 
         skillCheckUI.updateSkillCheck(time);
@@ -157,9 +163,10 @@ public class UIController {
 
     /**
      * moves dishStackUi with cook
+     *
      * @param cook used to get position
      */
-    public void updateDishStackUI(Cook cook){
+    public void updateDishStackUI(Cook cook) {
         dishStackUI.setX(cook.getX());
         dishStackUI.setY(cook.getY());
     }
@@ -191,7 +198,8 @@ public class UIController {
 
     /**
      * draws HPBar for a certain CollidableEnvironment
-     * @param env The environment object that needs an HPBar
+     *
+     * @param env            The environment object that needs an HPBar
      * @param viewController Required to draw the new UI
      */
     public void drawHPBar(CollidableEnvironment env, ViewController viewController) {
@@ -202,13 +210,14 @@ public class UIController {
 
     /**
      * updates all HPBars for CollidableEnvironments
+     *
      * @param viewController Required to deleted the HPBar in case it's not required anymore
      */
-    public void updateHPBars(ViewController viewController){
+    public void updateHPBars(ViewController viewController) {
         hpBars.toFirst();
-        while (hpBars.hasAccess()){
+        while (hpBars.hasAccess()) {
             hpBars.getContent().updateHealth();
-            if(hpBars.getContent().getHealth() >= 100) {
+            if (hpBars.getContent().getHealth() >= 100) {
                 viewController.removeDrawable(hpBars.getContent());
                 hpBars.remove();
             } else
@@ -218,37 +227,39 @@ public class UIController {
 
     /**
      * Draws the final frame after the player has failed
+     *
      * @param viewController Required to draw
-     * @param won whether the players lost or won the game
+     * @param won            whether the players lost or won the game
      */
     public void drawEndGameScreen(ViewController viewController, boolean won) {
-        if(won)
-            gameStateUI = new WonGameUI(250, 1080* 0.85 / 4);
+        if (won)
+            gameStateUI = new WonGameUI(250, 1080 * 0.85 / 4);
         else
-            gameStateUI = new LostGameUI(250, 1080* 0.85 / 4);
+            gameStateUI = new LostGameUI(250, 1080 * 0.85 / 4);
         viewController.draw(gameStateUI);
     }
 
     /**
      * Restarts game if mouse is on the Restart button.
-     * @param pX x position of mouse
-     * @param pY y position of mouse
+     *
+     * @param pX                x position of mouse
+     * @param pY                y position of mouse
      * @param programController Required to restart the game if needed
      */
-    public void restartGame(double pX, double pY, ProgramController programController){
-        if((gameStateUI instanceof LostGameUI || gameStateUI instanceof WonGameUI) && gameStateUI.isOnRestartButton(pX,pY))
+    public void restartGame(double pX, double pY, ProgramController programController) {
+        if ((gameStateUI instanceof LostGameUI || gameStateUI instanceof WonGameUI) && gameStateUI.isOnRestartButton(pX, pY))
             programController.restartGame();
     }
 
-    public boolean isMovingDownwards(){
-        if(skillCheckUI instanceof timeableSkillCheck)
+    public boolean isMovingDownwards() {
+        if (skillCheckUI instanceof timeableSkillCheck)
             return ((timeableSkillCheck) skillCheckUI).isMovingDownwards();
 
         return false;
     }
 
     public double getIndicatorSpeed() {
-        if(skillCheckUI instanceof timeableSkillCheck)
+        if (skillCheckUI instanceof timeableSkillCheck)
             return ((timeableSkillCheck) skillCheckUI).getSpeed();
         return 1;
     }

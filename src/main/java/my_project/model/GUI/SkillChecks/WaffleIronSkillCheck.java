@@ -12,9 +12,10 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
      *
      * @param pX Starting location of the Model
      * @param pY Starting location of the Model
+     * @param dish SimpleClassName of what dish is being cooked
      */
-    public WaffleIronSkillCheck(double pX, double pY) {
-        super(pX, pY);
+    public WaffleIronSkillCheck(double pX, double pY, String dish) {
+        super(pX, pY, dish);
         increment = 0.2;
     }
 

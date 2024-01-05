@@ -13,14 +13,16 @@ public abstract class SkillCheckUI extends UI {
     /**
      * Initializes UI Model
      *
-     * @param pX Starting location of the Model
-     * @param pY Starting location of the Model
+     * @param pX    Starting location of the Model
+     * @param pY    Starting location of the Model
+     * @param dish SimpleClassName of what dish is being cooked
      */
-    public SkillCheckUI(double pX, double pY) {
+    public SkillCheckUI(double pX, double pY, String dish) {
         super(pX, pY);
         width = 80;
         height = 200;
         progress = 0;
+        myImage = createImage("src/main/resources/graphic/Dishes/" + dish + ".png");
     }
 
     /**
@@ -37,7 +39,9 @@ public abstract class SkillCheckUI extends UI {
      * @param drawTool DrawTool that should be drawn with
      */
     protected void drawDefaultSCBorder(DrawTool drawTool) {
-        super.drawDefaultBorder(drawTool, 2, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9, width, height);
+        super.drawDefaultBorder(drawTool, 2, startingPosition[0] - width * 0.5 + 16, startingPosition[1] - height * 0.9 - 32, width, height + 32);
+
+        drawTool.drawImage(myImage, startingPosition[0] + 16 - myImage.getWidth() / 2d, startingPosition[1] - height * 0.9 - myImage.getHeight() + 8);
 
         // "Progress Bar"
         drawTool.setCurrentColor(120, 117, 117, 255);

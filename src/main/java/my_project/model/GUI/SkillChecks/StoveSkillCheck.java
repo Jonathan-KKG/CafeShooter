@@ -12,10 +12,11 @@ public class StoveSkillCheck extends timeableSkillCheck{
      *
      * @param pX    Starting location of the Model
      * @param pY    Starting location of the Model
+     * @param dish SimpleClassName of what dish is being cooked
      * @param firstValidHitTimeWindow the starting hit time window that is required of the player {earliest, latest}
      */
-    public StoveSkillCheck(double pX, double pY, double[] firstValidHitTimeWindow) {
-        super(pX, pY, firstValidHitTimeWindow);
+    public StoveSkillCheck(double pX, double pY, String dish, double[] firstValidHitTimeWindow) {
+        super(pX, pY, dish, firstValidHitTimeWindow);
         increment = 0.2;
     }
 

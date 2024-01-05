@@ -35,7 +35,7 @@ public class CookingController {
 
                 {{"Coffee"}, {"CoffeePowder", "false"}},
 
-                {{"SpaghettiCarbonara"}, {"Spaghetti", "false"}, {"Cream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
+                {{"SpaghettiCarbonara"}, {"Spaghetti", "false"}, {"WhippedCream", "false"}, {"Egg", "false"}, {"Cheese", "false"}, {"Bacon", "false"}}
         };
         currentHitTimeWindow = null;
     }

@@ -35,7 +35,7 @@ public class ItemController {
         programController = pProgramController;
 
         itemClasses = new Class[]{ApplePie.class, CheeseCake.class, ChocolateCheeseCake.class, ChocolateCake.class, Coffee.class, SpaghettiCarbonara.class, StrawberryWaffles.class, Waffles.class, IceCreamWaffles.class,
-                                Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class,Cream.class, Cream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
+                                Apple.class, Bacon.class, Cheese.class, Chocolate.class, CoffeePowder.class, WhippedCream.class, WhippedCream.class, Egg.class, Flour.class, IceCream.class,Spaghetti.class,Strawberry.class};
 
         for (int i = 0; i < storedDishes.length; i++) {
             storedDishes[i] = (Dish) createItem(1304 + 30d / 2d + 55 * i, 838, "Waffles");

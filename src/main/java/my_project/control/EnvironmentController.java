@@ -36,7 +36,7 @@ public class EnvironmentController {
 
         createObjects(viewController);
 
-        // DEBUG CODE
+        //DEBUG CODE
         // for (int i = 0; i < unlockableSets.length; i++) {
         //     activateNextSetOfCooking(viewController);
         // }
@@ -173,7 +173,7 @@ public class EnvironmentController {
         unlockableSets[5] = new CollidableEnvironment[]{new CheeseStorage(leftStorageOffset[0], leftStorageOffset[1] + 32 * 2)};
 
         unlockableSets[6] = new CollidableEnvironment[]{new Stove(kitchenOffset[0] + 32 * 8, kitchenOffset[1] - 32 - 3 * 32),
-                                                        new CreamStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 1),
+                                                        new WhippedCreamStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 1),
                                                         new BaconStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 2),
                                                         new SpaghettiStorage(rightStorageOffset[0], rightStorageOffset[1] + 32 * 3)};
     }

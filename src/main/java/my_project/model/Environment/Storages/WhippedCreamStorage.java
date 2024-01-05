@@ -1,17 +1,17 @@
 package my_project.model.Environment.Storages;
-import my_project.model.Ingredients.Cream;
+import my_project.model.Ingredients.WhippedCream;
 import my_project.model.Ingredients.Ingredient;
 /**
  * the cream storage
  */
-public class CreamStorage extends Storage {
+public class WhippedCreamStorage extends Storage {
     /**
      * creates an storage
      * @param pX start x-position
      * @param pY start y-position
      */
-    public CreamStorage(double pX, double pY) {
-        super( pX, pY,"Apple");
+    public WhippedCreamStorage(double pX, double pY) {
+        super( pX, pY,WhippedCream.class.getSimpleName());
     }
 
     /**
@@ -19,6 +19,6 @@ public class CreamStorage extends Storage {
      */
     @Override
     public Ingredient getIngredient() {
-        return new Cream(x, y);
+        return new WhippedCream(x, y);
     }
 }

@@ -52,9 +52,25 @@ public class InputManager extends InteractiveGraphicalObject {
     private void updateSkillCheckInputs() {
         if (ViewController.isKeyDown(KeyEvent.VK_SPACE) && !isSkillCheckButtonPressed) {
             isSkillCheckButtonPressed = true;
-            programController.getCookingController().addClick();
+            programController.getCookingController().addClick(-1);
         }
-        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE)) isSkillCheckButtonPressed = false;
+        if (ViewController.isKeyDown(KeyEvent.VK_A) && !isSkillCheckButtonPressed) {
+            isSkillCheckButtonPressed = true;
+            programController.getCookingController().addClick(0);
+        }
+        if (ViewController.isKeyDown(KeyEvent.VK_D) && !isSkillCheckButtonPressed) {
+            isSkillCheckButtonPressed = true;
+            programController.getCookingController().addClick(1);
+        }
+        if (ViewController.isKeyDown(KeyEvent.VK_S) && !isSkillCheckButtonPressed) {
+            isSkillCheckButtonPressed = true;
+            programController.getCookingController().addClick(2);
+        }
+        if (ViewController.isKeyDown(KeyEvent.VK_W) && !isSkillCheckButtonPressed) {
+            isSkillCheckButtonPressed = true;
+            programController.getCookingController().addClick(3);
+        }
+        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE) && !ViewController.isKeyDown(KeyEvent.VK_A) && !ViewController.isKeyDown(KeyEvent.VK_D) &&!ViewController.isKeyDown(KeyEvent.VK_S) &&!ViewController.isKeyDown(KeyEvent.VK_W)) isSkillCheckButtonPressed = false;
     }
 
     /**

@@ -113,7 +113,7 @@ public class CookingController {
      * adds a click and checks its validity depending on the skillchecktype
      * progresses skillcheck if click is valid
      */
-    public void addClick() {
+    public void addClick(int key) {
         if (!programController.getEntityController().getCook().isBusy())
             return;
 
@@ -121,11 +121,11 @@ public class CookingController {
         UIController uiCtrl = programController.getUIController();
         ItemController dCtrl = programController.getDishController();
         ViewController vCtrl = programController.getViewController();
-
-        if (currentStation.isClickValid(time, uiCtrl.isMovingDownwards(), currentHitTimeWindow)) {
+        if (currentStation.isClickValid(time, uiCtrl.isMovingDownwards(), currentHitTimeWindow, key, uiCtrl.getNeededKey())) {
             if (uiCtrl.progressSkillCheck(vCtrl)) {
                 newHitTimeWindow();
                 uiCtrl.changeSkillCheckHitzone(currentHitTimeWindow);
+                uiCtrl.setNewNeededKey();
                 return;
             }
 

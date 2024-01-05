@@ -23,7 +23,7 @@ public class Oven extends CookingStation{
      * @return whether click was valid or not
      */
     @Override
-    public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
+    public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow, int key, int neededKey) {
         return true;
     }
 }

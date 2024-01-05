@@ -19,7 +19,7 @@ public class WonGameUI extends GameStateUI {
         super(pX, pY);
         restartButtonPosAndSize = new double[][]{
                 new double[]{startingPosition[0] + 490, startingPosition[1] + 200},
-                new double[]{155, 45}
+                new double[]{165, 45}
         };
     }
 

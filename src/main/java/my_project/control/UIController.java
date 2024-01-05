@@ -278,4 +278,13 @@ public class UIController {
             return ((timeableSkillCheck) skillCheckUI).getSpeed();
         return 1;
     }
+
+    public int getNeededKey(){
+        return skillCheckUI.getNeededKey();
+    }
+
+    public void setNewNeededKey(){
+        if (skillCheckUI instanceof WaffleIronSkillCheck)
+            ((WaffleIronSkillCheck) skillCheckUI).setNeededKey();
+    }
 }

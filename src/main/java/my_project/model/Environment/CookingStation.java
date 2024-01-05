@@ -26,7 +26,7 @@ public abstract class CookingStation extends CollidableEnvironment {
      * @param currentHitTimeWindow the time window (if existing) in which the player has to click {earliest, latest}
      * @return whether click was valid or not
      */
-    public abstract boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow);
+    public abstract boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow, int key, int neededKey);
 
     public double getCookingTime() {
         return cookingTime;

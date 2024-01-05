@@ -24,7 +24,7 @@ public class WaffleIron extends CookingStation {
      * @return whether click was valid or not
      */
     @Override
-    public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow) {
-        return true; // TODO
+    public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow, int key, int neededKey) {
+        return key == neededKey;
     }
 }

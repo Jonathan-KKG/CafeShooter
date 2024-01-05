@@ -37,9 +37,9 @@ public class EnvironmentController {
         createObjects(viewController);
 
         //DEBUG CODE
-        // for (int i = 0; i < unlockableSets.length; i++) {
-        //     activateNextSetOfCooking(viewController);
-        // }
+        //for (int i = 0; i < unlockableSets.length; i++) {
+        //    activateNextSetOfCooking(viewController);
+        //}
     }
 
     /**

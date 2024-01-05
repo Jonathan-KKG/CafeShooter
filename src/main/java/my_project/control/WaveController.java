@@ -90,6 +90,7 @@ public class WaveController {
 
         if (waveIsEmpty)
             nextWave(viewController, uiController, envController);
+        else return false;
 
         if (!enemyWaves.isEmpty())
             return true;

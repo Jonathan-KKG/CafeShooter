@@ -23,7 +23,7 @@ public class WaveController {
      * @param viewController Required to draw the first wave and its Wants-Bubbles
      * @param uiController   Required to draw the first wave and its Wants-Bubbles
      */
-    public WaveController(ViewController viewController, UIController uiController, EnvironmentController environmentController, ProgramController programController) {
+    public WaveController(ViewController viewController, UIController uiController) {
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
         // Order of enemyTypes[] is important for scaling difficulty

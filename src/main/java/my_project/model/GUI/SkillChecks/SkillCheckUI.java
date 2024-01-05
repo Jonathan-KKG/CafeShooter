@@ -35,7 +35,7 @@ public abstract class SkillCheckUI extends UI {
     }
 
     /**
-     * This method should be used for drawing the border of all SkillChecks
+     * This method should be used for drawing the border of all SkillChecks that require it
      * @param drawTool DrawTool that should be drawn with
      */
     protected void drawDefaultSCBorder(DrawTool drawTool) {
@@ -48,7 +48,6 @@ public abstract class SkillCheckUI extends UI {
         drawTool.drawRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4, startingPosition[1] - height * 0.8, width * 0.4, height * 0.8);
         drawTool.setCurrentColor(120, 117, 117, 80);
         drawTool.drawFilledRectangle(startingPosition[0] - width * 0.45 + 16 + width / 4, startingPosition[1] - height * 0.8, width * 0.4, height * 0.8);
-
     }
 
     /**

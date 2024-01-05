@@ -151,7 +151,7 @@ public class InputManager extends InteractiveGraphicalObject {
             shooter.setBusy(true);
 
         if (key == KeyEvent.VK_E)
-            programController.getUIController().updateRecipeUI(programController.getViewController());
+            programController.getUIController().toggleRecipeUI(programController.getViewController());
 
         if (key == KeyEvent.VK_O && closestObjShooter instanceof Table)
             programController.getDishController().moveToStoredDishes((Table) closestObjShooter);

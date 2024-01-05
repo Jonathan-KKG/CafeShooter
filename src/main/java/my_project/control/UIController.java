@@ -22,7 +22,7 @@ public class UIController {
     private DishStackUI dishStackUI;
     private GameStateUI gameStateUI;
 
-    private boolean showRecepie;
+    private boolean showRecipe;
 
     /**
      * Creates all GUI elements
@@ -31,7 +31,7 @@ public class UIController {
      * @param firstGame      !(whether the user restarted the game at least once already or not=
      */
     public UIController(ViewController viewController, boolean firstGame) {
-        recipeTutorialUI = new RecipeTutorialUI(1200, 300);
+        recipeTutorialUI = new RecipeTutorialUI(1100, 50);
         dishUI = new DishUI(1300, 820);
         hpBars = new List<>();
         dishStackUI = new DishStackUI(816, 797);
@@ -230,13 +230,13 @@ public class UIController {
      *
      * @param viewController Required to deleted and draw the UI
      */
-    public void updateRecipeUI(ViewController viewController) {
-        if (showRecepie) {
+    public void toggleRecipeUI(ViewController viewController) {
+        if (showRecipe) {
             viewController.removeDrawable(recipeTutorialUI);
-            showRecepie = false;
+            showRecipe = false;
         } else {
             viewController.draw(recipeTutorialUI);
-            showRecepie = true;
+            showRecipe = true;
         }
     }
 

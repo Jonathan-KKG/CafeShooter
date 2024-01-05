@@ -66,7 +66,7 @@ public abstract class timeableSkillCheck extends SkillCheckUI {
      */
     public void setNewHitzone(double[] validHitTimeWindow) {
         hitzoneHeight = (height * 0.8) * (validHitTimeWindow[1] - validHitTimeWindow[0]);
-        hitzoneYPosition = startingPosition[1] - height * 0.8 + 1 + height * 0.8 * (1 - validHitTimeWindow[0]);
+        hitzoneYPosition = startingPosition[1] - height * 0.8 + 1 + height * 0.8 * (1 - validHitTimeWindow[1]);
     }
 
     public boolean isMovingDownwards() {

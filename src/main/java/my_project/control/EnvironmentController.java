@@ -204,9 +204,7 @@ public class EnvironmentController {
      * @param table the table that should be added to
      */
     public void addToTable(Dish dish, Table table, ViewController viewController) {
-        if(table.isTableEmpty())
-            viewController.draw(dish);
-        table.addToTable(dish);
+        table.addToTable(dish, viewController);
     }
 
     /**

@@ -3,7 +3,6 @@ package my_project.view;
 import KAGO_framework.control.ViewController;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
-import my_project.control.UIController;
 import my_project.model.Cook;
 import my_project.model.Dishes.Dish;
 import my_project.model.Environment.Bin;
@@ -173,13 +172,13 @@ public class InputManager extends InteractiveGraphicalObject {
         if (key == KeyEvent.VK_O && closestObjShooter instanceof Table)
             programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
 
-        if(key == KeyEvent.VK_H && shooter.getStunCooldown()<= 0){
+        if(key == KeyEvent.VK_H){
+            shooter.isStunRadius(true);
+            if(shooter.getStunCooldown() > 0)
+                return;
+
             programController.getEntityController().stunEnemies();
             programController.getUIController().createStunCooldown(programController.getViewController(), new double[]{shooter.getX(), shooter.getY()}, shooter.getMaxStunCooldown());
-
         }
-
-
-
     }
 }

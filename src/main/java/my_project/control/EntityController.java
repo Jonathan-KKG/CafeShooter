@@ -30,7 +30,6 @@ public class EntityController {
 
         viewController.draw(shooter);
         viewController.draw(cook);
-
     }
 
     /**
@@ -77,6 +76,9 @@ public class EntityController {
             playerDir[1][1] = 0;
         }
         shooter.setStunCooldown(shooter.getStunCooldown() - dt);
+        shooter.setRadiusCooldown(shooter.getRadiusCooldown() - dt);
+        if(shooter.getRadiusCooldown() <= 0)
+            shooter.isStunRadius(false);
 
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
         cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
@@ -223,7 +225,7 @@ public class EntityController {
         for (int i = 0; i < wave.length; i++) {
             if (wave[i] == null || !wave[i].isActive())
                 continue;
-            if (shooter.getDistanceTo(wave[i]) < 70)
+            if (shooter.getDistanceTo(wave[i]) < shooter.getStunRadius())
                 wave[i].setStunDuration(3.5);
         }
     }

@@ -15,6 +15,7 @@ public class StunCooldownUI extends UI{
      *
      * @param pX Starting location of the Model
      * @param pY Starting location of the Model
+     * @param pMaxDuration maximum duration that the stun lasts for
      */
     public StunCooldownUI(double pX, double pY, double pMaxDuration) {
         super(pX, pY);

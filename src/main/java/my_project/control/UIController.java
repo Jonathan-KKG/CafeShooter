@@ -150,7 +150,6 @@ public class UIController {
         skillCheckUI = null;
     }
 
-
     /**
      * creates UI for stun cooldown
      * @param viewController required for drawing

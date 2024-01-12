@@ -69,6 +69,7 @@ public class ProgramController {
         entityController.dishCollisionUpdate();
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
+        uiController.updateStunCooldownUI(viewController, entityController.getShooter().getStunCooldown());
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);
 
     }

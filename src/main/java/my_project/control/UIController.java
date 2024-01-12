@@ -9,6 +9,8 @@ import my_project.model.GUI.*;
 import my_project.model.GUI.GameStates.*;
 import my_project.model.GUI.SkillChecks.*;
 
+import javax.swing.text.View;
+
 /**
  * Responsible for drawing and managing every GUI on the screen
  */
@@ -21,6 +23,7 @@ public class UIController {
     private List<HPBar> hpBars;
     private DishStackUI dishStackUI;
     private GameStateUI gameStateUI;
+    private StunCooldownUI stunCooldownUI;
 
     private boolean showRecipe;
 
@@ -145,6 +148,27 @@ public class UIController {
     public void deleteSkillCheckUI(ViewController viewController) {
         viewController.removeDrawable(skillCheckUI);
         skillCheckUI = null;
+    }
+
+
+    // TODO: 3x javd
+    public void createStunCooldown(ViewController viewController, double[] pos, double maxDuration){
+        stunCooldownUI = new StunCooldownUI(pos[0], pos[1], maxDuration);
+        viewController.draw(stunCooldownUI);
+    }
+
+    public void updateStunCooldownUI(ViewController viewController, double duration) {
+        if (stunCooldownUI == null)
+            return;
+
+        stunCooldownUI.setDuration(duration);
+        if(duration <= 0)
+            deleteStunCooldownUI(viewController);
+    }
+
+    private void deleteStunCooldownUI(ViewController viewController) {
+        viewController.removeDrawable(stunCooldownUI);
+        stunCooldownUI = null;
     }
 
     /**

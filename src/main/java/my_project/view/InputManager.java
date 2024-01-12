@@ -171,5 +171,13 @@ public class InputManager extends InteractiveGraphicalObject {
 
         if (key == KeyEvent.VK_O && closestObjShooter instanceof Table)
             programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
+
+        if(key == KeyEvent.VK_H){
+            programController.getEntityController().stunEnemies();
+
+        }
+
+
+
     }
 }

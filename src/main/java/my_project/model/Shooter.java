@@ -9,6 +9,7 @@ import my_project.model.Environment.CollidableEnvironment;
 public class Shooter extends Player {
 
     private List<CollidableEnvironment> objectsInRange;
+    private double stunCooldown;
 
     /**
      * @param pX the start x-Position
@@ -16,6 +17,7 @@ public class Shooter extends Player {
      */
     public Shooter(double pX, double pY) {
         super("roeckrath", pX, pY);
+        stunCooldown = 0;
     }
 
     public List<CollidableEnvironment> getObjectsInRange() {
@@ -24,5 +26,13 @@ public class Shooter extends Player {
 
     public void setObjectsInRange(List<CollidableEnvironment> pObjectsInRange) {
         objectsInRange = pObjectsInRange;
+    }
+
+    public double getStunCooldown() {
+        return stunCooldown;
+    }
+
+    public void setStunCooldown(double stunCooldown) {
+        this.stunCooldown = stunCooldown;
     }
 }

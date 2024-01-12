@@ -8,6 +8,7 @@ import my_project.model.Entity;
 public abstract class Enemy extends Entity {
     protected String requiredDish;
     private boolean isActive;
+    protected double stunDuration;
 
     /**
      * Creates Enemy object of a specific type
@@ -19,6 +20,7 @@ public abstract class Enemy extends Entity {
         super("Enemies/" + filename, pX, pY);
         speed = 25;
         isActive = false;
+        stunDuration = 0;
     }
 
     public String getRequiredDish() {
@@ -31,5 +33,13 @@ public abstract class Enemy extends Entity {
 
     public void activate() {
         isActive = true;
+    }
+
+    public double getStunDuration() {
+        return stunDuration;
+    }
+
+    public void setStunDuration(double stunDuration) {
+        this.stunDuration = stunDuration;
     }
 }

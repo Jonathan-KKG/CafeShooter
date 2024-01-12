@@ -43,17 +43,21 @@ public class EntityController {
     public void updateEnemies(double dt, Enemy[] enemies, Entity target) {
         for (int i = 0; i < enemies.length; i++) {
             if (enemies[i] != null && enemies[i].isActive()) {
-                double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth() / 2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight() / 2};
-                double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
-                dir[0] /= distance;
-                dir[1] /= distance;
+                if (enemies[i].getStunDuration() >= 0)
+                    enemies[i].setStunDuration(enemies[i].getStunDuration() - dt);
+                else {
+                    double[] dir = {target.getX() - enemies[i].getX() - enemies[i].getWidth() / 2 + target.getWidth() / 2, target.getY() - enemies[i].getY() - enemies[i].getHeight() / 2 + target.getHeight() / 2};
+                    double distance = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
+                    dir[0] /= distance;
+                    dir[1] /= distance;
 
-                if (distance != 0)
-                    checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
-
-                if (enemies[i].collidesWith(cook))
-                    programController.endGame(false);
+                    if (distance != 0)
+                        checkForScreenAndEnvironCollisions(dt, enemies[i], dir);
+                }
             }
+
+            if (enemies[i] != null && enemies[i].collidesWith(cook))
+                programController.endGame(false);
         }
     }
 
@@ -72,9 +76,10 @@ public class EntityController {
             playerDir[1][0] = 0;
             playerDir[1][1] = 0;
         }
+        shooter.setStunCooldown(shooter.getStunCooldown() - dt);
 
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
-            cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
+        cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
 
         checkForScreenAndEnvironCollisions(dt, shooter, playerDir[1]);
         shooter.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), shooter));
@@ -156,6 +161,7 @@ public class EntityController {
 
     /**
      * Recursively nexts to next active collider in a given list
+     *
      * @param envObjs list that should be nexted through
      */
     private void nextToNextActiveCollider(List<CollidableEnvironment> envObjs) {
@@ -209,11 +215,26 @@ public class EntityController {
     }
 
     /**
+     * Shooter prevents nearby enemies from moving if he is able to stun
+     */
+    public void stunEnemies() {
+        if (shooter.getStunCooldown() >= 0)
+            return;
+        shooter.setStunCooldown(10);
+        Enemy[] wave = programController.getWaveController().getWave();
+        for (int i = 0; i < wave.length; i++) {
+            if (!wave[i].isActive())
+                continue;
+            if (shooter.getDistanceTo(wave[i]) < 70)
+                wave[i].setStunDuration(3.5);
+        }
+    }
+
+    /**
      * Changes player sprites to how did you do in pe today? or XD
-     *
      */
     public void endGame(boolean won) {
-        if(!won) {
+        if (!won) {
             cook.setNewImage("src/main/resources/graphic/PlayerDefeated.png");
             shooter.setNewImage("src/main/resources/graphic/PlayerDefeated.png");
         } else {

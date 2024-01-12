@@ -5,7 +5,7 @@ import my_project.model.Dishes.ChocolateCheeseCake;
 /**
  * The Ilias Enemy.
  */
-public class Ilias extends Enemy {
+public class Kamel extends Enemy {
 
     /**
      * Creates Enemy object of a specific type
@@ -13,8 +13,8 @@ public class Ilias extends Enemy {
      * @param pX the start x-Position
      * @param pY the start y-Position
      */
-    public Ilias(double pX, double pY) {
-        super("Ilias", pX, pY);
+    public Kamel(double pX, double pY) {
+        super("Kamel", pX, pY);
         requiredDish = ChocolateCheeseCake.class.getSimpleName();
         speed -= 1;
     }

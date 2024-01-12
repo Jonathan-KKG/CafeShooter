@@ -27,7 +27,7 @@ public class WaveController {
         spawnTimer = new Timer();
         enemyWaves = new Queue<>();
         // Order of enemyTypes[] is important for scaling difficulty
-        Class<? extends Enemy>[] enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Ilias.class, Jonathan.class};
+        Class<? extends Enemy>[] enemyTypes = new Class[]{Maxim.class, Maksym.class, Max.class, Alex.class, Carlos.class, Habib.class, Haya.class, Kamel.class, Jonathan.class};
         knownDishes = new String[enemyTypes.length];
 
         createWaves(enemyTypes);
@@ -41,12 +41,12 @@ public class WaveController {
      * Creates a set amount of waves with a set increasing amount of enemies with a random position and type
      */
     private void createWaves(Class<? extends Enemy>[] enemyTypes) {
-        int increment = 2;
-        int maximum = 20;
+        int increment = 1;
+        int maximum = 10;
 
         for (int i = increment; i < maximum; i += increment) {
 
-            Enemy[] enemies = new Enemy[i];
+            Enemy[] enemies = new Enemy[(int)(i * 1.5)];
 
             // enemies[0] reserved for newest enemy type
             double[] pos = getRandomEnemyPosition();
@@ -146,7 +146,7 @@ public class WaveController {
      */
     private void scheduleWaveDrawing(ViewController viewController) {
         for (int i = 0; i < enemyWaves.front().length; i++) {
-            long randomDelay = (long) (Math.random() * 1500 * enemyWaves.front().length + i * 3000L);
+            long randomDelay = (long) (Math.random() * 2500 * enemyWaves.front().length + i * 5000L);
             spawnTimer.schedule(addElementToDraw(enemyWaves.front()[i], viewController), randomDelay);
         }
     }

@@ -95,9 +95,4 @@ public class Table extends CollidableEnvironment {
     public Dish getFirstDish() {
         return tableDishes.front();
     }
-
-    public boolean isTableEmpty() {
-        return tableDishes.isEmpty();
-    }
-
 }

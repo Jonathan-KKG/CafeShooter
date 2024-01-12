@@ -30,7 +30,10 @@ public abstract class Storage extends CollidableEnvironment {
         }
     }
 
-    @Override
+    /**
+     * Additionally draws the corresponding ingredientImage
+     * @param drawTool Required to draw the object
+     */
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
         drawTool.drawImage(ingredient, x + myImage.getWidth() / 2d - ingredient.getWidth() / 2d, y + myImage.getHeight() / 2d - ingredient.getHeight() / 2d);

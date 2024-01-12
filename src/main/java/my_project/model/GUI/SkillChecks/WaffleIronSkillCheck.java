@@ -13,7 +13,7 @@ import java.io.IOException;
 public class WaffleIronSkillCheck extends SkillCheckUI{
 
     private BufferedImage buttonImage;
-    private String[] immages;
+    private String[] images;
 
     /**
      * Initializes UI Model
@@ -27,7 +27,7 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
         increment = 0.25;
         width = 40;
         height = 65;
-        immages = new String[]{"A_Key_Dark.png", "D_Key_Dark.png","S_Key_Dark.png","W_Key_Dark.png"};
+        images = new String[]{"A_Key_Dark.png", "D_Key_Dark.png","S_Key_Dark.png","W_Key_Dark.png"};
         setNeededKey();
     }
 
@@ -48,10 +48,17 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
 
     }
 
+    /**
+     * Generates new random keys (a,w,s,d) until it is different from the last one, then sets it to currentKey and sets the according image.
+     */
     public void setNeededKey() {
-        neededKey = (int)(Math.random() * 4);
+        int possibleNeededKey = (int)(Math.random() * 4);
+        while(possibleNeededKey == neededKey){
+            possibleNeededKey = (int)(Math.random() * 4);
+        }
+        neededKey=possibleNeededKey;
         try{
-            buttonImage = ImageIO.read(new File("src/main/resources/graphic/" + immages [neededKey]));
+            buttonImage = ImageIO.read(new File("src/main/resources/graphic/" + images[neededKey]));
         } catch (IOException e) {
             e.printStackTrace();
         }

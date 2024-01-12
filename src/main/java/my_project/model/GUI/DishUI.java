@@ -40,22 +40,22 @@ public class DishUI extends UI {
         // Pacman
         // Remove comment to find Pacman
         // Pacman Will Haunt You If You D̜͝e̮̚ľ̷é̷͓t̸͎̂e̵ ̟̀H͎̓i̶̫͂m̸̹.̵....
-        /*
-        drawTool.setCurrentColor(255,255,0,255);
-        drawTool.drawFilledEllipticArc(400,400, 80,80, 45f / 2,360-45,2);
-        drawTool.setCurrentColor(0,0,0,255);
-        drawTool.drawEllipticArc(400,400, 80,80, 45f / 2,360-45,2);
-        drawTool.setCurrentColor(0,0,255,255);
-        drawTool.drawFilledEllipticArc(400,400, 80,80, -45 / 2f,45f ,2);
 
-        drawTool.setCurrentColor(0,0,0,255);
-        drawTool.drawCircle(435,415,6);
+        //drawTool.setCurrentColor(255,255,0,255);
+        //drawTool.drawFilledEllipticArc(400,400, 80,80, 45f / 2,360-45,2);
+        //drawTool.setCurrentColor(0,0,0,255);
+        //drawTool.drawEllipticArc(400,400, 80,80, 45f / 2,360-45,2);
+        //drawTool.setCurrentColor(0,0,255,255);
+        //drawTool.drawFilledEllipticArc(400,400, 80,80, -45 / 2f,45f ,2);
+        //
+        //drawTool.setCurrentColor(0,0,0,255);
+        //drawTool.drawCircle(435,415,6);
+        //
+        //drawTool.setCurrentColor(255,255,255,255);
+        //drawTool.drawFilledCircle(435,415,5);
+        //drawTool.setCurrentColor(0,0,0,255);
+        //drawTool.drawFilledCircle(435,415,1);
 
-        drawTool.setCurrentColor(255,255,255,255);
-        drawTool.drawFilledCircle(435,415,5);
-        drawTool.setCurrentColor(0,0,0,255);
-        drawTool.drawFilledCircle(435,415,1);
-        */
 
     }
 

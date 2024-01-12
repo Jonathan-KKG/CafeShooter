@@ -151,28 +151,46 @@ public class UIController {
     }
 
 
-    // TODO: 3x javd
+    /**
+     * creates UI for stun cooldown
+     * @param viewController required for drawing
+     * @param pos position of shooter
+     * @param maxDuration the whole duration of the stun cooldown
+     */
     public void createStunCooldown(ViewController viewController, double[] pos, double maxDuration){
         stunCooldownUI = new StunCooldownUI(pos[0], pos[1], maxDuration);
         viewController.draw(stunCooldownUI);
     }
 
-    public void updateStunCooldownUI(ViewController viewController, double duration) {
+    /**
+     * updates UI for stun cooldown and deletes it once it has spoken its final words
+     * @param viewController required for drawing
+     * @param duration remaining cooldown
+     * @param pos position of shooter
+     */
+    public void updateStunCooldownUI(ViewController viewController, double duration, double[] pos) {
         if (stunCooldownUI == null)
             return;
+
+        stunCooldownUI.setX(pos[0]);
+        stunCooldownUI.setY(pos[1]);
 
         stunCooldownUI.setDuration(duration);
         if(duration <= 0)
             deleteStunCooldownUI(viewController);
     }
 
+    /**
+     * deletes stun cooldown ui
+     * @param viewController required for not reverse anti-undrawing*-1
+     */
     private void deleteStunCooldownUI(ViewController viewController) {
         viewController.removeDrawable(stunCooldownUI);
         stunCooldownUI = null;
     }
 
     /**
-     * moves all enemybubbles of the current wave to their enemy
+     * moves all enemy bubbles of the current wave to their enemy
      *
      * @param enemies Enemies of the current wave
      */

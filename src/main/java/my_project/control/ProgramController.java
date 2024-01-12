@@ -69,7 +69,7 @@ public class ProgramController {
         entityController.dishCollisionUpdate();
         cookingController.updateCooking(dt);
         uiController.updateEnemyBubblesOfWave(waveController.getWave());
-        uiController.updateStunCooldownUI(viewController, entityController.getShooter().getStunCooldown());
+        uiController.updateStunCooldownUI(viewController, entityController.getShooter().getStunCooldown(), new double[]{entityController.getShooter().getX(),entityController.getShooter().getY()});
         environmentController.updateEnvironments(entityController.getShooter(), dt, viewController, uiController);
 
     }

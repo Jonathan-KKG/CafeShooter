@@ -2,9 +2,11 @@ package my_project.model.GUI;
 
 import KAGO_framework.view.DrawTool;
 
-// TODO: javad
+
+/**
+ *Ui at shooter position for displaying remaining time for reusing stun ability
+ */
 public class StunCooldownUI extends UI{
-    
     private double duration;
     private double maxDuration;
     
@@ -25,11 +27,16 @@ public class StunCooldownUI extends UI{
      * @param drawTool Required to draw the object
      */
     public void draw(DrawTool drawTool) {
-        drawDefaultBorder(drawTool, 3, x,y,18,6);
+        //static part border
+        drawTool.setCurrentColor(171, 128, 19,255);
+        drawTool.drawCircle(x,y,13);
+        //static part middle
+        setDrawToolColorToRGBABackgroundVal(drawTool);
+        drawTool.drawFilledCircle(x,y,13);
 
-        drawTool.setCurrentColor((int) (240 - (duration/maxDuration) * 220), (int) (20 + (duration/maxDuration) * 220), 20, 220);
-        drawTool.drawFilledRectangle(x+1.5,y+1, duration * 16 - 0.5,4);
-
+        //moving part
+        drawTool.setCurrentColor((int) (20+ (duration/maxDuration) * 220), (int) (240- (duration/maxDuration) * 220), 20, 220);
+        drawTool.drawFilledArc(x-10,y-10,20,90,duration/maxDuration*360,2);
     }
 
     public void setDuration(double pDuration){

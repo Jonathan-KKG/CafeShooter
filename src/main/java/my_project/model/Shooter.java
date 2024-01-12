@@ -10,6 +10,7 @@ public class Shooter extends Player {
 
     private List<CollidableEnvironment> objectsInRange;
     private double stunCooldown;
+    private double maxStunCooldown;
 
     /**
      * @param pX the start x-Position
@@ -18,6 +19,7 @@ public class Shooter extends Player {
     public Shooter(double pX, double pY) {
         super("roeckrath", pX, pY);
         stunCooldown = 0;
+        maxStunCooldown = 10;
     }
 
     public List<CollidableEnvironment> getObjectsInRange() {
@@ -34,5 +36,9 @@ public class Shooter extends Player {
 
     public void setStunCooldown(double stunCooldown) {
         this.stunCooldown = stunCooldown;
+    }
+
+    public double getMaxStunCooldown() {
+        return maxStunCooldown;
     }
 }

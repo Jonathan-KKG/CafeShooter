@@ -215,15 +215,13 @@ public class EntityController {
     }
 
     /**
-     * Shooter prevents nearby enemies from moving if he is able to stun
+     * Shooter prevents nearby enemies from moving
      */
     public void stunEnemies() {
-        if (shooter.getStunCooldown() >= 0)
-            return;
-        shooter.setStunCooldown(10);
+        shooter.setStunCooldown(shooter.getMaxStunCooldown());
         Enemy[] wave = programController.getWaveController().getWave();
         for (int i = 0; i < wave.length; i++) {
-            if (!wave[i].isActive())
+            if (wave[i] == null || !wave[i].isActive())
                 continue;
             if (shooter.getDistanceTo(wave[i]) < 70)
                 wave[i].setStunDuration(3.5);

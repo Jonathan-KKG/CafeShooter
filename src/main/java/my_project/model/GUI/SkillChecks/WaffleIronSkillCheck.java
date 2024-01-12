@@ -43,6 +43,9 @@ public class WaffleIronSkillCheck extends SkillCheckUI{
         drawTool.drawTransformedImage(buttonImage, startingPosition[0] - 18, startingPosition[1] + 5, 0 ,0.32);
     }
 
+    /**
+     * not required lol
+     */
     @Override
     public void updateSkillCheck(double time) {
 

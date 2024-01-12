@@ -17,6 +17,11 @@ public class DishUI extends UI {
 
     }
 
+    /**
+     * Graphical implementation of the UI
+     *
+     * @param drawTool Required to draw the object
+     */
     @Override
     public void draw(DrawTool drawTool) {
         drawDefaultBorder(drawTool, -1, startingPosition[0] + 5, startingPosition[1], 5 * 55 + 30d / 2, 100);

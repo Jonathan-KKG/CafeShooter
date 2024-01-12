@@ -23,6 +23,11 @@ public abstract class Dish extends Item {
         scale = 1;
     }
 
+    /**
+     * Graphical Implementation of the Dish
+     * Accounts for scale
+     * @param drawTool
+     */
     public void draw(DrawTool drawTool){
         drawTool.drawTransformedImage(myImage, x, y, 0, scale);
     }

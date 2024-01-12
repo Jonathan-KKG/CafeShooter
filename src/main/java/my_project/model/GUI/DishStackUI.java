@@ -33,6 +33,10 @@ public class DishStackUI extends UI {
 
     }
 
+    /**
+     * Graphical implementation of the UI
+     * @param drawTool Required to draw the object
+     */
     @Override
     public void draw(DrawTool drawTool) {
         if(dishStackAmount<10) {

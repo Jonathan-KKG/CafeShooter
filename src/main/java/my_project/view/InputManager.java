@@ -173,7 +173,7 @@ public class InputManager extends InteractiveGraphicalObject {
             programController.getDishController().moveToStoredDishes((Table) closestObjShooter);
 
         if(key == KeyEvent.VK_H){
-            shooter.isStunRadius(true);
+            shooter.setIndicator(true);
             if(shooter.getStunCooldown() > 0)
                 return;
 

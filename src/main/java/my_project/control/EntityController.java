@@ -76,9 +76,9 @@ public class EntityController {
             playerDir[1][1] = 0;
         }
         shooter.setStunCooldown(shooter.getStunCooldown() - dt);
-        shooter.setRadiusCooldown(shooter.getRadiusCooldown() - dt);
-        if(shooter.getRadiusCooldown() <= 0)
-            shooter.isStunRadius(false);
+        shooter.setIndicatorDisplayTime(shooter.getIndicatorDisplayTime() - dt);
+        if(shooter.getIndicatorDisplayTime() <= 0)
+            shooter.setIndicator(false);
 
         checkForScreenAndEnvironCollisions(dt, cook, playerDir[0]);
         cook.setClosestObjectInRange(getClosestObjectInRange(programController.getEnvironmentController().getInteractableEnvironmentObjects(), cook));
@@ -225,7 +225,7 @@ public class EntityController {
         for (int i = 0; i < wave.length; i++) {
             if (wave[i] == null || !wave[i].isActive())
                 continue;
-            if (shooter.getDistanceTo(wave[i]) < shooter.getStunRadius())
+            if (shooter.getDistanceTo(wave[i]) < shooter.getIndicatorRadius())
                 wave[i].setStunDuration(3.5);
         }
     }

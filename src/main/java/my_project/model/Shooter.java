@@ -13,9 +13,9 @@ public class Shooter extends Player {
     private double stunCooldown;
     private double maxStunCooldown;
 
-    private double stunRadius;
-    private double radiusCooldown;
-    private boolean showStunRadius;
+    private double indicatorRadius;
+    private double indicatorDisplayTime;
+    private boolean isIndicatorActive;
 
     /**
      * @param pX the start x-Position
@@ -25,47 +25,48 @@ public class Shooter extends Player {
         super("roeckrath", pX, pY);
         stunCooldown = 0;
         maxStunCooldown = 10;
-        stunRadius = 70;
-        showStunRadius = false;
+        indicatorRadius = 70;
+        isIndicatorActive = false;
     }
 
     /**
-     * Draws the player and, if showStunRadius is true, draws the area in which enemies are affected by stuns
+     * Draws the player and, if isIndicatorActive, draws the area in which enemies are affected by stuns
      * @param drawTool Required to draw
      */
     @Override
     public void draw(DrawTool drawTool) {
         super.draw(drawTool);
 
-        if(!showStunRadius)
+        if(!isIndicatorActive)
             return;
+
+        // stun area
         drawTool.setCurrentColor(0,0,0,50);
-        drawTool.drawFilledCircle(x + getWidth() / 2, y + getHeight() / 2, stunRadius);
+        drawTool.drawFilledCircle(x + getWidth() / 2, y + getHeight() / 2, indicatorRadius);
         drawTool.setCurrentColor(0,0,0,100);
-        drawTool.drawCircle(x + getWidth() / 2, y + getHeight() / 2, stunRadius);
+        drawTool.drawCircle(x + getWidth() / 2, y + getHeight() / 2, indicatorRadius);
     }
 
     /**
-     * sets stun radius to true or false
-     * @param show whether the radius is supposed to be activated or deactivated (true = activated)
+     * sets indicator to to true or false
+     * @param show whether the indicator is supposed to be activated or deactivated (true = activated)
      */
-    public void isStunRadius(boolean show){
+    public void setIndicator(boolean show){
         if(!show) {
-            showStunRadius = false;
-            radiusCooldown = 0;
-            return;
+            isIndicatorActive = false;
+            indicatorDisplayTime = 0;
+        } else {
+            isIndicatorActive = true;
+            indicatorDisplayTime = 0.4;
         }
-
-        showStunRadius = true;
-        radiusCooldown = 0.4;
     }
 
-    public double getRadiusCooldown() {
-        return radiusCooldown;
+    public double getIndicatorDisplayTime() {
+        return indicatorDisplayTime;
     }
 
-    public void setRadiusCooldown(double pRadiusCooldown) {
-        radiusCooldown = pRadiusCooldown;
+    public void setIndicatorDisplayTime(double pIndicatorDisplayTime) {
+        indicatorDisplayTime = pIndicatorDisplayTime;
     }
 
     public List<CollidableEnvironment> getObjectsInRange() {
@@ -88,7 +89,7 @@ public class Shooter extends Player {
         return maxStunCooldown;
     }
 
-    public double getStunRadius() {
-        return stunRadius;
+    public double getIndicatorRadius() {
+        return indicatorRadius;
     }
 }

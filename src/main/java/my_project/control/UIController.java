@@ -9,8 +9,6 @@ import my_project.model.GUI.*;
 import my_project.model.GUI.GameStates.*;
 import my_project.model.GUI.SkillChecks.*;
 
-import javax.swing.text.View;
-
 /**
  * Responsible for drawing and managing every GUI on the screen
  */
@@ -24,8 +22,6 @@ public class UIController {
     private DishStackUI dishStackUI;
     private GameStateUI gameStateUI;
     private StunCooldownUI stunCooldownUI;
-
-    private boolean showRecipe;
 
     /**
      * Creates all GUI elements
@@ -272,12 +268,12 @@ public class UIController {
      * @param viewController Required to deleted and draw the UI
      */
     public void toggleRecipeUI(ViewController viewController) {
-        if (showRecipe) {
+        if (recipeTutorialUI.isDrawn()) {
             viewController.removeDrawable(recipeTutorialUI);
-            showRecipe = false;
+            recipeTutorialUI.setDrawn(true);
         } else {
             viewController.draw(recipeTutorialUI);
-            showRecipe = true;
+            recipeTutorialUI.setDrawn(false);
         }
     }
 

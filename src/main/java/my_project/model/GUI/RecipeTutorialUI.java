@@ -8,6 +8,7 @@ import KAGO_framework.view.DrawTool;
 public class RecipeTutorialUI extends UI {
     
     private int borderOffset;
+    private boolean isDrawn;
     
     /**
      * Initializes UI Model
@@ -19,6 +20,7 @@ public class RecipeTutorialUI extends UI {
         super(pX, pY);
         setNewImage("src/main/resources/graphic/Recipes.png");
         borderOffset = 25;
+        isDrawn = false;
     }
 
     /**
@@ -29,5 +31,13 @@ public class RecipeTutorialUI extends UI {
     public void draw(DrawTool drawTool) {
         drawDefaultBorder(drawTool, 5, startingPosition[0], startingPosition[1], myImage.getWidth() + borderOffset * 2, myImage.getHeight() + borderOffset * 2);
         drawTool.drawImage(myImage,startingPosition[0] + borderOffset,startingPosition[1] + borderOffset);
+    }
+
+    public boolean isDrawn() {
+        return isDrawn;
+    }
+
+    public void setDrawn(boolean drawn) {
+        isDrawn = drawn;
     }
 }

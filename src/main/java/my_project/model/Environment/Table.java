@@ -54,11 +54,11 @@ public class Table extends CollidableEnvironment {
         tableDishes.front().setScale(1);
         tableDishes.dequeue();
 
-        // draw next 3 objects
+            // draw next 3 objects:
         Queue<Dish> tempQueue = new Queue<>();
         queueLength = 0;
 
-        // empty tableDishes
+        // copy and empty tableDishes
         while (!tableDishes.isEmpty()) {
             tempQueue.enqueue(tableDishes.front());
             viewController.removeDrawable(tableDishes.front());

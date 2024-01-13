@@ -35,6 +35,13 @@ public class WaveController {
         // Ready First Wave
         scheduleWaveDrawing(viewController);
         uiController.createEnemyBubblesOfWave(enemyWaves.front(), viewController);
+
+        // DEBUG CODE
+        // Add EnvController as parameter
+        // (!) repeat condition shouldn't be 9 or higher
+        // for (int i = 0; i < 8; i++) {
+        //     nextWave(viewController,uiController,envController);
+        // }
     }
 
     /**

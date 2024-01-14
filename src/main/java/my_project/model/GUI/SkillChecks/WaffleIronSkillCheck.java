@@ -51,10 +51,10 @@ public class WaffleIronSkillCheck extends SkillCheckUI {
      */
     public void setNeededKey() {
         int possibleNeededKey = (int) (Math.random() * 4);
-        while (possibleNeededKey == neededKey) {
+        while (possibleNeededKey == requiredKey) {
             possibleNeededKey = (int) (Math.random() * 4);
         }
-        neededKey = possibleNeededKey;
-        buttonImage = createImage("src/main/resources/graphic/" + images[neededKey]);
+        requiredKey = possibleNeededKey;
+        buttonImage = createImage("src/main/resources/graphic/" + images[requiredKey]);
     }
 }

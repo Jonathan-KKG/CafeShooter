@@ -117,10 +117,10 @@ public class WaveController {
 
         int spawnTopLeftOrRight = (int) (Math.random() * 100);      // Determine spawn position of Enemy in relation to screen borders
         // Following values contain off-by-one errors
-        if (spawnTopLeftOrRight < 33) {                               // spawn left of screen
+        if (spawnTopLeftOrRight < 25) {                               // spawn left of screen
             x = (int) -(Math.random() * 100 + 50);                     // between -150 and -50
             y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
-        } else if (spawnTopLeftOrRight > 66) {                       // spawn right of screen
+        } else if (spawnTopLeftOrRight > 75) {                       // spawn right of screen
             x = (int) (Math.random() * 100 + 1920 * 0.85 + 50);       // between 1920 * 0.85 + 50 and 1920 * 0.85 + 150
             y = (int) (Math.random() * (1080 * 0.85 - 300));           // between 0 and 1080 * 0.85 - 300
         } else {                                                    // spawn top of screen (including area over left and right out-of-screen)

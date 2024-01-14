@@ -15,7 +15,7 @@ public class CoffeeMachine extends CookingStation {
         cookingTime = 5;
     }
 
-    /** TODO: get rid of Code duplication
+    /**
      * checks whether the click is valid or not
      * @param time time passed since initation of cooking in seconds
      * @param isMovingDownwards whether the UI indicator is currently moving downwards

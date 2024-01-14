@@ -7,6 +7,7 @@ import my_project.model.Dishes.*;
 import my_project.model.Environment.Table;
 import my_project.model.Ingredients.*;
 import my_project.model.Item;
+import my_project.model.Shooter;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -57,11 +58,12 @@ public class ItemController {
             return;
 
         Dish objCurrentDish = storedDishes[currentDishIndex];
-
-        objCurrentDish.setX(programController.getEntityController().getShooter().getX());
-        objCurrentDish.setY(programController.getEntityController().getShooter().getY());
-        long yLength = (long) (yPos - (programController.getEntityController().getShooter().getY() + programController.getEntityController().getShooter().getHeight() / 2));
-        long xLength = (long) (xPos - (programController.getEntityController().getShooter().getX() + programController.getEntityController().getShooter().getWidth() / 2));
+        Shooter shooter = programController.getEntityController().getShooter();
+        
+        objCurrentDish.setX(shooter.getX());
+        objCurrentDish.setY(shooter.getY());
+        long yLength = (long) (yPos - (shooter.getY() + shooter.getHeight() / 2));
+        long xLength = (long) (xPos - (shooter.getX() + shooter.getWidth() / 2));
         double playerRotation = Math.atan2(yLength, xLength);
         double xDir = Math.cos(playerRotation);
         double yDir = Math.sin(playerRotation);

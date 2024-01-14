@@ -5,8 +5,8 @@ import my_project.view.InputManager;
 
 /**
  * Creates all Controllers and enables communication between them
- * Calls updaateProgram to update every Controller
- * Deals with ending the game
+ * Calls updateProgram to update every Controller
+ * Deals with (re-)starting and ending the game
  */
 public class ProgramController {
 

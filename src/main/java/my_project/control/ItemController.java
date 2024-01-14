@@ -74,7 +74,6 @@ public class ItemController {
         nextBullet();
     }
 
-
     /**
      * Moves all Dishes that are thrown (all in the List dishes)
      *

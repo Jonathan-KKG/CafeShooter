@@ -270,10 +270,10 @@ public class UIController {
     public void toggleRecipeUI(ViewController viewController) {
         if (recipeTutorialUI.isDrawn()) {
             viewController.removeDrawable(recipeTutorialUI);
-            recipeTutorialUI.setDrawn(true);
+            recipeTutorialUI.setDrawn(false);
         } else {
             viewController.draw(recipeTutorialUI);
-            recipeTutorialUI.setDrawn(false);
+            recipeTutorialUI.setDrawn(true);
         }
     }
 

@@ -3,7 +3,7 @@ package my_project.model.Enemies;
 import my_project.model.Dishes.ChocolateCheeseCake;
 
 /**
- * The Ilias Enemy.
+ * The Kamel Enemy.
  */
 public class Kamel extends Enemy {
 

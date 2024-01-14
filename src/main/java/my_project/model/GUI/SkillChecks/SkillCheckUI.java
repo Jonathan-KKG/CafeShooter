@@ -9,7 +9,7 @@ import my_project.model.GUI.UI;
 public abstract class SkillCheckUI extends UI {
     protected double progress; // progress value between 0 and 1
     protected double increment; // by how much the progress should be incremented each time
-    protected int neededKey; // for waffleIron witch key has to be presed
+    protected int requiredKey; // for waffleIron witch key has to be presed
 
     /**
      * Initializes UI Model
@@ -68,7 +68,7 @@ public abstract class SkillCheckUI extends UI {
      */
     public abstract void updateSkillCheck(double time);
 
-    public int getNeededKey() {
-        return neededKey;
+    public int getRequiredKey() {
+        return requiredKey;
     }
 }

@@ -317,7 +317,7 @@ public class UIController {
     }
 
     public int getNeededKey(){
-        return skillCheckUI.getNeededKey();
+        return skillCheckUI.getRequiredKey();
     }
 
     public void setNewNeededKey(){

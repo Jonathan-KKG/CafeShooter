@@ -24,6 +24,7 @@ public abstract class SkillCheckUI extends UI {
         height = 200;
         progress = 0;
         myImage = createImage("src/main/resources/graphic/Dishes/" + dish + ".png");
+        requiredKey = -1;
     }
 
     /**

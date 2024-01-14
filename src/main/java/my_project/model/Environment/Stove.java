@@ -30,7 +30,7 @@ public class Stove extends CookingStation{
             return false;
 
         for (double i = 0; i < cookingTime; i++) {
-            // g: cos(π x)*0.5 (1-2 (1-a))+0.5+x
+            // g: cos(π x)*0.5*(1-2*(1-a))+0.5+x
             double earliestTimeWindow = Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[0]))+0.5+i;
             double latestTimeWindow =   Math.cos(Math.PI * i)*0.5 * (1-2 *(1-currentHitTimeWindow[1]))+0.5+i;
             double timeDifference = currentHitTimeWindow[1] - currentHitTimeWindow[0];

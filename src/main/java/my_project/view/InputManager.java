@@ -70,7 +70,8 @@ public class InputManager extends InteractiveGraphicalObject {
             isSkillCheckButtonPressed = true;
             programController.getCookingController().addClick(3);
         }
-        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE) && !ViewController.isKeyDown(KeyEvent.VK_A) && !ViewController.isKeyDown(KeyEvent.VK_D) &&!ViewController.isKeyDown(KeyEvent.VK_S) &&!ViewController.isKeyDown(KeyEvent.VK_W)) isSkillCheckButtonPressed = false;
+        if (!ViewController.isKeyDown(KeyEvent.VK_SPACE) && !ViewController.isKeyDown(KeyEvent.VK_A) && !ViewController.isKeyDown(KeyEvent.VK_D) &&!ViewController.isKeyDown(KeyEvent.VK_S) &&!ViewController.isKeyDown(KeyEvent.VK_W))
+            isSkillCheckButtonPressed = false;
     }
 
     /**

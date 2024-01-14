@@ -121,6 +121,7 @@ public class CookingController {
         UIController uiCtrl = programController.getUIController();
         ItemController dCtrl = programController.getDishController();
         ViewController vCtrl = programController.getViewController();
+
         if (currentStation.isClickValid(time, uiCtrl.isMovingDownwards(), currentHitTimeWindow, key, uiCtrl.getNeededKey())) {
             if (uiCtrl.progressSkillCheck(vCtrl)) {
                 newHitTimeWindow();

@@ -24,6 +24,6 @@ public class Oven extends CookingStation{
      */
     @Override
     public boolean isClickValid(double time, boolean isMovingDownwards, double[] currentHitTimeWindow, int key, int neededKey) {
-        return true;
+        return key == neededKey;
     }
 }
